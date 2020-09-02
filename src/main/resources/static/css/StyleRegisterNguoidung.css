@@ -1,0 +1,22 @@
+.form-group{
+	text-align: right;
+	margin: 0 350px 0 0;
+}
+
+.form-group input {
+	width: 400px;
+	margin:0 0 0 20px;
+}
+.them {
+	margin: 0 0 0 300px;
+}
+.gioitinh {
+	text-align: left !important;
+	margin: 0 0 0 160px !important;
+}
+.checkbox-inline {
+	padding:0 20px 0 0 !important;
+}
+.radio {
+	margin: -32px 0 0 170px !important;
+}

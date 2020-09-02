@@ -1,0 +1,19 @@
+.form-group{
+	text-align: right;
+	margin: 20px 350px 0 0;
+}
+
+.form-group input {
+	width: 400px;
+	margin:0 0 0 20px;
+}
+.form-group > select > option {
+	width: 400px;
+}
+.them {
+	margin: 10px 0 0 300px;
+}
+
+.sach {
+	margin-top: 10px;
+}

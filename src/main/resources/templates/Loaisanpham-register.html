@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<head>
+<meta charset="utf-8">
+<title>Loại sản phẩm</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/StyleRegisterChucNang.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+	<div class="main" layout:fragment="content">
+		<div class="container">
+			<h4>Thêm mới loại sản phẩm</h4>
+			<hr>
+			<form th:action="@{/loaisanpham/saveLoaisanpham}" th:object="${LOAISANPHAM}" enctype="multipart/form-data" method="post" id="myModals">
+				<input type="hidden" th:field="*{id}">
+				<div class="form-group">
+					<label>Mã loại sản phẩm(*)</label>
+					<input type="text" th:field="*{maloaisanpham}">
+				</div>
+				<div class="form-group">
+					<label>Tên loại sản phẩm(*)</label>
+					<input type="text" th:field="*{tenloaisanpham}">
+				</div>
+				<button type="submit" class="btn btn-primary">Save</button>
+				<a href="/loaisanpham/list" class="btn btn-primary">List</a>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

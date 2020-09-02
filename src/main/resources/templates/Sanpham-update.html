@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<form th:action="@{/sanpham/updateSanpham}" enctype="multipart/form-data" method="post" id="formEdit">
+				<input type="hidden" name="id" >
+			<div class="form-group">
+				<label>Mã sản phẩm(*)</label>
+				<input type="text" name="masanpham">
+			</div>
+			<div class="form-group">
+				<label>Tên sản phẩm(*)</label>
+				<input type="text" name="tensanpham">
+			</div>
+			
+			<div class="form-group">
+				<label>Hình ảnh(*)</label>
+				<img class="thumbnails" alt="logo"/>
+			</div>
+			<div class="form-group">
+				<input type="file" name="fileImages" class="fileImages">
+			</div>
+			<div class="form-group">
+				<label>Loại sản phẩm</label>
+				<select name="loaisanpham">
+					<option th:each="loai : ${LOAISANPHAM}" th:value="${loai.id}" th:text="${loai.tenloaisanpham}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Xuất xứ</label>
+				<input type="text" name="xuatxu">
+			</div>
+			<div class="form-group">
+				<label>Mô tả</label>
+				<textarea name="mota" rows="5" cols="50"></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Cập nhật</button>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Trang quản trị</title>
+<link rel="stylesheet" type="text/css" href="/css/StyleLayout.css"/>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="grid-container">
+		<div class="header">
+			<div class="ha">
+				<a href="#"><h3 class="logo">admin</h3></a>
+			</div>
+			<div class="search">
+				<input class="header-input" type="text" value="Nhập thông tin cần tìm kiếm!!!!"/>
+				<a class="header-a" href="#"><i class="fas fa-search"></i> Tìm kiếm</a>
+			</div>
+			<div class="avatar">
+				<i class="fas fa-user-circle"></i>
+				<div class="dropdown-content">
+					<a href="#" th:text="'Name, ' + ${session.USERNAME}"></a>
+					<a href="#">Logout</a>
+				</div>
+			</div>
+		</div>
+		<div class="menu">
+			<ul>
+				<li th:each="item : ${session.MENU}">
+					<th:block th:if="${item.parentid} < 0">	
+						<a th:href="${item.maapi}" th:text="${item.tenchucnang}"></a>
+					</th:block>
+				</li>
+			</ul>
+		</div>
+		<div class="main" layout:fragment="content">Main</div>
+		<div class="footer">Footer</div>
+	</div>
+</body>
+</html>

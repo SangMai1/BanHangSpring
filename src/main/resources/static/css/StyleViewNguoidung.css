@@ -1,0 +1,60 @@
+.modal-content {
+	width: 600px !important;
+	background-color: #89AB9D !important;
+}
+.modal-content table {
+	text-align: center !important;
+	width: 80% !important;
+	margin: 0 auto !important;
+}
+
+.chitiet {
+	width: 1000px !important;
+	margin-top: 600px !important;
+	top: 50% !important;
+	left: 50% !important;
+	transform: translate(-50%, -50%) !important;
+}
+
+.showin {
+	text-align: center;
+}
+
+.pagination {
+	 justify-content: center !important;
+}
+
+#btn, .buttonDelete{
+	margin: 10px;
+}
+#dataSearch {
+	float: right;
+	margin: 10px;
+}
+.header-input {
+	width: 300px;
+	background-color: white;
+	color: orange;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	-webkit-transition: width .35s ease-in-out;
+  	transition: width .35s ease-in-out;
+  	text-align: center;
+}
+
+.header-input:focus {
+	width: 400px;
+	outline: none !important;
+	 border: 1px solid #B8B6B6;
+  box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0px 0px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-a {
+	background-color: rgb(237, 238, 242);
+	padding: 5px;
+}
+
+.fa-search {
+	font-size: 15px !important;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+<link rel="stylesheet" type="text/css" href="/css/reset.css">
+<link rel="stylesheet" type="text/css" href="/css/StyleTrangchu.css">
+
+</head>
+<body>
+	<div class="wrapper">
+		<header class="header">
+			<div class="container header__inner">
+				<a href="#" class="header__text">Trend Fashion</a>
+				
+				<div class="header__icon">
+					<ul class="header__icon-list">
+						<li class="header__icon-item">
+							<a href="#" class="header__icon-link"><i class="fas fa-search"></i></a>
+						</li>
+						<li class="header__icon-item">
+							<a href="#" class="header__icon-link"><i class="fas fa-user-circle"></i></a>
+						</li>
+						<li class="header__icon-item">
+							<a href="#" class="header__icon-link"><i class="fas fa-shopping-cart"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		
+		<nav class="container menu__inner">
+			<ul class="menu__inner-list">
+				<li class="menu__inner-item">
+					<a href="#" class="menu__inner-link">Trang chủ</a>
+				</li>
+				<li class="menu__inner-item">
+					<a href="#" class="menu__inner-link">Sản phẩm mới</a>
+				</li>
+				<li class="menu__inner-item">
+					<a href="#" class="menu__inner-link">Sale</a>
+				</li>
+				<li class="menu__inner-item">
+					<a href="#" class="menu__inner-link">Blog</a>
+				</li>
+				<li class="menu__inner-item">
+					<a href="#" class="menu__inner-link">Giới thiệu</a>
+				</li>
+			</ul>
+		</nav>
+		
+		<section class="banner">
+			<div>
+				<div class="banner__list">
+					<a href="#"><img class="mySlides" alt="anh 1" src="/img/w1.jpg"></a>
+					<a href="#"><img class="mySlides" alt="anh 1" src="/img/w2.png"></a>
+					<a href="#"><img class="mySlides" alt="anh 1" src="/img/w3.png"></a>
+				</div>
+			</div>
+		</section>
+	</div>
+	
+	<script>
+		var myIndex = 0;
+		carousel();
+		
+		function carousel() {
+		  var i;
+		  var x = document.getElementsByClassName("mySlides");
+		  for (i = 0; i < x.length; i++) {
+		    x[i].style.display = "none";  
+		  }
+		  myIndex++;
+		  if (myIndex > x.length) {myIndex = 1}    
+		  x[myIndex-1].style.display = "block";  
+		  setTimeout(carousel, 2000); // Change image every 2 seconds
+		}
+	</script>
+</body>
+</html>

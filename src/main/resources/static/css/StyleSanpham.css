@@ -1,0 +1,31 @@
+.form-group{
+	text-align: right;
+	margin: 20px 350px 0 0;
+}
+
+.form-group input, textarea{
+	width: 400px;
+	margin:0 0 0 20px;
+}
+.form-group select {
+	width: 400px;
+}
+.ha{
+	margin-right: 430px;
+}
+.form-group img {
+	width: 100px;
+	height: 130px;
+	display: block;
+	border: 1px solid red;
+	margin-left: 300px;
+	margin-bottom: 5px;
+	max-width: 100%;
+}
+.them {
+	margin: 10px 0 0 300px;
+}
+
+.sach {
+	margin-top: 10px;
+}

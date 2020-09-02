@@ -1,0 +1,20 @@
+img {
+	width: 50px;
+}
+
+.chitiet {
+	width: 1300px !important;
+	margin-top: 300px !important;
+	top: 50% !important;
+	left: 50% !important;
+	transform: translate(-50%, -50%) !important;
+}
+.form-group img {
+	width: 100px;
+	height: 130px;
+	display: block;
+	border: 1px solid red;
+	margin-left: 300px;
+	margin-bottom: 5px;
+	max-width: 100%;
+}
