@@ -58,6 +58,7 @@ public class ChucNangController {
 		cn.setUpdateday(new Timestamp(new Date().getTime()));
 		cn.setNguoitao((String) session.getAttribute("USERNAME"));
 		cn.setNguoiupdate((String) session.getAttribute("USERNAME"));
+		System.out.println("aaaa");
 		this.chucNangService.insertChucNang1(cn);
 		return "redirect:/chucnang/list";
 	}
