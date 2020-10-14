@@ -2,43 +2,95 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<title>Trang quản trị</title>
-<link rel="stylesheet" type="text/css" href="/css/StyleLayout.css"/>
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-	crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/reset.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/StyleLayout.css"/>
+  <title>ADMIN</title>
 </head>
 <body>
-	<div class="grid-container">
-		<div class="header">
-			<div class="ha">
-				<a href="#"><h3 class="logo">admin</h3></a>
-			</div>
-			<div class="search">
-				<input class="header-input" type="text" value="Nhập thông tin cần tìm kiếm!!!!"/>
-				<a class="header-a" href="#"><i class="fas fa-search"></i> Tìm kiếm</a>
-			</div>
-			<div class="avatar">
-				<i class="fas fa-user-circle"></i>
-				<div class="dropdown-content">
-					<a href="#" th:text="'Name, ' + ${session.USERNAME}"></a>
-					<a href="#">Logout</a>
-				</div>
-			</div>
-		</div>
-		<div class="menu">
-			<ul>
-				<li th:each="item : ${session.MENU}">
-					<th:block th:if="${item.parentid} < 0">	
-						<a th:href="${item.maapi}" th:text="${item.tenchucnang}"></a>
-					</th:block>
-				</li>
-			</ul>
-		</div>
-		<div class="main" layout:fragment="content">Main</div>
-		<div class="footer">Footer</div>
-	</div>
+    <div class="wrapper">
+      <header class="header">
+        <div class="header__left">
+          <a href="#" class="logo">ADMIN</a>
+        </div>
+        <div class="header__right">
+          <div class="header__right-box">
+            <div class="header__right-box-image">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="header__right-box-name">
+              <b><span class="header__right-box-name-text" sec:authentication="name">Username</span></b>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main">
+        <section class="main__menu">
+          <div class="main__menu-search">
+            <div class="main__menu-search-form">
+              <input type="text" class="main__menu-search-form-input" placeholder="Search...">
+              <button class="main__menu-search-form-button">Search</button>
+            </div>
+          </div>
+          <div class="main__menu-navigation">
+            <p class="main__menu-navigation-text">MAIN NAVIGATION</p>
+          </div>
+          <div class="main__menu-function">
+            <div class="main__menu-function-sidenav">
+              <a href="#">Home</a>
+              <button class="main__menu-function-dropdown-btn">Quản trị hệ thống
+                <i class="fas fa-caret-down"></i>
+              </button>
+              <div class="dropdown-container">
+                <a href="/nguoidung/">Người dùng</a>
+                <a href="/chucnang/">Chức năng</a>
+                <a href="/vaitro/">Vai trò</a>
+                <a href="/nhom/">Nhóm</a>
+              </div>
+              <button class="main__menu-function-dropdown-btn">Quản lý website
+                <i class="fas fa-caret-down"></i>
+              </button>
+              <div class="dropdown-container">
+                <a href="#">Slide</a>
+                <a href="#">Loại sản phẩm</a>
+                <a href="#">Sản phẩm</a>
+              </div>
+              <a href="#">Statistical</a>
+        	  <a th:href="@{/logout}">Logout</a>
+            </div>
+          </div>
+        </section>
+        
+        <section class="main__content" layout:fragment="content">
+
+        </section>
+      </div>
+      <div class="clear"></div>
+      <footer class="footer">
+        <p class="footer-text">Mai Văn Sang</p>
+      </footer>
+    </div>
+    <script>
+      /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+      var dropdown = document.getElementsByClassName("main__menu-function-dropdown-btn");
+      var i;
+
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+          } else {
+            dropdownContent.style.display = "block";
+          }
+        });
+      }
+    </script>
 </body>
 </html>

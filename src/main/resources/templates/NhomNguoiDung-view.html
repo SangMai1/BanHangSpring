@@ -2,10 +2,11 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/main-layout}">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/css/StyleViewNhom.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/StyleViewNhom.css">
+<link rel="stylesheet" type="text/css" href="/css/StyleRegisterNhom.css"/>
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" /> 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -13,7 +14,8 @@
 <script type="text/javascript" th:src="@{/js/NhomNguoiDung-view.js}"></script>
 </head>
 <body>
-		<div class="main" layout:fragment="content">
+		<section class="main__content" layout:fragment="content">
+			<div class="container">
 				<h4>Danh sách nhóm</h4>
 				<hr>
 				<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn"><i class="fas fa-plus-circle"></i></button>
@@ -38,16 +40,12 @@
 				   </div>
 				   
 				   <!-- Search  -->
-					<form th:action="@{'/nhom/dataSearch'}" id="dataSearch">
-						<input class="header-input" type="text" name="namn" th:value="${session.NAMN}" placeholder="Nhập thông tin cần tìm kiếm!!!!"/>
-						<button type="submit" class="header-a" id="search"><i class="fas fa-search"></i> Tìm kiếm</button>
-							
-						<!--	<input type="text" name="namn" th:value="${session.NAMN}" placeholder="Nhập tên nhóm cần tìm"/>
-							<input type="text" name="keyn" th:value="${session.KEYN}" placeholder="Nhập mã nhóm cần tìm"/>							
-							<input type="submit" value="Search" class="btn btn-primary" id="search"/> -->
+					<form th:action="@{/nhom/dataSearch}" id="dataSearch">
+						<input class="main__menu-search-form-input1" type="text" name="namn" th:value="${session.NAMN}" placeholder="Search..."/>
+						<button type="submit" class="main__menu-search-form-button1" id="search">Search</button>
 					</form>
 					<th:block th:if="${#lists.isEmpty(NHOMS.pageList)}">
-						<h2>No nhom nguoi dung</h2>
+						<h2>Không có nhóm người dùng</h2>
 					</th:block>
 					
 					
@@ -71,57 +69,8 @@
 											<td th:text="${nhom.tennhom}"></td>
 											
 											<td>
-												<a class="btn btn-primary edit" th:href="@{/nhom/nhom-update/}" data-toggle="modal" data-target="#myEdit" th:attrappend="data-target=${nhom.id}"><i class="fas fa-edit"></i></a>
-													<!-- The Modal Edit -->
-													 <div class="modal" id="myEdit"  th:attrappend="id=${nhom.id}">
-													    <div class="modal-dialog">
-													      <div class="modal-content">
-													      
-													        <!-- Modal Header -->
-													        <div class="modal-header">
-													          <h4>Edit chức năng</h4>
-													          <button type="button" class="close" data-dismiss="modal">&times;</button>
-													        </div>
-													        <div id="edit-body">
-													        	<form th:action="@{/nhom/doUpdate}" method="put" id="formEdit">
-																			<input type="hidden" name="id" th:value="${nhom.id}">
-																	 	<div class="form-group">
-																	 		<label>Mã nhóm(*)</label>
-																	 		<input type="text" name="manhom" th:value="${nhom.manhom}" >
-																	 	</div>
-																		<div class="form-group">
-																	 		<label>Tên nhóm(*)</label>
-																	 		<input type="text" name="tennhom" th:value="${nhom.tennhom}">
-																	 	</div>
-																	 	<div >
-																	 		<label>Chức năng</label>
-																	 		<div class="row" style="margin-top: 5px">
-																	 				<table class="table table-bordered">
-																	 					<thead>
-																	 						<tr>
-																	 							<th>Select</th>
-																	 							<th>Tên chức năng</th>
-																	 						</tr>
-																	 					</thead>
-																	 					<tbody>
-																	 						<tr th:each="tcn: ${CHUCNANGS}">
-																	 							<td><input type="checkbox" class="update" name="chucnang" th:value="${tcn.id}"></td>
-																	 							<td th:text="${tcn.tenchucnang}"></td>
-																	 						</tr>
-																	 					</tbody>
-																	 				</table>
-																	 		</div>
-																	 	</div>
-																	 	
-																	<button type="submit" id="toggler" class="btn btn-primary them" onClick="action()">Cập nhật</button>
-																</form>
-													        </div>
-													        <div class="modal-footer">
-													          
-													        </div>
-														  </div>
-													   </div>
-													</div>
+												<a class="btn btn-primary edit" th:href="@{/nhom/nhom-update/(id=${nhom.id})}" data-toggle="modal" data-target="#myEdit"><i class="fas fa-edit"></i></a>
+
 										
 													
 													<a class="btn btn-primary chi" th:href="@{/nhom/nhom-chitiet/}" data-toggle="modal" data-target="#myChitiet" th:attrappend="data-target=${nhom.id}"><i class="fas fa-eye"></i></a>
@@ -192,7 +141,7 @@
 								</form>
 							</div>
 							
-							<p th:text="'Record: ' + ${sum}"></p>
+							<p class="showcount" th:text="'Record: ' + ${sum}"></p>
 							<p class="showin" th:text="'Show '+ ${pageNumber} + ' in ' + ${totalPageCount}"></p>
 							
 							<!-- phan trang -->
@@ -254,7 +203,66 @@
 						  </div>
 					   </div>
 					</div>
-		</div>
+					
+					<!-- The Modal Edit -->
+					 <div class="modal" id="myEdit">
+					    <div class="modal-dialog">
+					      <div class="modal-content">
+					      
+					        <!-- Modal Header -->
+					        <div class="modal-header">
+					          <h4>Edit nhóm</h4>
+					          <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        </div>
+					        <div id="edit-body">
+					        	<form th:action="@{/nhom/doUpdate}" method="put" id="formEdit">
+											<input type="hidden" name="id" id="idUpdate">
+									 	<div class="form-group row">
+									 		<label class="col-sm-2 col-form-label">Mã nhóm(*)</label>
+									 		<div class="col-sm-10">
+									 			<input type="text" class="form-control" name="manhom" id="mUpdate" >
+									 		</div>
+									 		
+									 	</div>
+										<div class="form-group row">
+									 		<label class="col-sm-2 col-form-label">Tên nhóm(*)</label>
+									 		<div class="col-sm-10">
+									 			<input type="text" class="form-control" name="tennhom" id="tUpdate">
+									 		</div>
+									 		
+									 	</div>
+									 	<div class="form-group row">
+									 		<label class="col-sm-2 col-form-label">Chức năng</label>
+									 		<div class="col-sm-10">
+									 				<table class="table table-bordered">
+									 					<thead>
+									 						<tr>
+									 							<th>Select</th>
+									 							<th>Tên chức năng</th>
+									 						</tr>
+									 					</thead>
+									 					<tbody>
+									 						<tr th:each="tcn: ${CHUCNANGS}">
+									 							<td><input type="checkbox" class="n-update" name="chucnang" th:value="${tcn.id}"></td>
+									 							<td th:text="${tcn.tenchucnang}"></td>
+									 						</tr>
+									 					</tbody>
+									 				</table>
+									 		</div>
+									 	</div>
+									 	
+									<button type="submit" id="toggler" class="btn btn-primary capnhat" onClick="action()">Cập nhật</button>
+								</form>
+					        </div>
+					        <div class="modal-footer">
+					          
+					        </div>
+						  </div>
+					   </div>
+					</div>		
+			</div>
+
+		</section>
 
 </body>
 </html>

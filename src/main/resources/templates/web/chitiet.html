@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/trangchu}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/css/StyleChitiet.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.size').on('click',function(){
+			var id = $("input[name='option1']:checked").val();
+			console.log(id);
+
+			$.ajax({
+				type: "GET",
+				contentType: "application/json",
+				url: '/web/sp-chitiet',
+				data: {
+					id: id
+				},
+				dataType: "json",
+				timeout: 10000,
+				success: function(data){
+					console.log(data);
+				},
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<div layout:fragment="content">
+	
+		<section class="path__chitiet">
+			<div class="wrapper1">
+				<p>Sản phẩm / <span th:text="${spm.tensanpham}"></span></p>
+			</div>
+		</section>
+		
+		<section class="feature1">
+				<div class="wrapper1">
+					<div class="feature__item1">
+						<div class="feature__image1">
+							<img class="feature__img1" th:src="@{${spm.getLogoImagePath()}}">
+			
+						</div>
+						<div class="feature__info1">
+							<div class="feature__info1-product-title">
+								<h5 th:text="${spm.tensanpham}"></h5>
+								<p>SKU: <span th:text="${spm.masanpham}"></span></p>
+							</div>
+							<hr>
+							<div class="feature__info1-product-price">
+								<span class="pro-sale">23%</span>
+								<span class="pro-price">500.000</span>
+								<del>650.000</del>
+							</div>
+							<hr>
+							<div class="feature__info1-product-size">
+								<label th:each="size : ${sizesp}" class="size">
+									<span th:text="${size.kichthuoc}"></span>
+									<input class="kichthuoc" type="radio" name="option1" th:value="${size.id}" >
+									<span class="checkmark"></span>
+								</label>
+								<!-- <label class="size">S
+									<input type="radio" name="option1" value="S">
+									<span class="checkmark"></span>
+								</label>
+								<label class="size">L
+									<input type="radio" name="option1" value="L">
+									<span class="checkmark"></span>
+								</label> -->
+							</div>
+							<hr>
+							<div class="feature__info1-product-cart">
+								<div class="feature__info1-product-number">
+									<input type="number" value="1">
+								</div>
+								<div class="feature__info1-product-button">
+									<button>Thêm vào giỏ hàng</button>
+								</div>
+								<div class="feature__info1-product-description">
+									<h5>Mô tả</h5>
+									<p th:text="${spm.mota}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="selling_products">
+				<div class="selling_products-title">
+					<a href="#">Sản phẩm liên quan</a>
+				</div>
+			</section>
+	</div>
+
+</body>
+</html>

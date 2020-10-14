@@ -29,4 +29,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 	
 	@Query(value = "SELECT id, idsanpham, kichthuoc, soluong, giatien, isdelete FROM qtht_sanphamvachitiet WHERE isdelete = 0", nativeQuery = true)
 	List<SanphamVaChitiet> getAll();
+	
+	@Query(value = "SELECT id, idsanpham, kichthuoc, soluong, giatien, isdelete, giamgia FROM qtht_sanphamvachitiet WHERE idsanpham=? and isdelete = 0", nativeQuery = true)
+	List<SanphamVaChitiet> findBySizeSanpham(Long idsanpham);
 }

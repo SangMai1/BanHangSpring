@@ -52,23 +52,29 @@
 		
 		$('.edit').on('click', function(event){
 			event.preventDefault();
-			var url = $('#formEdit').attr('action');
+			$('input[name="chucnang"]').prop("checked", false);
+			var uu = $(this).attr('href');
+			var id = GetURLParameter(uu, 'id');
 			$.ajax({
 				contentType: "application/json",
-				url: "/login/check",
+//				url: "/login/check",
+				url : "/vaitro/update",
 				data: {
-					url: url
+					id: id
 				},
 				dataType: "json",
 				timeout: 10000,
 				success: function(data){
-					if(data > 0){
-						$('#myEdit').modal("show");
-					} else {
-						alert("Bạn không dùng được chức năng này");
-						$('#myEdit').modal("hide");
-					}
-				},
+
+					console.log(data);
+					$('#idUpdate').val(data.id);
+					$('#mUpdate').val(data.mavaitro);
+					$('#tUpdate').val(data.tenvaitro);
+					var cns = getData(data.chucnangs);
+					if(cns != null){
+						$('input[name="chucnang"]').val(cns);
+					};
+				}
 			});
 		});
 		
@@ -116,3 +122,21 @@
 			});
 		});
 	});
+	
+	function GetURLParameter(sPageURL, sParam){
+		var sURLVariable = sPageURL.split('?');
+		var sParameterName = sURLVariable[1].split('=');
+			if(sParameterName[0] == sParam){
+				return sParameterName[1];
+			}
+	}
+	
+	function getData(data){
+		if(data == "[]"){
+			return null;
+		} else {
+			var temp = data.substring(1, data.length-1);
+			console.log(temp);
+			return temp.split(", ");
+		}
+	}

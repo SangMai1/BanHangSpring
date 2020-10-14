@@ -28,50 +28,69 @@
 </script>
 </head>
 <body>
-	<div class="main" layout:fragment="content">
+	<section class="main__content" layout:fragment="content">
 		<div class="container">
 			<h4>Thêm mới sản phẩm</h4>
 			<hr>
 			<form th:action="@{/sanpham/doSave}" th:object="${SANPHAM}" method="post" enctype="multipart/form-data" id="myModals">
 				<input th:field="*{id}" name="id" type="hidden">
-				<div class="form-group">
-					<label>Mã sản phẩm</label>
-					<input th:field="*{masanpham}" name="masanpham" type="text">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Mã sản phẩm</label>
+					<div class="col-sm-10">
+						<input class="form-control" placeholder="Enter mã sản phẩm" th:field="*{masanpham}" name="masanpham" type="text">
+					</div>
 				</div>
-				<div class="form-group">
-					<label>Tên sản phẩm</label>
-					<input th:field="*{tensanpham}" name="tensanpham" type="text">
-				</div>
-				
-				<div class="form-group">
-					<label class="ha">Hình ảnh</label>
-					<img id="thumbnail" alt="Logo">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Tên sản phẩm</label>
+					<div class="col-sm-10">	
+						<input class="form-control" placeholder="Enter tên sản phẩm" th:field="*{tensanpham}" name="tensanpham" type="text">
+					</div>
 					
 				</div>
-				<div class="form-group">
-					<input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpg">
-				</div>	
-				<div class="form-group">
-					<label>Loại sản phẩm</label>
-					<select th:field="*{loaisanpham}">
-						<option th:each="loai : ${LOAISANPHAM}" th:value="${loai.id}" th:text="${loai.tenloaisanpham}"></option>
-					</select>
+				
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Hình ảnh</label>
+					<div class="col-sm-10">
+						<img id="thumbnail" alt="Logo">
+						<input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpg">
+					</div>
+					
+					
+				</div>
+	
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Loại sản phẩm</label>
+					<div class="col-sm-10">
+						<select class="form-control" th:field="*{loaisanpham}">
+							<option th:each="loai : ${LOAISANPHAM}" th:value="${loai.id}" th:text="${loai.tenloaisanpham}"></option>
+						</select>
+					</div>
+					
 				</div>
 				
-				<div class="form-group">
-					<label>Xuất xứ</label>
-					<input th:field="*{xuatxu}" name="xuatxu" type="text">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Xuất xứ</label>
+					<div class="col-sm-10">
+						<input class="form-control" placeholder="Enter xuất xứ" th:field="*{xuatxu}" name="xuatxu" type="text">
+					</div>
+					
 				</div>
 				
-				<div class="form-group">
-					<label>Mô tả</label>
-					<textarea th:field="*{mota}" name="mota" rows="5" cols="50"></textarea>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Mô tả</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" placeholder="Enter mô tả" th:field="*{mota}" name="mota" rows="3"></textarea>
+					</div>
+					
+				</div>
+				<div class="button-all">
+					<button type="submit" class="btn btn-primary btn-lg">Thêm mới</button>
+			 		<a class="btn btn-primary btn-lg" href="/sanpham/list">Xem danh sách</a>
 				</div>
 				
-				<button type="submit" class="btn btn-primary them">Thêm mới</button>
-			 	<a class="btn btn-primary sach" href="/sanpham/list">Danh sách</a>
+			 	
 			</form>
 		</div>
-	</div>
+	</section>
 </body>
 </html>

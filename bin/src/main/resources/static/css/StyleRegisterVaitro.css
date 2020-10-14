@@ -1,0 +1,13 @@
+.form-group{
+	text-align: right;
+	margin: 20px 350px 0 0;
+}
+
+.form-group input {
+	width: 400px;
+	margin:0 0 0 20px;
+}
+
+.them {
+	margin: 0 0 0 300px;
+}

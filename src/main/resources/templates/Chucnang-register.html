@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	layout:decorate="~{layout/main-layout}">
 <head>
 <meta charset="UTF-8" />
@@ -11,36 +13,50 @@
 </head>
 <body>
 	
-	<div class="main" layout:fragment="content">
-		<div class="container" >
+	<section class="main__content" layout:fragment="content">
+		<div class="container">
 			<h4>Thêm mới chức năng</h4>
 			<hr>
-			<form th:action="@{/chucnang/saveChucNang}" th:object="${CHUCNANG}" enctype="multipart/form-data" id="myModals">
-				<input type="hidden" th:field="*{id}" th:name="id">
-				<div class="form-group">
-					<label>Mã chức năng(*)</label>
-					<input type="text" th:field="*{machucnang}">
+			<form th:action="@{/chucnang/saveChucNang}" th:object="${CHUCNANG}" id="myModals">
+				<input type="hidden" th:field="*{id}" name="id">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Mã chức năng(*)</label>
+			        <div class="col-sm-10">
+			          <input type="text" class="form-control" placeholder="Enter ma chuc nang" th:field="*{machucnang}">
+			        </div>
 				</div>
-				<div class="form-group">
-					<label>Tên chức năng(*)</label>
-					<input type="text" th:field="*{tenchucnang}">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Tên chức năng(*)</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" placeholder="Enter ten chuc nang" th:field="*{tenchucnang}">
+					</div>
+					
 				</div>
-				<div class="form-group">
-					<label>Mã API(*)</label>
-					<input type="text" th:field="*{maapi}">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Mã API(*)</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" placeholder="Enter ma api" th:field="*{maapi}">
+					</div>
+					
 				</div>
-				<div class="form-group">
-					<label>Parent</label>
-					<select th:field="*{parentid}" >
-						<option th:each="parent : ${PARENTID}" th:value="${parent.id}" th:text="${parent.tenchucnang}"></option>
-						<option th:value="-1">Không có ở trên</option>
-					</select>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Parent</label>
+					<div class="col-sm-10">
+						<select class="form-control" th:field="*{parentid}" >
+							<option th:each="parent : ${PARENTID}" th:value="${parent.id}" th:text="${parent.tenchucnang}"></option>
+							<option th:value="-1">Không có ở trên</option>
+						</select>
+					</div>
+					
 				</div>
-				<button type="submit" id="toggler" class="btn btn-primary them" onClick="action()">Thêm mới</button>
-				<a class="btn btn-primary sach" href="/chucnang/list">Xem danh sách</a>
+				<div class="button-all">
+					<button type="submit" class="btn btn-primary btn-lg">Thêm mới</button>
+					<a class="btn btn-primary btn-lg" href="/chucnang/list">Xem danh sách</a>
+				</div>
+
 			</form>
 		</div>
-	</div>
+	</section>
 
 </body>
 </html>

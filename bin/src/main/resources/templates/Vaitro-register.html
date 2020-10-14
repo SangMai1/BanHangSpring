@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/css/StyleRegisterVaitro.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/Vaitro-register.js}"></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container">
+				<h4>Thêm mới vai trò</h4>
+				<hr>
+				<form th:action="@{/vaitro/saveVaitro}" th:object="${VAITRO}" enctype="multipart/form-data" id="myModals">
+					<input type="hidden" th:field="*{id}" >
+					<div class="form-group">
+						<label>Mã vai trò(*)</label>
+						<input type="text" th:field="*{mavaitro}">
+					</div>
+					<div class="form-group">
+						<label>Tên vai trò(*)</label>
+						<input type="text" th:field="*{tenvaitro}">
+					</div>
+					
+					<button type="submit" class="btn btn-primary them">Thêm mới</button>
+					<a href="/vaitro/list/" class="btn btn-primary sach">Xem danh sách</a>
+				</form>
+			</div>
+		</div>
+</body>
+</html>

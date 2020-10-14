@@ -90,4 +90,10 @@ public class NhomNguoiDungImpl implements NhomNguoiDungService{
 		return (List<VaiTro>)vaiTroRepository.findAll();
 	}
 
+	@Override
+	public List<Long> findChucnangNhom(Long idnhom) {
+		return nhomNguoiDungRepository.findChucnangNhom(idnhom);
+	}
+
+	
 }

@@ -31,4 +31,6 @@ public interface ChucNang1Service {
 
 	List<ChucNang1> findChucnangByTennguoidung(String tennguoidung);
 
+	List<String> maapi();
+
 }

@@ -15,4 +15,6 @@ public interface SanphamVaChitietService {
 
 	int updateSanphamVaChitiet(String kichthuoc, Integer soluong, Float giatien, Integer isdelete, Long id);
 
+	List<SanphamVaChitiet> findBySizeSanpham(Long idsanpham);
+
 }

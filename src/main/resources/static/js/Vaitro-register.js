@@ -37,3 +37,16 @@
 			},
 		});
 	});
+	
+	$('.-1').on('click', function(){
+		var obj = $(this);
+		if(obj.hasClass('-1')){
+			obj.hide();
+		    obj.next().show();            
+		    obj.parent().parent().next().show();
+		  }else{
+		     obj.hide();
+		     obj.prev().show();
+		     obj.parent().parent().next().hide();
+		  }
+	})

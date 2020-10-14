@@ -1,0 +1,52 @@
+.feature__item2 {
+  display: flex;
+  align-items: center; 
+  background-color: #f5f5f5;
+  margin-bottom: 50px;
+}
+.feature__image2 {
+  width: 20%; 
+  border: 1px solid red;
+}
+
+.feature__info2 {
+	width: 80%;
+}
+
+.feature__image2 {
+	position: relative;
+}
+
+.feature__image2 img {
+	opacity: .4;
+
+	height: 702px;
+	width: 768px;
+}
+
+.feature__info2 {
+	padding-left: 50px;
+	padding-right: 105px;
+}
+
+.feature__iamge2-amout h4 , .feature__info1-product-season h4{
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+
+.feature__iamge2-amout ul li label, .feature__info1-product-season ul li label {
+	font-size: 14px;
+}
+
+.feature__info1-product-size {
+	padding-bottom: 15px;
+}
+.feature__info1-product-size h4 {
+	padding-top: 10px;
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+
+.feature__info1-product-size .kt {
+	font-size: 18px;
+}

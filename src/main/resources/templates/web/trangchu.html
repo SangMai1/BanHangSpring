@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <link rel="stylesheet" type="text/css" href="/css/reset.css">
 <link rel="stylesheet" type="text/css" href="/css/StyleTrangchu.css">
-
+<style>
+.mySlides {
+	display: none;
+}
+</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -36,8 +41,13 @@
 				<li class="menu__inner-item">
 					<a href="#" class="menu__inner-link">Trang chủ</a>
 				</li>
-				<li class="menu__inner-item">
-					<a href="#" class="menu__inner-link">Sản phẩm mới</a>
+				<li class="menu__inner-item dropdown">
+					<a href="#" class="menu__inner-link dropbtn">Sản phẩm</a>
+					<div class="dropdown-content">
+						<a href="#">Sản phẩm nổi bật</a>
+						<a href="#">Sản phẩm mới</a>
+						<a href="#">Sản phẩm bán chạy</a>
+					</div>
 				</li>
 				<li class="menu__inner-item">
 					<a href="#" class="menu__inner-link">Sale</a>
@@ -51,31 +61,159 @@
 			</ul>
 		</nav>
 		
-		<section class="banner">
-			<div>
-				<div class="banner__list">
-					<a href="#"><img class="mySlides" alt="anh 1" src="/img/w1.jpg"></a>
-					<a href="#"><img class="mySlides" alt="anh 1" src="/img/w2.png"></a>
-					<a href="#"><img class="mySlides" alt="anh 1" src="/img/w3.png"></a>
+		<div layout:fragment="content">
+			<section class="banner">
+				<div class="slideshow-container">
+				  <div class="mySlides fade">
+				    <img src="https://file.hstatic.net/1000300454/file/slid01_e89a0f8aa2874ef0849de530c10408e8.jpg" style="width:100%">
+				  </div>
+				
+				  <div class="mySlides fade">
+				    <img src="https://file.hstatic.net/1000300454/file/slide02_a9d973701a6e45b78c6def7874b6b65e.jpg" style="width:100%">
+				  </div>
+				
+				  <div class="mySlides fade">
+				    <img src="https://file.hstatic.net/1000300454/file/slide03_9d51a29f6cef438994406c1d0e12e25b.jpg" style="width:100%">
+				  </div>
+				</div>
+				<br>
+				
+				<div class="dot__list" style="text-align:center">
+				  <span class="dot"></span> 
+				  <span class="dot"></span> 
+				  <span class="dot"></span> 
+				</div>
+			</section>
+			
+			<section class="selling_products">
+				<div class="selling_products-title">
+					<a href="#">Sản phẩm mới</a>
+				</div>
+			</section>
+			
+			<section class="category">
+				<div class="container">
+					<ul class="category__list">
+						<li th:each="spm : ${SANPHAMMOI}" class="category__item">
+							<a th:href="${'/web/sanpham-chitiet1/' + spm.id}"><img class="category__image" th:src="@{${spm.getLogoImagePath()}}"></a>
+							<a href="#" th:text="${spm.tensanpham}" class="category__name"></a>
+						</li>
+						
+					</ul>
+				</div>
+			</section>
+			
+			<section class="banner-category">
+				<div class="container">
+					<ul class="banner-category__list">
+						<li class="banner-category__item">
+							<a href="/web/chitiet/"><img class="banner-category__image" src="/img/b1.png"></a>
+							<p class="banner-category__tails">Khuyến mãi tới 50%</p>
+						</li>
+						<li class="banner-category__item">
+							<a href="#"><img class="banner-category__image" src="/img/b2.png"></a>
+							<p class="banner-category__tails">Cùng bạn xuống phố</p>
+						</li>
+						<li class="banner-category__item">
+							<a href="#"><img class="banner-category__image" src="/img/b3.png"></a>
+							<p class="banner-category__tails">Thời trang công sở</p>
+						</li>
+					</ul>
+				</div>
+			</section>
+	
+			<section class="selling_products">
+				<div class="selling_products-title">
+					<a href="#">Sản phẩm bán chạy</a>
+				</div>
+			</section>
+			
+			<section class="category">
+				<div class="container">
+					<ul class="category__list">
+						<li th:each="spm : ${SANPHAMMOI}" class="category__item">
+							<a href="#"><img class="category__image" th:src="@{${spm.getLogoImagePath()}}"></a>
+							<a href="#" th:text="${spm.tensanpham}" class="category__name"></a>
+						</li>
+						
+					</ul>
+				</div>
+			</section>
+			
+			<section class="feature">
+				<div class="container">
+					<div class="feature__item">
+						<div class="feature__image">
+							<img class="feature__img" src="/img/b4.png">
+							<p>Về chúng tôi</p>
+						</div>
+						<div class="feature__info">
+							<p>Trang giới thiệu giúp khách hàng hiểu rõ hơn về cửa hàng của bạn. Hãy cung cấp thông tin cụ thể về việc kinh doanh, về cửa hàng, thông tin liên hệ. Điều này sẽ giúp khách hàng cảm thấy tin tưởng khi mua hàng trên website của bạn.</p>
+							<p>Một vài gợi ý cho nội dung trang Giới thiệu:</p>
+							<p>Bạn là ai</p>
+							<p>Giá trị kinh doanh của bạn là gì</p>
+							<p>Địa chỉ cửa hàng</p>
+							<p>Bạn đã kinh doanh trong ngành hàng này bao lâu rồi</p>
+							<p>Bạn kinh doanh ngành hàng online được bao lâu</p>
+							<p>Đội ngũ của bạn gồm những ai</p>
+							<p>Thông tin liên hệ</p>
+							<p>Liên kết đến các trang mạng xã hội (Twitter, Facebook)</p>
+							<p>Bạn có thể chỉnh sửa hoặc xoá bài viết này tại đây hoặc thêm những bài viết mới trong phần quản lý</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<footer class="footer">
+			<div class="footer__top">
+				<div class="container footer__container">
+					<div class="footer__item">
+						<h4>Giới thiệu</h4>
+						<p>Trang mua sắm trực tuyến của thương hiệu thời trang Lama, thời trang nam, nữ, phụ kiện, giúp bạn tiếp cận xu hướng thời trang mới nhất.</p>
+					</div>
+					<div class="footer__item">
+						<h4>Liên kết</h4>
+						<a href="#">Tìm kiếm</a><br>
+						<a href="#">Giớ thiệu</a><br>
+						<a href="#">Chính sách đổi trả</a><br>
+						<a href="#">Chính sách bảo mật</a><br>
+						<a href="#">Điều khoản dịch vụ</a><br>
+						<a href="#">Liên hệ</a>
+					</div>
+					<div class="footer__item">
+						<h4>Thông tin liên hệ</h4>
+						<p><i class="fas fa-map-marker-alt"></i> Tầng 4, tòa nhà Flemington, số 182, đường Lê Đại Hành, phường 15, quận 11, Tp. Hồ Chí Minh.</p>
+						<p><i class="fas fa-phone-alt"></i> 1900-1080</p>
+					</div>
+					
 				</div>
 			</div>
-		</section>
+			<div class="footer__bottom">
+				<p>Copyright © 2020 Trend Fashion</p>
+			</div>
+		</footer>
 	</div>
 	
 	<script>
-		var myIndex = 0;
-		carousel();
+		var slideIndex = 0;
+		showSlides();
 		
-		function carousel() {
+		function showSlides() {
 		  var i;
-		  var x = document.getElementsByClassName("mySlides");
-		  for (i = 0; i < x.length; i++) {
-		    x[i].style.display = "none";  
+		  var slides = document.getElementsByClassName("mySlides");
+		  var dots = document.getElementsByClassName("dot");
+		  for (i = 0; i < slides.length; i++) {
+		    slides[i].style.display = "none";  
 		  }
-		  myIndex++;
-		  if (myIndex > x.length) {myIndex = 1}    
-		  x[myIndex-1].style.display = "block";  
-		  setTimeout(carousel, 2000); // Change image every 2 seconds
+		  slideIndex++;
+		  if (slideIndex > slides.length) {slideIndex = 1}    
+		  for (i = 0; i < dots.length; i++) {
+		    dots[i].className = dots[i].className.replace(" active", "");
+		  }
+		  slides[slideIndex-1].style.display = "block";  
+		  dots[slideIndex-1].className += " active";
+		  setTimeout(showSlides, 2000); // Change image every 2 seconds
 		}
 	</script>
 </body>

@@ -70,17 +70,13 @@ public class Nguoidung implements Serializable{
 				inverseJoinColumns = {@JoinColumn(name = "idnhom", referencedColumnName = "id")})
 	private List<NhomNguoiDung> nhomnguoidung = new ArrayList<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-	@JoinTable(name = "qtht_nguoidungvachucnang",
-				joinColumns = {@JoinColumn(name = "idnguoidung", referencedColumnName = "id")},
-				inverseJoinColumns = {@JoinColumn(name = "idchucnang", referencedColumnName = "id")})
-	private List<ChucNang1> chucnang = new ArrayList<>();
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinTable(name = "qtht_nguoidungvavaitro",
 				joinColumns = {@JoinColumn(name = "idnguoidung", referencedColumnName = "id")},
 				inverseJoinColumns = {@JoinColumn(name = "idvaitro", referencedColumnName = "id")})
 	private List<VaiTro> vaitro = new ArrayList<>();
+
 
 	public Nguoidung() {
 		super();
@@ -88,7 +84,7 @@ public class Nguoidung implements Serializable{
 
 	public Nguoidung(long id, String manguoidung, String tennguoidung, String password, String email, int gender,
 			String phone, Date createday, String nguoitao, Date updateday, String nguoiupdate, int isdelete,
-			List<NhomNguoiDung> nhomnguoidung, List<ChucNang1> chucnang, List<VaiTro> vaitro) {
+			List<NhomNguoiDung> nhomnguoidung, List<VaiTro> vaitro) {
 		super();
 		this.id = id;
 		this.manguoidung = manguoidung;
@@ -103,130 +99,157 @@ public class Nguoidung implements Serializable{
 		this.nguoiupdate = nguoiupdate;
 		this.isdelete = isdelete;
 		this.nhomnguoidung = nhomnguoidung;
-		this.chucnang = chucnang;
 		this.vaitro = vaitro;
 	}
+
+
+	public Nguoidung(String tennguoidung, String password, List<VaiTro> vaitro) {
+		super();
+		this.tennguoidung = tennguoidung;
+		this.password = password;
+		this.vaitro = vaitro;
+	}
+
 
 	public long getId() {
 		return id;
 	}
 
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 
 	public String getManguoidung() {
 		return manguoidung;
 	}
 
+
 	public void setManguoidung(String manguoidung) {
 		this.manguoidung = manguoidung;
 	}
+
 
 	public String getTennguoidung() {
 		return tennguoidung;
 	}
 
+
 	public void setTennguoidung(String tennguoidung) {
 		this.tennguoidung = tennguoidung;
 	}
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 
 	public int getGender() {
 		return gender;
 	}
 
+
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
+
 
 	public String getPhone() {
 		return phone;
 	}
 
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 
 	public Date getCreateday() {
 		return createday;
 	}
 
+
 	public void setCreateday(Date createday) {
 		this.createday = createday;
 	}
+
 
 	public String getNguoitao() {
 		return nguoitao;
 	}
 
+
 	public void setNguoitao(String nguoitao) {
 		this.nguoitao = nguoitao;
 	}
+
 
 	public Date getUpdateday() {
 		return updateday;
 	}
 
+
 	public void setUpdateday(Date updateday) {
 		this.updateday = updateday;
 	}
+
 
 	public String getNguoiupdate() {
 		return nguoiupdate;
 	}
 
+
 	public void setNguoiupdate(String nguoiupdate) {
 		this.nguoiupdate = nguoiupdate;
 	}
+
 
 	public int getIsdelete() {
 		return isdelete;
 	}
 
+
 	public void setIsdelete(int isdelete) {
 		this.isdelete = isdelete;
 	}
+
 
 	public List<NhomNguoiDung> getNhomnguoidung() {
 		return nhomnguoidung;
 	}
 
+
 	public void setNhomnguoidung(List<NhomNguoiDung> nhomnguoidung) {
 		this.nhomnguoidung = nhomnguoidung;
 	}
 
-	public List<ChucNang1> getChucnang() {
-		return chucnang;
-	}
-
-	public void setChucnang(List<ChucNang1> chucnang) {
-		this.chucnang = chucnang;
-	}
 
 	public List<VaiTro> getVaitro() {
 		return vaitro;
 	}
-
+	
 	public void setVaitro(List<VaiTro> vaitro) {
 		this.vaitro = vaitro;
 	}
 
-	
+
+
 	
 }

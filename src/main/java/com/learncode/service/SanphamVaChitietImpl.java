@@ -37,6 +37,12 @@ public class SanphamVaChitietImpl implements SanphamVaChitietService{
 	public List<SanphamVaChitiet> getAll() {
 		return this.sanphamVaChitietRepository.getAll();
 	}
+
+
+	@Override
+	public List<SanphamVaChitiet> findBySizeSanpham(Long idsanpham) {
+		return sanphamVaChitietRepository.findBySizeSanpham(idsanpham);
+	}
 	
 	
 }

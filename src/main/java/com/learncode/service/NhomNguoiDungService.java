@@ -27,4 +27,6 @@ public interface NhomNguoiDungService {
 
 	List<NhomNguoiDung> findByManhom(String manhom);
 
+	List<Long> findChucnangNhom(Long idnhom);
+
 }

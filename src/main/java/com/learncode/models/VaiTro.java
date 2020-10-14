@@ -1,10 +1,18 @@
 package com.learncode.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,12 +48,18 @@ public class VaiTro implements Serializable{
 	@Column(name="isdelete")
 	private int isdelete;
 
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@JoinTable(name = "qtht_vaitrovachucnang",
+				joinColumns = {@JoinColumn(name = "idvaitro", referencedColumnName = "id")},
+				inverseJoinColumns = {@JoinColumn(name = "idchucnang", referencedColumnName = "id")})
+	private List<ChucNang1> chucnang = new ArrayList<>();
+
 	public VaiTro() {
 		super();
 	}
 
 	public VaiTro(long id, String mavaitro, String tenvaitro, String nguoitao, Date createday, String nguoiupdate,
-			Date updateday, int isdelete) {
+			Date updateday, int isdelete, List<ChucNang1> chucnang) {
 		super();
 		this.id = id;
 		this.mavaitro = mavaitro;
@@ -55,6 +69,7 @@ public class VaiTro implements Serializable{
 		this.nguoiupdate = nguoiupdate;
 		this.updateday = updateday;
 		this.isdelete = isdelete;
+		this.chucnang = chucnang;
 	}
 
 	public long getId() {
@@ -121,9 +136,21 @@ public class VaiTro implements Serializable{
 		this.isdelete = isdelete;
 	}
 
-	//@ManyToMany(targetEntity = NhomNguoiDung.class ,mappedBy = "vaitro", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+	public List<ChucNang1> getChucnang() {
+		return chucnang;
+	}
 
-	//private Set<NhomNguoiDung> nhomnguoidung = new HashSet<>();
+	public void setChucnang(List<ChucNang1> chucnang) {
+		this.chucnang = chucnang;
+	}
+
+	@Override
+	public String toString() {
+		return "VaiTro [id=" + id + ", mavaitro=" + mavaitro + ", tenvaitro=" + tenvaitro + ", nguoitao=" + nguoitao
+				+ ", createday=" + createday + ", nguoiupdate=" + nguoiupdate + ", updateday=" + updateday
+				+ ", isdelete=" + isdelete + ", chucnang=" + chucnang + "]";
+	}
+	
 	
 	
 }

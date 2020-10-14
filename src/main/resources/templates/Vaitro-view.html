@@ -4,8 +4,9 @@
 <head>
 <meta charset="UTF-8" />
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/css/StyleViewVaiTro.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+ <link rel="stylesheet" type="text/css" href="/css/StyleViewVaiTro.css">
+ <link rel="stylesheet" type="text/css" href="/css/StyleRegisterVaitro.css">
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -13,7 +14,7 @@
 <script type="text/javascript" th:src="@{/js/Vaitro-view.js}"></script>
 </head>
 <body>
-	<div layout:fragment="content">
+	<section class="main__content" layout:fragment="content">
 		<div class="container"> 
 			<h4>Danh sách vai trò</h4>
 			<hr>
@@ -37,8 +38,8 @@
 				 </div>
 			   </div>
 			<form th:action="@{'/vaitro/dataSearch'}" id="dataSearch">
-				<input class="header-input" type="text" name="namvt" th:value="${session.NAMEVT}" placeholder="Nhập thông tin cần tìm kiếm!!!!"/>
-				<button type="submit" class="header-a" id="search"><i class="fas fa-search"></i> Tìm kiếm</button>
+			 		<input type="text" class="main__menu-search-form-input1" name="keyword" th:value="${session.NAMEVT}" placeholder="Search...">
+            		 <button class="main__menu-search-form-button1" id="search">Search</button>
 						
 			<!--  	<input type="text" name="namvt" th:value="${session.NAMEVT}" placeholder="Nhập tên cần tìm"/>
 				<input type="text" name="keyvt" th:value="${session.KEYVT}" placeholder="Nhập mã cần tìm"/>
@@ -66,38 +67,8 @@
 										<td th:text="${items.mavaitro}"></td>
 										<td th:text="${items.tenvaitro}"></td>
 										<td>
-											<a class="btn btn-primary edit" th:href="@{/vaitro/update/}" data-toggle="modal" data-target="#myEdit" th:attrappend="data-target=${items.id}"><i class="fas fa-edit"></i></a>
-												<!-- The Modal Edit -->
-													 <div class="modal" id="myEdit"  th:attrappend="id=${items.id}">
-													    <div class="modal-dialog">
-													      <div class="modal-content">
-													      
-													        <!-- Modal Header -->
-													        <div class="modal-header">
-													          <h4>Edit vai trò</h4>
-													          <button type="button" class="close" data-dismiss="modal">&times;</button>
-													        </div>
-													        <div id="edit-body">
-													        	<form th:action="@{/vaitro/updateVaiTro}" method="put" id="formEdit">
-																		<input type="hidden" name="id" th:value = "${items.id}">
-																	<div class="form-group">
-																		<label>Mã vai trò(*)</label>
-																		<input type="text" name="mavaitro" th:value = "${items.mavaitro}">
-																	</div>
-																	<div class="form-group">
-																		<label>Tên vai trò(*)</label>
-																		<input type="text" name="tenvaitro" th:value = "${items.tenvaitro}">
-																	</div>
-																	
-																	<button type="submit" id="toggler" class="btn btn-primary them" onClick="action()">Cập nhật</button>
-																</form>
-													        </div>
-													        <div class="modal-footer">
-													          
-													        </div>
-														  </div>
-													   </div>
-													</div>											
+											<a class="btn btn-primary edit" th:href="@{/vaitro/update/(id=${items.id})}" data-toggle="modal" data-target="#myEdit"><i class="fas fa-edit"></i></a>
+									
 											
 													<a class="btn btn-primary chi" th:href="@{/vaitro/vaitro-chitiet/}" data-toggle="modal" data-target="#myChitiet" th:attrappend="data-target=${items.id}"><i class="fas fa-eye"></i></a>
 													<input type="checkbox" id="allDelete" name="lvt" th:value="${items.id}"/>
@@ -158,7 +129,7 @@
 						</form>
 					</div>
 					
-					<p th:text="'Record: ' + ${sum}"></p>
+					<p class="showcount" th:text="'Record: ' + ${sum}"></p>
 					<p class="showin" th:text="'Show '+ ${pageNumber} + ' in ' + ${totalPageCount}"></p>
 					<!-- phan trang-->
 					<ul class="pagination">
@@ -215,7 +186,125 @@
 					  </div>
 				   </div>
 				</div>
+				
+				<!-- The Modal Edit -->
+				 <div class="modal" id="myEdit">
+				    <div class="modal-dialog">
+				      <div class="modal-content">
+				      
+				        <!-- Modal Header -->
+				        <div class="modal-header">
+				          <h4>Edit vai trò</h4>
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        </div>
+				        <div id="edit-body">
+				        	<form th:action="@{/vaitro/updateVaiTro}" method="put" id="formEdit">
+									<input type="hidden" name="id" id="idUpdate">
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">Mã vai trò(*)</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="mavaitro" id="mUpdate">
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">Tên vai trò(*)</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="tenvaitro" id="tUpdate">
+									</div>
+									
+								</div>
+							 	<div class="form-group row">
+							 		<label class="col-sm-2 col-form-label">Chức năng</label>
+							 		<div class="col-sm-10">
+							 				<table class="table table-bordered">
+							 					<thead>
+							 						<tr>
+							 							<th>Select</th>
+							 							<th>Tên chức năng</th>
+							 						</tr>
+							 					</thead>
+							 					<tbody>
+							 						<tr th:each="chucnang: ${CHUCNANGS}">
+							 							<td><input class="vt-update" type="checkbox" name="chucnang" th:value="${chucnang.id}"></td>
+							 							<td th:text="${chucnang.tenchucnang}"></td>
+							 						</tr>
+							 					</tbody>
+							 				</table>
+							 		</div>
+							 	</div>
+								<button type="submit" id="toggler" class="btn btn-primary them">Cập nhật</button>
+							</form>
+				        </div>
+				        <div class="modal-footer">
+				          
+				        </div>
+					  </div>
+				   </div>
+				</div>		
 		</div>
-	</div>
+				<script th:inline="javascript">
+			var message = /*[[${CHUCNANGS}]]*/'default';
+			console.log('mesage', message);
+			(function(cns){
+				let map = {};
+				console.log('debug');
+				let rs = cns.reduce((map,item)=>{
+				    let {mapv, cns} = map;
+				    cns[item.id] = item;
+				    if(!mapv[item.parentid]){mapv[item.parentid] = []};
+				    mapv[item.parentid].push(item);
+				    return map;
+				}, {cns: {}, mapv: {}})
+				let tableBody = $('.view-per');
+				tableBody.html('');
+				for(let key in rs.mapv){
+				    let parent = rs.cns[key];
+				    if(parent){
+				        let parentJDOM;
+				        tableBody.append(parentJDOM = $(`<tr is-hide="1">
+				            <td><input type="checkbox" class="cb-per" value="${parent.id}" name="chucnang"/></td>
+				            <td>${parent.tenchucnang}</td>
+				        </tr>`).click((evt)=>{
+				    let target = $(evt.currentTarget);
+				    let checkbox = $('td > input.cb-per' ,target);
+				    if(evt.target !== checkbox[0]){
+				if(target.attr('is-hide')){
+				        target.removeAttr('is-hide');
+				        $('.view-per > tr.child-'+key).removeClass('d-none')
+				    }else{
+				 target.attr('is-hide', '1');
+				        $('.view-per > tr.child-'+key).addClass('d-none')
+				    }
+				}
+				    
+				}))
+				$('td > input.cb-per' ,parentJDOM).change((evt)=>{
+				let check = false;
+				let childs =  $('.view-per > tr.child-'+key);
+				if(evt.currentTarget.checked){
+				    //xổ ra nếu checkbox true
+				    parentJDOM.removeAttr('is-hide');
+				        childs.removeClass('d-none');
+				    check = true;
+				}
+				childs.each((index, element)=>{
+				    $('td > input.cb-per', element)[0].checked = check
+				})
+				})
+				        let childs = rs.mapv[key];
+				        if(childs){
+				        for(let child of childs){
+				tableBody.append($(`<tr class="child-${key} d-none">
+				            <td><input type="checkbox" class="cb-per" value="${child.id}" name="chucnang"/></td>
+				            <td>${child.tenchucnang}</td>
+				        </tr>`))
+				        }
+				    }
+				}
+				}
+				})(message)
+		</script>
+	</section>
 </body>
 </html>

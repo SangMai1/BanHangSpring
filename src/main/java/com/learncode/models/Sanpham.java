@@ -62,6 +62,17 @@ public class Sanpham {
 		super();
 	}
 
+	public Sanpham(Long id, String masanpham, String tensanpham, LoaiSanPham loaisanpham, String xuatxu,
+			String mota) {
+		super();
+		this.id = id;
+		this.masanpham = masanpham;
+		this.tensanpham = tensanpham;
+		this.loaisanpham = loaisanpham;
+		this.xuatxu = xuatxu;
+		this.mota = mota;
+	}
+	
 	public Sanpham(long id, String masanpham, String tensanpham, String image, LoaiSanPham loaisanpham, Date createday,
 			String createby, Date updateday, String updateby, String xuatxu, String mota, Integer isdelete) {
 		super();

@@ -1,22 +1,42 @@
-.form-group{
-	text-align: right;
-	margin: 0 350px 0 0;
+h4 {
+	padding-top: 5px;
+	color: black;
+	font-size: 18px;
+	font-weight: 600;
 }
 
-.form-group input {
-	width: 400px;
-	margin:0 0 0 20px;
+form {
+	padding-top: 5px;
 }
-.them {
-	margin: 0 0 0 300px;
+
+.col-form-label {
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	color: black !important;
 }
-.gioitinh {
-	text-align: left !important;
-	margin: 0 0 0 160px !important;
+
+.form-control {
+	height: 30px !important;
+	font-size: 14px !important;
 }
-.checkbox-inline {
-	padding:0 20px 0 0 !important;
+
+.form-check-label {
+	color: black;
+	font-size: 12px;
+	font-weight: 400;
 }
-.radio {
-	margin: -32px 0 0 170px !important;
+
+th, td {
+	color: black;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+
+.button-all {
+	text-align: center;
+}
+
+.btn-lg {
+	margin-bottom: 20px;
 }

@@ -15,4 +15,8 @@ public interface SanphamService {
 
 	Optional<Sanpham> finBySanphamId(Long id);
 
+	List<Sanpham> getSanphammoi();
+
+	List<Sanpham> getSanphamAndSanphamchitiet();
+
 }

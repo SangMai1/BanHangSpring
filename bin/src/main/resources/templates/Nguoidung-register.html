@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/css/StyleRegisterNguoidung.css"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/NguoiDung-register.js}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+
+	});
+</script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container">
+			<h4>Thêm mới người dùng</h4>
+			<hr>
+			<form th:action="@{/nguoidung/saveNguoiDung}" th:object="${NGUOIDUNG}" onsubmit="return validate()" id="myModals">
+				<input th:field="*{id}" type="hidden">
+				<div class="form-group">
+					<label>Mã người dùng(*) </label>
+					<input type="text" name="manguoidung" th:field="*{manguoidung}">
+					
+				</div>
+				<div class="form-group">
+					<label>Tên người dùng(*)</label>
+					<input type="text" name="tennguoidung" th:field="*{tennguoidung}">
+					
+				</div>
+				<div class="form-group">
+					<label>Password(*)</label>
+					<input type="password" name="password" th:field="*{password}">
+					
+				</div>
+				<div class="form-group">
+					<label>Email(*)</label>
+					<input type="text" name="email" th:field="*{email}">
+				</div>
+				<div class="form-group">
+					<label>Phone(*)</label>
+					<input type="text" name="phone" th:field="*{phone}">
+				</div>
+				<div class="gioitinh">
+						<label>Gender</label>
+						<div class="radio">
+							<!--value = 0 => Nam| 1 => Nu| 2 => LGBT -->
+							<label class="checkbox-inline">
+							<input type="radio" name="gender" th:field="*{gender}" checked="checked" value="0" id="gender1">Male</label> 
+							<label class="checkbox-inline">
+							<input type="radio" name="gender" th:field="*{gender}" value="1" id="gender2">Female</label>
+							<label class="checkbox-inline">
+							<input type="radio" name="gender" th:field="*{gender}" value="2" id="gender3">Không xác định</label>
+						</div>
+					</div>
+				<div>
+			 		<label>Nhóm người dùng</label>
+			 		<div class="row" style="margin-top: 5px">
+			 				<table class="table table-bordered">
+			 					<thead>
+			 						<tr>
+			 							<th>Select</th>
+			 							<th>Tên nhóm</th>
+			 						</tr>
+			 					</thead>
+			 					<tbody>
+			 						<tr id="oo" th:each="nhom: ${NHOMS}">
+			 							<td><input class="vt-update" type="checkbox" name="nhomnguoidung" th:field="*{nhomnguoidung}" th:value="${nhom.id}"></td>
+			 							<td th:text="${nhom.tennhom}"></td>
+			 						</tr>
+			 					</tbody>
+			 				</table>
+			 		</div>
+			 	</div>
+			 	<div>
+			 		<label>Chức năng</label>
+			 		<div class="row" style="margin-top: 5px">
+			 				<table class="table table-bordered">
+			 					<thead>
+			 						<tr>
+			 							<th>Select</th>
+			 							<th>Tên chức năng</th>
+			 						</tr>
+			 					</thead>
+			 					<tbody>
+			 						<tr th:each="chucnang: ${CHUCNANGS}" th:class="${chucnang.parentid}">
+			 							<td><input type="checkbox" name="chucnang" th:field="*{chucnang}" th:value="${chucnang.id}"></td>
+			 							<td th:text="${chucnang.tenchucnang}" th:class="${chucnang.parentid}"></td>
+			 						</tr>
+			 					</tbody>
+			 				</table>
+			 		</div>
+			 	</div>
+			 	<div>
+			 		<label>Vai trò</label>
+			 		<div class="row" style="margin-top: 5px">
+			 				<table class="table table-bordered">
+			 					<thead>
+			 						<tr>
+			 							<th>Select</th>
+			 							<th>Tên vai trò</th>
+			 						</tr>
+			 					</thead>
+			 					<tbody>
+			 						<tr id="oo" th:each="vaitro: ${VAITROS}">
+			 							<td><input class="vt-update" type="checkbox" name="vaitro" th:field="*{vaitro}" th:value="${vaitro.id}"></td>
+			 							<td th:text="${vaitro.tenvaitro}"></td>
+			 						</tr>
+			 					</tbody>
+			 				</table>
+			 		</div>
+			 	</div>
+			 	<button type="submit" class="btn btn-primary them">Thêm mới</button>
+			 	<a class="btn btn-primary sach" href="/nguoidung/list">Danh sách</a>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>

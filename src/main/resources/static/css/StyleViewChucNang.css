@@ -1,70 +1,88 @@
-
-.view {
-	position: absolute;
+h4 {
+	padding-top: 30px;
+	color: black;
+	font-size: 18px;
+	font-weight: 600;
 }
-.table {
+
+
+.table-bordered {
+  margin-top: 10px;
   font-family: arial, sans-serif !important;
   border-collapse: collapse !important;
   width: 100% !important;
+  height: 300px !important;
 }
 
 td, th {
   border: 1px solid #dddddd !important;
   text-align: left !important;
   padding: 8px !important;
+  font-size: 14px !important;
+  font-weight: 600px !important;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd !important;
+
+.btn-primary {
+	font-size: 15px !important;
+	font-weight: 600;
 }
 
-.chitiet {
-	width: 1300px !important;
-	margin-top: 300px !important;
-	top: 50% !important;
-	left: 50% !important;
-	transform: translate(-50%, -50%) !important;
-}
 
 .showin {
 	text-align: center;
+	color: black;
+	font-size: 12px;
 }
 
+.showcount {
+	color: black;
+	font-size: 12px;
+}
 .pagination {
 	 justify-content: center !important;
+	 font-size: 16px;
 }
 
 #bnn, .buttonDelete{
-	margin: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
 }
 #dataSearch {
 	float: right;
-	margin: 10px;
-}
-.header-input {
-	width: 300px;
-	background-color: white;
-	color: orange;
-	border-radius: 10px;
-	border: none;
-	cursor: pointer;
-	-webkit-transition: width .35s ease-in-out;
-  	transition: width .35s ease-in-out;
-  	text-align: center;
+    background-color: #4db6ac;
+    width: 40%;
+    margin: 0 auto;
+    padding: 10px;
 }
 
-.header-input:focus {
-	width: 400px;
-	outline: none !important;
-	 border: 1px solid #B8B6B6;
-  box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0px 0px 8px rgba(0, 0, 0, 0.2);
+.main__menu-search-form-input, .main__menu-search-form-button {
+  padding: 0;
+}
+.main__menu-search-form-input1 {
+  border: 0;
+  outline: none;
+  background-color: transparent;
+  font-size: 1rem;
+  font-family: "Poppins";
+  flex-grow: 1;
+  width: 90%;
+  padding-right: 0.5rem;
+  color: white;
+}
+.main__menu-search-form-button1 {
+  float: right;
+  width: 10%;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-family: "Poppins";
+  color: white;
 }
 
-.header-a {
-	background-color: rgb(237, 238, 242);
-	padding: 5px;
+.capnhat {
+	margin-left: 200px;
 }
 
-.fa-search {
-	font-size: 15px !important;
-}

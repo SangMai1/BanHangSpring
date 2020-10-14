@@ -1,25 +1,34 @@
 package com.learncode.controller;
 
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
-
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -29,11 +38,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import com.google.zxing.qrcode.encoder.QRCode;
+import com.learncode.comon.ZXingHelper;
 import com.learncode.models.LoaiSanPham;
 import com.learncode.models.Sanpham;
 import com.learncode.models.SanphamVaChitiet;
@@ -63,11 +74,11 @@ public class SanphamController {
 	}
 	
 	@RequestMapping(value = "/doSave", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
-	public String doSave(@ModelAttribute("SANPHAM") Sanpham sp, HttpSession session, @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+	public String doSave(@ModelAttribute("SANPHAM") Sanpham sp, Principal principal, @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
 		sp.setCreateday(new Timestamp(new Date().getTime()));
-		sp.setCreateby((String) session.getAttribute("USERNAME"));
+		sp.setCreateby(principal.getName());
 		sp.setUpdateday(new Timestamp(new Date().getTime()));
-		sp.setUpdateby((String) session.getAttribute("USERNAME"));
+		sp.setUpdateby(principal.getName());
 		sp.setIsdelete((Integer) 0);
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		sp.setImage(fileName);
@@ -90,10 +101,10 @@ public class SanphamController {
 		return "redirect:/sanpham/list";
 	}
 	
-	@GetMapping("/sanpham-update")
-	@ResponseBody
-	public Optional<Sanpham> findBySanphamId(Long id){
-		return this.sanphamService.finBySanphamId(id);
+	@GetMapping("/sanpham-update/{id}")
+	public String findBySanphamId(@PathVariable Long id,ModelMap model){
+		model.addAttribute("sp", this.sanphamService.finBySanphamId(id).get());
+		return "form-san-pham";  
 	}
 	
 	@GetMapping("/sanpham-chitiet")
@@ -108,19 +119,31 @@ public class SanphamController {
 		return this.sanphamService.finBySanphamId(id);
 	}
 	
-	@RequestMapping(value = "/updateSanpham", method = {RequestMethod.POST})
-	public String doUpdate(Sanpham sp, HttpSession session, @RequestParam("fileImages") MultipartFile multipartFile) {
+	@RequestMapping(value = "/doUpdate", method = RequestMethod.POST)
+	public String doUpdate(@RequestParam("id") Long id, @RequestParam("masanpham") String masanpham,
+			@RequestParam("tensanpham") String tensanpham,
+			@RequestParam("loaisanpham") LoaiSanPham loaisanpham,
+			@RequestParam("xuatxu") String xuatxu,
+			@RequestParam("mota") String mota, Principal principal, @RequestPart("fileImages") MultipartFile multipartFile) throws IOException {
+		
+		Sanpham sp = new Sanpham(id, masanpham, tensanpham, loaisanpham, xuatxu, mota);
 		sp.setUpdateday(new Timestamp(new Date().getTime()));
-		sp.setUpdateby((String) session.getAttribute("USERNAME"));
+		sp.setUpdateby(principal.getName());
 		sp.setIsdelete((Integer) 0);
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		sp.setImage(fileName);
-//		Path deleteFile = Paths.get("C://Users//SANG//Documents//workspace-spring-tool-suite-4-4.5.1.RELEASE//WebsiteBanHangThoiTrang//uploads//" + sp.getId());
-//		Files.delete(deleteFile);
-		File file = new File("C://Users//SANG//Documents//workspace-spring-tool-suite-4-4.5.1.RELEASE//WebsiteBanHangThoiTrang//uploads//" + sp.getId());
-		if (file.delete()) {
-			System.out.println("delete thanh cong");
+		Path deleteFile = Paths.get("uploads/" + sp.getId());
+		{
+			File file = deleteFile.toFile();
+			if(file.isDirectory()) {
+				for(File f : deleteFile.toFile().listFiles()) {
+					f.delete();
+				}
+			}else {
+				file.deleteOnExit();
+			}
 		}
+		System.out.println("aaaa"+this.sanphamService.updateSanpham(sp));
 		this.sanphamService.updateSanpham(sp);
 		
 		String uploadDir = "./uploads/" + sp.getId();
@@ -129,18 +152,15 @@ public class SanphamController {
 		System.out.println(uploadPath);
 
 		if (!Files.exists(uploadPath)) {
-			try {
-				Files.createDirectories(uploadPath);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Files.createDirectories(uploadPath);
 		}
 		
 		try (InputStream inputStream = multipartFile.getInputStream()) {
 			Path filePath = uploadPath.resolve(fileName);
+			System.out.println("=>" + ImageIO.read(multipartFile.getInputStream()) == null + " ="+ filePath.toString());
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {	
+			System.out.println(e); 
 		}
 		return "redirect:/sanpham/list";
 	}
@@ -161,7 +181,7 @@ public class SanphamController {
 		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("sanphamlist");
 		int pagesize = 5;
 		List<Sanpham> list = (List<Sanpham>) this.sanphamService.getAllSanpham();
-		System.out.println(list.size());
+		int sum = list.size();
 		if (pages == null) {
 			pages = new PagedListHolder<>(list);
 			pages.setPageSize(pagesize);
@@ -182,6 +202,8 @@ public class SanphamController {
 		int totalPageCount = pages.getPageCount();
 		
 		String baseUrl = "/list/page/";
+		
+		model.addAttribute("sum", sum);		
 		
 		model.addAttribute("beginIndex", begin);
 	
@@ -211,10 +233,23 @@ public class SanphamController {
 //	}
 	
 	@RequestMapping(value = "/add", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
-	public String add(@RequestParam("idsanpham") Long idsanpham, @RequestParam("kichthuoc") String kichthuoc, @RequestParam("soluong") Integer soluong, @RequestParam("giatien") Float giatien) {
+	public String add(@RequestParam("idsanpham") Long idsanpham, @RequestParam("kichthuoc") String kichthuoc, @RequestParam("soluong") Integer soluong, @RequestParam("giatien") Float giatien, @RequestParam("giamgia") Integer giamgia) {
 		SanphamVaChitiet spct = new SanphamVaChitiet(0, idsanpham, kichthuoc, soluong, giatien, 0);
-		spct.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000000")));
+		spct.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
 		this.sanphamVaChitietService.insertSanphamVaChitiet(spct);
 		return "redirect:/sanpham/list";
 	}
+	
+	@RequestMapping(value ="/barcode/{id}", method = RequestMethod.GET)
+	public void barcode(@PathVariable Long id, HttpServletResponse response) throws Exception {
+		response.setContentType("image/png");
+		OutputStream outputStream = response.getOutputStream();
+		System.out.println(outputStream);
+		outputStream.write(ZXingHelper.getBarCodeImage(String.valueOf(id), 100, 100));
+		outputStream.flush();
+		outputStream.close();
+	}
+
+
+
 }

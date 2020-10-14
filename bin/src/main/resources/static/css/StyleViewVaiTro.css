@@ -1,0 +1,69 @@
+
+.view {
+	position: absolute;
+}
+.table {
+  font-family: arial, sans-serif !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+}
+
+td, th {
+  border: 1px solid #dddddd !important;
+  text-align: left !important;
+  padding: 8px !important;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd !important;
+}
+.chitiet {
+	width: 900px !important;
+	margin-top: 300px !important;
+	top: 50% !important;
+	left: 50% !important;
+	transform: translate(-50%, -50%) !important;
+}
+
+.showin {
+	text-align: center;
+}
+
+.pagination {
+	 justify-content: center !important;
+}
+
+#bnn, .buttonDelete{
+	margin: 10px;
+}
+#dataSearch {
+	float: right;
+	margin: 10px;
+}
+.header-input {
+	width: 300px;
+	background-color: white;
+	color: orange;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	-webkit-transition: width .35s ease-in-out;
+  	transition: width .35s ease-in-out;
+  	text-align: center;
+}
+
+.header-input:focus {
+	width: 400px;
+	outline: none !important;
+	 border: 1px solid #B8B6B6;
+  box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0px 0px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-a {
+	background-color: rgb(237, 238, 242);
+	padding: 5px;
+}
+
+.fa-search {
+	font-size: 15px !important;
+}

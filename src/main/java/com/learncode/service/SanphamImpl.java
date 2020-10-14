@@ -39,6 +39,16 @@ public class SanphamImpl implements SanphamService{
 	public List<Sanpham> getAllSanpham() {
 		return sanphamRepository.getAllSanpham();
 	}
+
+	@Override
+	public List<Sanpham> getSanphamAndSanphamchitiet() {
+		return sanphamRepository.getSanphamAndSanphamchitiet();
+	}
+
+	@Override
+	public List<Sanpham> getSanphammoi() {
+		return sanphamRepository.getSanphammoi();
+	}
 	
 	
 }

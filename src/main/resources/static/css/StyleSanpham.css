@@ -1,17 +1,23 @@
-.form-group{
-	text-align: right;
-	margin: 20px 350px 0 0;
+h4 {
+	padding-top: 30px;
+	color: black;
+	font-size: 18px;
+	font-weight: 600;
 }
 
-.form-group input, textarea{
-	width: 400px;
-	margin:0 0 0 20px;
+form {
+	padding-top: 20px;
 }
-.form-group select {
-	width: 400px;
+
+.col-form-label {
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	color: black !important;
 }
-.ha{
-	margin-right: 430px;
+
+.form-control {
+	height: 30px !important;
+	font-size: 14px !important;
 }
 .form-group img {
 	width: 100px;
@@ -22,10 +28,7 @@
 	margin-bottom: 5px;
 	max-width: 100%;
 }
-.them {
-	margin: 10px 0 0 300px;
-}
 
-.sach {
-	margin-top: 10px;
+.button-all {
+	text-align: center;
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<head>
+<meta charset="UTF-8" />
+<title>Chuc nang</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/StyleRegisterChucNang.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/Chucnang-register.js}"></script>
+</head>
+<body>
+	
+	<div class="main" layout:fragment="content">
+		<div class="container" >
+			<h4>Thêm mới chức năng</h4>
+			<hr>
+			<form th:action="@{/chucnang/saveChucNang}" th:object="${CHUCNANG}" enctype="multipart/form-data" id="myModals">
+				<input type="hidden" th:field="*{id}" th:name="id">
+				<div class="form-group">
+					<label>Mã chức năng(*)</label>
+					<input type="text" th:field="*{machucnang}">
+				</div>
+				<div class="form-group">
+					<label>Tên chức năng(*)</label>
+					<input type="text" th:field="*{tenchucnang}">
+				</div>
+				<div class="form-group">
+					<label>Mã API(*)</label>
+					<input type="text" th:field="*{maapi}">
+				</div>
+				<div class="form-group">
+					<label>Parent</label>
+					<select th:field="*{parentid}" >
+						<option th:each="parent : ${PARENTID}" th:value="${parent.id}" th:text="${parent.tenchucnang}"></option>
+						<option th:value="-1">Không có ở trên</option>
+					</select>
+				</div>
+				<button type="submit" id="toggler" class="btn btn-primary them" onClick="action()">Thêm mới</button>
+				<a class="btn btn-primary sach" href="/chucnang/list">Xem danh sách</a>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>

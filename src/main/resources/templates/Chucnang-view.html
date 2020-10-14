@@ -2,20 +2,21 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/main-layout}">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/css/StyleViewChucNang.css">
+<meta charset="UTF-8">
+<title>Danh sach chuc nang</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/StyleViewChucNang.css"> 
+<link rel="stylesheet" type="text/css" href="/css/StyleRegisterChucNang.css"> 
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" th:src="@{/js/Chucnang-view.js}"></script>
 </head>
-<body>
-	<div layout:fragment="content">
-	
-			<h4>Danh sách chức năng</h4>
+<body>												
+	<section class="main__content" layout:fragment="content">
+	  <div class="container">
+		<h4>Danh sách chức năng</h4>
 			<hr>
 			<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="bnn"><i class="fas fa-plus-circle"></i></button>
 			<button class="btn btn-primary buttonDelete"><i class="fas fa-trash-alt"></i></button>
@@ -38,13 +39,10 @@
 			   </div>
 					
 						
-				<form th:action="@{'/chucnang/dataSearch'}" id="dataSearch">
-						<input class="header-input" type="text" name="keyword" th:value="${session.KEYWORK}" placeholder="Nhập thông tin cần tìm kiếm!!!!"/>
-						<button type="submit" class="header-a" id="search"><i class="fas fa-search"></i> Tìm kiếm</button>
+				<form th:action="@{/chucnang/dataSearch}" id="dataSearch">
+				     <input type="text" class="main__menu-search-form-input1" name="keyword" th:value="${session.KEYWORK}" placeholder="Search...">
+              		 <button type="submit" class="main__menu-search-form-button1" id="search">Search</button>
 						
-			<!-- 	<input id="keyword" type="text" name="keyword" th:value="${session.KEYWORK}" placeholder="Key word"/>
-						<input id="key" type="text" name="key" th:value="${session.KEY}" placeholder="Key"/>
-						<input type="submit" value="Search" class="btn btn-primary" id="search"/>-->
 				</form>
 				<th:block th:if="${#lists.isEmpty(CHUCNANGS.pageList)}">
 					<h2>Không có chức năng</h2>
@@ -92,25 +90,36 @@
 													        <div id="edit-body">
 													        	<form th:action="@{/chucnang/updateChucNang}" method="put" id="formEdit">
 																		<input type="hidden" name="id" th:value = "${chucnang.id}">
-																	<div class="form-group">
-																		<label>Mã chức năng(*)</label>
-																		<input type="text" name="machucnang" th:value = "${chucnang.machucnang}">
+																	<div class="form-group row">
+																		<label class="col-sm-2 col-form-label">Mã chức năng(*)</label>
+																		<div class="col-sm-10">
+																			<input type="text" class="form-control" name="machucnang" th:value = "${chucnang.machucnang}">
+																		</div>
+																		
 																	</div>
-																	<div class="form-group">
-																		<label>Tên chức năng(*)</label>
-																		<input type="text" name="tenchucnang" th:value = "${chucnang.tenchucnang}">
+																	<div class="form-group row">
+																		<label class="col-sm-2 col-form-label">Tên chức năng(*)</label>
+																		<div class="col-sm-10">
+																			<input type="text" class="form-control" name="tenchucnang" th:value = "${chucnang.tenchucnang}">
+																		</div>
+																		
 																	</div>
-																	<div class="form-group">
-																		<label>Mã API(*)</label>
-																		<input type="text" name="maapi" th:value = "${chucnang.maapi}">
+																	<div class="form-group row">
+																		<label class="col-sm-2 col-form-label">Mã API(*)</label>
+																		<div class="col-sm-10">
+																			<input type="text" class="form-control" name="maapi" th:value = "${chucnang.maapi}">
+																		</div>
+																		
 																	</div>
-																	<div class="form-group">
-																		<label>Parent</label>
-																		<select name="parentid" >
-																			<option th:each="parent : ${PARENTID}" th:value="${parent.id}" th:text="${parent.tenchucnang}"></option>
-																		</select>
+																	<div class="form-group row">
+																		<label class="col-sm-2 col-form-label">Parent</label>
+																		<div class="col-sm-10">
+																			<select name="parentid" class="form-control">
+																				<option th:each="parent : ${PARENTID}" th:value="${parent.id}" th:text="${parent.tenchucnang}"></option>
+																			</select>
+																		</div>
 																	</div>
-																	<button type="submit" id="toggler" class="btn btn-primary them" onClick="action()">Cập nhật</button>
+																	<button type="submit" id="toggler" class="btn btn-primary capnhat" onClick="action()">Cập nhật</button>
 																</form>
 													        </div>
 													        <div class="modal-footer">
@@ -129,7 +138,7 @@
 													      
 													        <!-- Modal Header -->
 													        <div class="modal-header">
-													          <h4>Chi tiet</h4>
+													          <h4>Chi tiết</h4>
 													          <button type="button" class="close" data-dismiss="modal">&times;</button>
 													        </div>
 													        <div id="chitiet-body">
@@ -163,7 +172,7 @@
 																		<td th:text="${chucnang.updateday}"></td>
 																	</tr>
 																	<tr>
-																		<th>Người Update</th>
+																		<th>Người update</th>
 																		<td th:text="${chucnang.nguoiupdate}"></td>
 																	</tr>
 																	<tr>
@@ -187,7 +196,7 @@
 							</form>
 						</div>
 						
-						<p th:text="'Record: ' + ${sum}"></p>
+						<p class="showcount" th:text="'Record: ' + ${sum}"></p>
 						<p class="showin" th:text="'Show '+ ${pageNumber} + ' in ' + ${totalPageCount}"></p>
 						
 						<!-- phan trang-->
@@ -248,8 +257,9 @@
 				        </div>
 					  </div>
 				   </div>
-				</div>
-	</div>
+			</div>
+		</div>
+	</section>
 
 </body>
 </html>

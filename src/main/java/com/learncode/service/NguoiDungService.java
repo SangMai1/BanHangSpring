@@ -20,7 +20,7 @@ public interface NguoiDungService {
 
 	void insertNguoidung(Nguoidung nd);
 
-	boolean checkLogin(String username, String password);
+	//boolean checkLogin(String username, String password);
 
 	List<Nguoidung> findByTennguoidung(String tennguoidung);
 
@@ -36,12 +36,15 @@ public interface NguoiDungService {
 
 	Nguoidung findByTen(String tennguoidung);
 
-	List<Long> findByIdchucnang(Long idnguoidung);
 
 	List<Long> findByIdvaitro(Long idnguoidung);
 
 	List<Long> findByIdnhom(Long idnguoidung);
 
 	Nguoidung findById1(Long id);
+
+	Nguoidung findUrl(String tennguoidung);
+
+	List<String> findUrlNd(String tennguoidung);
 
 }

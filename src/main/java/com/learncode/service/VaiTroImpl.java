@@ -9,18 +9,37 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.learncode.models.ChucNang1;
 import com.learncode.models.VaiTro;
+import com.learncode.repository.ChucNang1Repository;
 import com.learncode.repository.VaiTroRepository;
 
 @Service
 public class VaiTroImpl implements VaiTroService{
 	
+
 	@Autowired
 	VaiTroRepository vaiTroRepository;
 
+	@Autowired
+	ChucNang1Repository chucNangRepository;
+	
+	@Autowired
+	ChucNang1Service chucNang1Service;
+	
 	@Override
-	public int insertVaitro(VaiTro vt) {
-		return vaiTroRepository.insertVaitro(vt.getId(), vt.getMavaitro(), vt.getTenvaitro(), vt.getNguoitao(), vt.getCreateday(), vt.getNguoiupdate(), vt.getUpdateday(), 0);
+	public List<ChucNang1> finAllChucNang(){
+		return this.chucNang1Service.findAllChucNang1();
+	}
+	
+	@Override
+	public void insertVaitro(VaiTro vt) {
+		this.vaiTroRepository.insertVaitro(vt.getId(), vt.getMavaitro(), vt.getTenvaitro(), vt.getNguoitao(), vt.getCreateday(), vt.getNguoiupdate(), vt.getUpdateday(), 0);
+		if (vt.getChucnang() != null) {
+			for (ChucNang1 cn1 : vt.getChucnang()) {
+				this.vaiTroRepository.insertVaitroVaChucnang(vt.getId(), cn1.getId());
+			}
+		}
 	}
 
 	@Override
@@ -29,8 +48,14 @@ public class VaiTroImpl implements VaiTroService{
 	}
 
 	@Override
-	public int updateVaitro(VaiTro vt) {
-		return vaiTroRepository.updateVaitro(vt.getMavaitro(), vt.getTenvaitro(), vt.getNguoiupdate(), vt.getUpdateday(), vt.getIsdelete(), vt.getId());
+	public void updateVaitro(VaiTro vt) {
+		this.vaiTroRepository.updateVaitro(vt.getMavaitro(), vt.getTenvaitro(), vt.getNguoiupdate(), vt.getUpdateday(), vt.getIsdelete(), vt.getId());
+		this.vaiTroRepository.deleteVaitroVaChucnang(vt.getId());
+		if (vt.getChucnang() != null) {
+			for (ChucNang1 cn : vt.getChucnang()) {
+				this.vaiTroRepository.insertVaitroVaChucnang(vt.getId(), cn.getId());
+			}
+		}
 	}
 
 	@Override
@@ -46,6 +71,11 @@ public class VaiTroImpl implements VaiTroService{
 	@Override
 	public List<VaiTro> findByTenvaitro(String tenvaitro) {
 		return vaiTroRepository.findByTenvaitro(tenvaitro);
+	}
+
+	@Override
+	public List<Long> findChucnangVaitro(Long idvaitro) {
+		return vaiTroRepository.findChucnangVaitro(idvaitro);
 	}
 	
 	

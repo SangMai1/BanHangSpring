@@ -29,7 +29,19 @@ public interface SanphamRepository extends CrudRepository<Sanpham, Long> {
 	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham FROM qtht_sanpham WHERE id = ?", nativeQuery = true)
 	Optional<Sanpham> finBySanphamId(@Param("id") Long id);
 	
+	@Query(value ="SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.createday, sp.createby, sp.updateday, sp.updateby, sp.xuatxu, sp.mota, sp.maloaisanpham, sp.isdelete, spct.kichthuoc, spct.giatien\r\n" + 
+			"FROM qtht_sanpham sp \r\n" + 
+			"INNER JOIN qtht_sanphamvachitiet spct ON spct.idsanpham = sp.id\r\n" + 
+			"WHERE sp.isdelete = 0 and spct.isdelete = 0", nativeQuery = true)
+	List<Sanpham> getSanphamAndSanphamchitiet();
 
 	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham FROM qtht_sanpham WHERE isdelete = 0", nativeQuery = true)
 	List<Sanpham> getAllSanpham();
+	
+	@Query(value = "SELECT max(id) id, max(masanpham) masanpham, tensanpham, max(image) image, max(createday) createday, max(createby) createby, max(updateday) updateday, max(updateby) updateby, max(xuatxu) xuatxu, max(mota) mota, max(isdelete) isdelete, max(maloaisanpham) maloaisanpham, min(now() - createday) as ngay \r\n" + 
+			"FROM qtht_sanpham\r\n" + 
+			"GROUP BY tensanpham\r\n" + 
+			"ORDER BY ngay ASC\r\n" + 
+			"LIMIT 5", nativeQuery = true)
+	List<Sanpham> getSanphammoi();
 }

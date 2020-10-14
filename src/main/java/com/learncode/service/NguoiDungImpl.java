@@ -58,41 +58,38 @@ public class NguoiDungImpl implements NguoiDungService{
 	public void insertNguoidung(Nguoidung nd) {
 	   this.nguoiDungRepository.insertNguoidung(nd.getId(), nd.getManguoidung(), nd.getTennguoidung(), Xuly.giaiMd5(nd.getPassword()), nd.getEmail(), nd.getGender(), nd.getPhone(), nd.getCreateday(), nd.getNguoitao(), nd.getUpdateday(), nd.getNguoiupdate(), nd.getIsdelete());
 		
-		if (nd.getChucnang() != null) {
-			for (ChucNang1 cn1 : nd.getChucnang()) {
-				this.nguoiDungRepository.insertNguoidungVaChucnang(nd.getId(), cn1.getId());
+	   if (nd.getVaitro() != null) {
+			for (VaiTro vt : nd.getVaitro()) {
+				this.nguoiDungRepository.insertNguoidungVaVaitro(nd.getId(), vt.getId());
+			}
+	   }
+
+		if (nd.getNhomnguoidung() != null) {
+			for (NhomNguoiDung nnd : nd.getNhomnguoidung()) {
+				this.nguoiDungRepository.insertNguoidungVaNhomnguoidung(nd.getId(), nnd.getId());
 			}
 		}
-		
-		for (VaiTro vt : nd.getVaitro()) {
-			this.nguoiDungRepository.insertNguoidungVaVaitro(nd.getId(), vt.getId());
-		}
-		
-		for (NhomNguoiDung nnd : nd.getNhomnguoidung()) {
-			this.nguoiDungRepository.insertNguoidungVaNhomnguoidung(nd.getId(), nnd.getId());
-		}
+
 	}
 
 	@Override
 	public void updateNguoidung(Nguoidung nd) {
 		this.nguoiDungRepository.updateNguoidung(nd.getManguoidung(), nd.getTennguoidung(), nd.getPassword(), nd.getEmail(), nd.getGender(), nd.getPhone(), nd.getUpdateday(), nd.getNguoiupdate(), nd.getIsdelete(), nd.getId());
-		this.nguoiDungRepository.deleteNguoidungVaChucnang(nd.getId());
 		this.nguoiDungRepository.deleteNguoidungVaNhomnguoidung(nd.getId());
 		this.nguoiDungRepository.deleteNguoidungVaVaitro(nd.getId());
 		
-		if (nd.getChucnang() != null) {
-			for (ChucNang1 cn1 : nd.getChucnang()) {
-				this.nguoiDungRepository.insertNguoidungVaChucnang(nd.getId(), cn1.getId());
+		if (nd.getNhomnguoidung() != null) {
+			for (NhomNguoiDung nnd : nd.getNhomnguoidung()) {
+				this.nguoiDungRepository.insertNguoidungVaNhomnguoidung(nd.getId(), nnd.getId());
 			}
 		}
-		
-		for (NhomNguoiDung nnd : nd.getNhomnguoidung()) {
-			this.nguoiDungRepository.insertNguoidungVaNhomnguoidung(nd.getId(), nnd.getId());
+
+		if (nd.getVaitro() != null) {
+			for (VaiTro vt : nd.getVaitro()) {
+				this.nguoiDungRepository.insertNguoidungVaVaitro(nd.getId(), vt.getId());
+			}
 		}
-		
-		for (VaiTro vt : nd.getVaitro()) {
-			this.nguoiDungRepository.insertNguoidungVaVaitro(nd.getId(), vt.getId());
-		}
+
 	}
 	
 	@Override
@@ -125,16 +122,11 @@ public class NguoiDungImpl implements NguoiDungService{
 	@Override
 	public Nguoidung findUrlChucNang(String tennguoidung){
 		Nguoidung nd = this.findByTen(tennguoidung);
-		List<ChucNang1> dscn = this.chucNang1Service.findChucnangByTennguoidung(tennguoidung);
-		nd.setChucnang(dscn);
+		
 		return nd;
 	}
 	
-	
-	@Override
-	public List<Long> findByIdchucnang(Long idnguoidung) {
-		return nguoiDungRepository.findByIdchucnang(idnguoidung);
-	}
+
 
 	
 	@Override
@@ -153,13 +145,23 @@ public class NguoiDungImpl implements NguoiDungService{
 		return nguoiDungRepository.findById1(id);
 	}
 
+//	@Override
+//	public boolean checkLogin(String username, String password) {
+//		Nguoidung nd = this.nguoiDungRepository.findByTen(username);
+//		if (username != null || Xuly.checkMd5(password, nd.getPassword())) {
+//			return true;
+//		}
+//		return false;
+//	}
+
 	@Override
-	public boolean checkLogin(String username, String password) {
-		Nguoidung nd = this.nguoiDungRepository.findByTen(username);
-		if (username != null || Xuly.checkMd5(password, nd.getPassword())) {
-			return true;
-		}
-		return false;
+	public Nguoidung findUrl(String tennguoidung) {
+		return nguoiDungRepository.findUrl(tennguoidung, tennguoidung);
+	}
+
+	@Override
+	public List<String> findUrlNd(String tennguoidung) {
+		return nguoiDungRepository.findUrlNd(tennguoidung);
 	}
 	
 	

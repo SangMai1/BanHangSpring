@@ -79,6 +79,11 @@ public class ChucNang1Impl implements ChucNang1Service{
 	public List<ChucNang1> findChucnangByTennguoidung(String tennguoidung) {
 		return chucNangRepository.findChucnangByTennguoidung(tennguoidung, tennguoidung);
 	}
+
+	@Override
+	public List<String> maapi() {
+		return chucNangRepository.maapi();
+	}
 	
 	
 }

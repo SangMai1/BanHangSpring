@@ -1,5 +1,6 @@
 package com.learncode.controller;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.learncode.models.ChucNang1;
 import com.learncode.models.LoaiSanPham;
 import com.learncode.service.LoaisanphamService;
 
@@ -40,12 +41,12 @@ public class LoaisanphamController {
 	}
 	
 	@RequestMapping(value = "/saveLoaisanpham", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
-	public String doSave(ModelMap modal, @ModelAttribute("LOAISANPHAM") LoaiSanPham lsp, HttpSession session) {
-		lsp.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000000")));
+	public String doSave(ModelMap modal, @ModelAttribute("LOAISANPHAM") LoaiSanPham lsp, Principal principal) {
+		lsp.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
 		lsp.setCreateday(new Timestamp(new Date().getTime()));
-		lsp.setCreateby((String) session.getAttribute("USERNAME"));
+		lsp.setCreateby(principal.getName());
 		lsp.setUpdateday(new Timestamp(new Date().getTime()));
-		lsp.setUpdateby((String) session.getAttribute("USERNAME"));
+		lsp.setUpdateby(principal.getName());
 		lsp.setIsdelete((Integer) 0);
 		this.loaisanphamService.insertLoaisanpham(lsp);
 		return "redirect:/loaisanpham/list";
@@ -57,10 +58,16 @@ public class LoaisanphamController {
 		return this.loaisanphamService.findLoaisanphamById(id);
 	}
 	
+	@GetMapping("/loaisanpham-chitiet")
+	@ResponseBody
+	public Optional<LoaiSanPham> findByChitietLoaisanpham(ModelMap model, Long id) {
+		return this.loaisanphamService.findLoaisanphamById(id);
+	}
+	
 	@RequestMapping("/updateLoaisanpham")
-	public String doUpdate(LoaiSanPham lsp, HttpSession session) {
+	public String doUpdate(LoaiSanPham lsp, Principal principal) {
 		lsp.setUpdateday(new Timestamp(new Date().getTime()));
-		lsp.setUpdateby((String) session.getAttribute("USERNAME"));
+		lsp.setUpdateby(principal.getName());
 		lsp.setIsdelete((Integer) 0);
 		this.loaisanphamService.updateLoaisanpham(lsp);
 		return "redirect:/loaisanpham/list";
@@ -77,7 +84,7 @@ public class LoaisanphamController {
 		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("loaisanphamlist");
 		int pagesize = 5;
 		List<LoaiSanPham> list = (List<LoaiSanPham>) this.loaisanphamService.findAllLoaisanpham();
-		System.out.println(list.size());
+		int sum = list.size();
 		if (pages == null) {
 			pages = new PagedListHolder<>(list);
 			pages.setPageSize(pagesize);
@@ -99,6 +106,8 @@ public class LoaisanphamController {
 		
 		String baseUrl = "/list/page/";
 		
+		model.addAttribute("sum", sum);
+		
 		model.addAttribute("beginIndex", begin);
 	
 		model.addAttribute("endIndex", end);
@@ -115,11 +124,11 @@ public class LoaisanphamController {
 	}
 	
 	@RequestMapping("/del")
-	public String delete(@RequestParam("lsp[]") List<Long> ids, HttpSession session) {
+	public String delete(@RequestParam("lsp[]") List<Long> ids, Principal principal) {
 		for (Long long1 : ids) {
 			LoaiSanPham lsp = this.loaisanphamService.findLoaisanphamById(long1).get();
 			lsp.setUpdateday(new Timestamp(new Date().getTime()));
-			lsp.setUpdateby((String) session.getAttribute("USERNAME"));
+			lsp.setUpdateby(principal.getName());
 			lsp.setIsdelete((Integer) 1);
 			this.loaisanphamService.updateLoaisanpham(lsp);
 		}
