@@ -8,6 +8,7 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,6 @@ import com.learncode.repository.NhomNguoiDungRepository;
 import com.learncode.repository.VaiTroRepository;
 
 @Service
-@Transactional
 public class NhomNguoiDungImpl implements NhomNguoiDungService{
 	
 	@Autowired
@@ -34,29 +34,32 @@ public class NhomNguoiDungImpl implements NhomNguoiDungService{
 	
 	@Override
 	public void insertNhomNguoiDung(NhomNguoiDung nnd) {
-		this.nhomNguoiDungRepository.insertNhomNguoiDung(nnd.getId(), nnd.getManhom(), nnd.getTennhom(), nnd.getCreateday(), nnd.getNguoitao(), nnd.getUpdateday(), nnd.getNguoiupdate(), 0);
-		if (nnd.getChucnang() != null) {
-			for (ChucNang1 cn1 : nnd.getChucnang()) {
-				this.nhomNguoiDungRepository.insertNhomNguoiDungChucNang(nnd.getId(), cn1.getId());
-			}
-		}
+		this.nhomNguoiDungRepository.save(nnd);
+//		this.nhomNguoiDungRepository.insertNhomNguoiDung(nnd.getId(), nnd.getManhom(), nnd.getTennhom(), nnd.getCreateday(), nnd.getNguoitao(), nnd.getUpdateday(), nnd.getNguoiupdate(), 0);
+//		if (nnd.getChucnang() != null) {
+//			for (ChucNang1 cn1 : nnd.getChucnang()) {
+//				this.nhomNguoiDungRepository.insertNhomNguoiDungChucNang(nnd.getId(), cn1.getId());
+//			}
+//		}
 	}
 
 	@Override
+	@Cacheable(value = "nhom", key = "#ndd.nguoiupdate")
 	public void updateNhomNguoiDung(NhomNguoiDung ndd) {
-		this.nhomNguoiDungRepository.updateNhomNguoiDung(ndd.getManhom(), ndd.getTennhom(), ndd.getUpdateday(), ndd.getNguoiupdate(), ndd.getId());
-		this.nhomNguoiDungRepository.deleteNhomNguoiDungChucNang(ndd.getId());
-		if (ndd.getChucnang() != null) {
-			for (ChucNang1 cn1 : ndd.getChucnang()) {
-				this.nhomNguoiDungRepository.insertNhomNguoiDungChucNang(ndd.getId(), cn1.getId());
-			}
-		}
+		this.nhomNguoiDungRepository.save(ndd);
+//		this.nhomNguoiDungRepository.updateNhomNguoiDung(ndd.getManhom(), ndd.getTennhom(), ndd.getUpdateday(), ndd.getNguoiupdate(), ndd.getId());
+//		this.nhomNguoiDungRepository.deleteNhomNguoiDungChucNang(ndd.getId());
+//		if (ndd.getChucnang() != null) {
+//			for (ChucNang1 cn1 : ndd.getChucnang()) {
+//				this.nhomNguoiDungRepository.insertNhomNguoiDungChucNang(ndd.getId(), cn1.getId());
+//			}
+//		}
 	}
 
 	
 	@Override
 	public List<NhomNguoiDung> findByTennhom(String tennhom) {
-		return nhomNguoiDungRepository.findByTennhom(tennhom);
+		return this.nhomNguoiDungRepository.findByTennhom(tennhom);
 	}
 
 	@Override
@@ -67,32 +70,33 @@ public class NhomNguoiDungImpl implements NhomNguoiDungService{
 
 	@Override
 	public List<NhomNguoiDung> findByManhom(String manhom) {
-		return nhomNguoiDungRepository.findByManhom(manhom);
+		return this.nhomNguoiDungRepository.findByManhom(manhom);
 	}
 
 	@Override
 	public List<NhomNguoiDung> findAllNhomNguoiDung() {
-		return nhomNguoiDungRepository.findAllNhomNguoiDung();
+		return this.nhomNguoiDungRepository.findAllNhomNguoiDung();
 	}
 
 	@Override
+	@Cacheable(value = "nhom", key = "#id")
 	public Optional<NhomNguoiDung> findByLongId(Long id) {
-		return nhomNguoiDungRepository.findByLongId(id);
+		return this.nhomNguoiDungRepository.findByLongId(id);
 	}
 
 	@Override
 	public List<ChucNang1> findAllChucNang1(){
-		return (List<ChucNang1>)chucNangRepository.findAllChucNang1();
+		return (List<ChucNang1>)this.chucNangRepository.findAllChucNang1();
 	}
 	
 	@Override
 	public List<VaiTro> findAllVaiTro(){
-		return (List<VaiTro>)vaiTroRepository.findAll();
+		return (List<VaiTro>)this.vaiTroRepository.findAll();
 	}
 
 	@Override
 	public List<Long> findChucnangNhom(Long idnhom) {
-		return nhomNguoiDungRepository.findChucnangNhom(idnhom);
+		return this.nhomNguoiDungRepository.findChucnangNhom(idnhom);
 	}
 
 	

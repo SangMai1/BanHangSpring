@@ -14,8 +14,6 @@ import com.google.zxing.oned.EAN13Writer;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
-import javassist.bytecode.ByteArray;
-
 public class ZXingHelper {
 	public static byte[] getQRCodeImage(String text, int width, int height) {
 		try {
@@ -28,7 +26,7 @@ public class ZXingHelper {
 			return null;
 		}
 	}
-	
+
 	public static byte[] getBarCodeImage(String text, int width, int height) {
 		try {
 			Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
@@ -42,19 +40,18 @@ public class ZXingHelper {
 			return null;
 		}
 	}
-	
+
 	public static BufferedImage generateQRCodeImage(Long id) throws Exception {
-	    QRCodeWriter barcodeWriter = new QRCodeWriter();
-	    BitMatrix bitMatrix = 
-	      barcodeWriter.encode(id.toString(), BarcodeFormat.QR_CODE, 200, 200);
-	 
-	    return MatrixToImageWriter.toBufferedImage(bitMatrix);
+		QRCodeWriter barcodeWriter = new QRCodeWriter();
+		BitMatrix bitMatrix = barcodeWriter.encode(id.toString(), BarcodeFormat.QR_CODE, 200, 200);
+
+		return MatrixToImageWriter.toBufferedImage(bitMatrix);
 	}
-	
+
 	public static BufferedImage generateEAN13BarcodeImage(String barcodeText) throws Exception {
-	    EAN13Writer barcodeWriter = new EAN13Writer();
-	    BitMatrix bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.EAN_13, 300, 150);
-	 
-	    return MatrixToImageWriter.toBufferedImage(bitMatrix);
+		EAN13Writer barcodeWriter = new EAN13Writer();
+		BitMatrix bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.EAN_13, 300, 150);
+
+		return MatrixToImageWriter.toBufferedImage(bitMatrix);
 	}
 }

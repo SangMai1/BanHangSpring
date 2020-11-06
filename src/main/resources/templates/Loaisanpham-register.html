@@ -13,12 +13,13 @@
 		<div class="container">
 			<h4>Thêm mới loại sản phẩm</h4>
 			<hr>
-			<form th:action="@{/loaisanpham/saveLoaisanpham}" th:object="${LOAISANPHAM}" enctype="multipart/form-data" method="post" id="myModals">
+			<form th:action="@{/loaisanpham/saveLoaisanpham}" th:object="${LOAISANPHAM}" method="post" id="myModals">
 				<input type="hidden" th:field="*{id}">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Mã loại sản phẩm(*)</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" placeholder="Enter mã loại sản phẩm" th:field="*{maloaisanpham}">
+						<p th:if="${#fields.hasErrors('maloaisanpham')}" th:errors="*{maloaisanpham}" class="alert alert-danger"></p>
 					</div>
 					
 				</div>
@@ -26,6 +27,7 @@
 					<label class="col-sm-2 col-form-label">Tên loại sản phẩm(*)</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" placeholder="Enter tên sản phẩm" th:field="*{tenloaisanpham}">
+						<p th:if="${#fields.hasErrors('tenloaisanpham')}" th:errors="*{tenloaisanpham}" class="alert alert-danger"></p>
 					</div>
 					
 				</div>

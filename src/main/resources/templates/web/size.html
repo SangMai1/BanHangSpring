@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/trangchu}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/css/StyleSize.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.size').on('click',function(){
+			$.ajax({
+				
+				type: "GET",
+				contentType: "application/json",
+				url: '/web/sp-chitiet',
+				data: {
+					id: $('input[name="option1"]:checked').val()
+				},
+				dataType: "json",
+				timeout: 10000,
+				success: function(data){
+					console.log(data);
+					$('.gia-goc').html(data.giatien);
+					$('.pro-sale').html(data.giamgia);
+					$('.pro-price').html(data.giatien - data.giamgia);
+				},
+				
+			});
+		});
+		
+		$("#dSuggest").keyup(function() {
+	        var dInput = $(this).val();
+	       	this.setAttribute('value', dInput)
+	  
+	    });
+	});
+	
+	// Add active class to the current button (highlight it)
+	var header = document.getElementById("myDIV");
+	var btns = header.getElementsByClassName("btn");
+	for (var i = 0; i < btns.length; i++) {
+	  btns[i].addEventListener("click", function() {
+	  var current = document.getElementsByClassName("active");
+	  current[0].className = current[0].className.replace(" active", "");
+	  this.className += " active";
+	  });
+	}
+	
+	function myFunction(val) {
+		  alert("The input value has changed. The new value is: " + val);
+		}
+</script>
+</head>
+<body>
+	<div layout:fragment="content">
+	
+		<section class="path__chitiet">
+			<div class="wrapper1 sanpham">
+				<p>Sản phẩm</p>
+				
+			</div>
+		</section>
+		
+		<section class="feature1">
+				<div class="wrapper1">
+					
+						<div th:each="si : ${sizes}" class="feature__item1" >
+						
+							<div  class="feature__image1">
+								<img class="feature__img1" th:src="@{${si.sanphams.getLogoImagePath()}}">
+				
+							</div>
+							<div class="feature__info1">
+								<div class="feature__info1-product-title">
+									
+									<h5 th:text="${si.sanphams.tensanpham}"></h5>
+									<p>SKU: <span th:text="${si.sanphams.masanpham}"></span></p>
+								</div>
+								<hr>
+								<div class="feature__info1-product-price">
+									<span class="pro-sale" th:text="${#numbers.formatCurrency(si.giamgia)}"></span>
+									<span class="pro-price" th:text="${#numbers.formatCurrency(si.giatien - si.giamgia)}"></span>
+									<del class="gia-goc" th:text="${#numbers.formatCurrency(si.giatien)}"></del>
+								</div>
+								
+								<hr>
+								<div class="feature__info1-product-cart">
+								<form action="/web/add" method="GET">
+									<input type="hidden" th:value="${si.id}" name="id"/>
+									<div class="feature__info1-product-number">
+										<input type="number" name="quantity" value="1" id="dSuggest">
+									</div>
+									<div class="feature__info1-product-button">
+										<button class="btn btn-sm btn-primary" id="btn-dSuggest">Thêm vào giỏ hàng</button>
+									</div>
+								</form>
+									<div class="feature__info1-product-description">
+										<h5>Mô tả</h5>
+										<p th:text="${si.sanphams.mota}"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+				</div>
+			</section>
+			<section class="selling_products">
+				<div class="selling_products-title">
+					<a href="#">Sản phẩm liên quan</a>
+				</div>
+			</section>
+			
+	</div>
+
+</body>
+</html>

@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,7 +13,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -20,12 +23,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Sanpham {
 	
 	@Id
-	private long id;
+    @GeneratedValue(generator = "bigid")
+    @GenericGenerator(name = "bigid",strategy = "com.learncode.config.IDGenerator")
+    private long id;
 	
 	@Column(name = "masanpham")
+	@NotBlank(message = "không được để trống")
 	private String masanpham;
 	
 	@Column(name = "tensanpham")
+	@NotBlank(message = "không được để trống")
 	private String tensanpham;
 	
 	@Column(name = "image")
@@ -50,20 +57,24 @@ public class Sanpham {
 	private String updateby;
 	
 	@Column(name = "xuatxu")
+	@NotBlank(message = "không được để trống")
 	private String xuatxu;
 	
 	@Column(name = "mota")
+	@NotBlank(message = "không được để trống")
 	private String mota;
 	
 	@Column(name = "isdelete")
 	private Integer isdelete;
-	
+
 	public Sanpham() {
 		super();
 	}
 
-	public Sanpham(Long id, String masanpham, String tensanpham, LoaiSanPham loaisanpham, String xuatxu,
-			String mota) {
+	public Sanpham(long id, @NotBlank(message = "không được để trống") String masanpham,
+			@NotBlank(message = "không được để trống") String tensanpham, LoaiSanPham loaisanpham,
+			@NotBlank(message = "không được để trống") String xuatxu,
+			@NotBlank(message = "không được để trống") String mota) {
 		super();
 		this.id = id;
 		this.masanpham = masanpham;
@@ -72,9 +83,12 @@ public class Sanpham {
 		this.xuatxu = xuatxu;
 		this.mota = mota;
 	}
-	
-	public Sanpham(long id, String masanpham, String tensanpham, String image, LoaiSanPham loaisanpham, Date createday,
-			String createby, Date updateday, String updateby, String xuatxu, String mota, Integer isdelete) {
+
+	public Sanpham(long id, @NotBlank(message = "không được để trống") String masanpham,
+			@NotBlank(message = "không được để trống") String tensanpham, String image, LoaiSanPham loaisanpham,
+			Date createday, String createby, Date updateday, String updateby,
+			@NotBlank(message = "không được để trống") String xuatxu,
+			@NotBlank(message = "không được để trống") String mota, Integer isdelete) {
 		super();
 		this.id = id;
 		this.masanpham = masanpham;
@@ -89,6 +103,8 @@ public class Sanpham {
 		this.mota = mota;
 		this.isdelete = isdelete;
 	}
+	
+	
 
 	public long getId() {
 		return id;
@@ -193,4 +209,16 @@ public class Sanpham {
 		}
 		return "/uploads/" + id + "/" + image;
 	}
+
+	@Override
+	public String toString() {
+		return "Sanpham [id=" + id + ", masanpham=" + masanpham + ", tensanpham=" + tensanpham + ", image=" + image
+				+ ", loaisanpham=" + loaisanpham + ", createday=" + createday + ", createby=" + createby
+				+ ", updateday=" + updateday + ", updateby=" + updateby + ", xuatxu=" + xuatxu + ", mota=" + mota
+				+ ", isdelete=" + isdelete + "]";
+	}
+
+	
+	
+	
 }

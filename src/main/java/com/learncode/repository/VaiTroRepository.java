@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,7 +18,7 @@ import groovyjarjarpicocli.CommandLine.Parameters;
 
 @Repository
 @Transactional
-public interface VaiTroRepository extends CrudRepository<VaiTro, Long>{
+public interface VaiTroRepository extends JpaRepository<VaiTro, Long>{
 	
 	@Modifying
 	@Query(value = "INSERT INTO public.qtht_vaitro(id, mavaitro, tenvaitro, nguoitao, createday, nguoiupdate, updateday, isdelete) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", nativeQuery = true)

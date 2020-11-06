@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <link rel="stylesheet" type="text/css" href="/css/reset.css">
 <link rel="stylesheet" type="text/css" href="/css/StyleTrangchu.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/trangchu.js}"></script>
 <style>
 .mySlides {
 	display: none;
@@ -19,21 +25,70 @@
 		<header class="header">
 			<div class="container header__inner">
 				<a href="#" class="header__text">Trend Fashion</a>
-				
 				<div class="header__icon">
 					<ul class="header__icon-list">
 						<li class="header__icon-item">
 							<a href="#" class="header__icon-link"><i class="fas fa-search"></i></a>
 						</li>
-						<li class="header__icon-item">
-							<a href="#" class="header__icon-link"><i class="fas fa-user-circle"></i></a>
+						<li class="header__icon-item dropdown">
+							<a href="#" class="header__icon-link"><i class="fas fa-user-circle dropbtn"></i></a>
+							<ul th:unless="${session.EMAIL_WEB} or ${session.INFO}" class="dropdown-content">
+								<li class="dropdown-content-li"><a class="dropdown-coontent-li-a" href="/web/login1">Đăng nhập</a></li>
+								<li class="dropdown-content-li"><a class="dropdown-coontent-li-a1" href="/web/checkout">Tạo tài khoản</a></li>
+								
+							</ul>
+							<div th:if="${session.EMAIL_WEB}" class="dropdown-content">
+								<h3 th:text="${session.EMAIL_WEB.bill_name}"></h3>
+							</div>
+							<div th:if="${session.INFO}" class="dropdown-content">
+								<h3 th:text="${session.INFO.bill_name}"></h3>
+							</div>
 						</li>
-						<li class="header__icon-item">
-							<a href="#" class="header__icon-link"><i class="fas fa-shopping-cart"></i></a>
+						<li class="header__icon-item "><a href="#"
+							class="header__icon-link"><i class="fas fa-shopping-cart"></i><span
+								class="text-shopping-cart" th:text="${session.myCartNum}"></span></a>
 						</li>
 					</ul>
 				</div>
+				
+				<!-- The Modal Login-->
+			  <div class="modal" id="myModal">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			      
+			        <!-- Modal Header -->
+			        <div class="modal-header">
+			          <h4>LOGIN</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+			        <div id="model-body"></div>
+			        <div class="modal-footer">
+			          
+			        </div>
+				   </div>
+				 </div>
+			   </div>
+			   
+			   				<!-- The Modal Tao tai khoan-->
+			  <div class="modal" id="myModal1">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			      
+			        <!-- Modal Header -->
+			        <div class="modal-header">
+			          <h4>TAO TAI KHOAN</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+			        <div id="model-body1"></div>
+			        <div class="modal-footer">
+			          
+			        </div>
+				   </div>
+				 </div>
+			   </div>
 			</div>
+			
+						
 		</header>
 		
 		<nav class="container menu__inner">
@@ -41,9 +96,9 @@
 				<li class="menu__inner-item">
 					<a href="#" class="menu__inner-link">Trang chủ</a>
 				</li>
-				<li class="menu__inner-item dropdown">
-					<a href="#" class="menu__inner-link dropbtn">Sản phẩm</a>
-					<div class="dropdown-content">
+				<li class="menu__inner-item dropdown1">
+					<a href="#" class="menu__inner-link dropbtn1">Sản phẩm</a>
+					<div class="dropdown-content1">
 						<a href="#">Sản phẩm nổi bật</a>
 						<a href="#">Sản phẩm mới</a>
 						<a href="#">Sản phẩm bán chạy</a>
@@ -62,32 +117,26 @@
 		</nav>
 		
 		<div layout:fragment="content">
-			<section class="banner">
-				<div class="slideshow-container">
-				  <div class="mySlides fade">
-				    <img src="https://file.hstatic.net/1000300454/file/slid01_e89a0f8aa2874ef0849de530c10408e8.jpg" style="width:100%">
+			<div class="banner11">
+				<div class="slideshow-container11">
+				  <div class="mySlides11 fade11" th:each="slide : ${SLIDESSHOW}">
+				    <img th:src="@{${slide.getSlidesImagePath()}}" style="width:100%">
 				  </div>
 				
-				  <div class="mySlides fade">
-				    <img src="https://file.hstatic.net/1000300454/file/slide02_a9d973701a6e45b78c6def7874b6b65e.jpg" style="width:100%">
-				  </div>
-				
-				  <div class="mySlides fade">
-				    <img src="https://file.hstatic.net/1000300454/file/slide03_9d51a29f6cef438994406c1d0e12e25b.jpg" style="width:100%">
-				  </div>
 				</div>
 				<br>
 				
-				<div class="dot__list" style="text-align:center">
-				  <span class="dot"></span> 
-				  <span class="dot"></span> 
-				  <span class="dot"></span> 
+				<div class="dot__list11" style="text-align:center">
+				  <span class="dot11"></span> 
+				  <span class="dot11"></span> 
+				  <span class="dot11"></span> 
 				</div>
-			</section>
+			</div>
 			
 			<section class="selling_products">
 				<div class="selling_products-title">
 					<a href="#">Sản phẩm mới</a>
+					
 				</div>
 			</section>
 			
@@ -148,17 +197,17 @@
 							<p>Về chúng tôi</p>
 						</div>
 						<div class="feature__info">
-							<p>Trang giới thiệu giúp khách hàng hiểu rõ hơn về cửa hàng của bạn. Hãy cung cấp thông tin cụ thể về việc kinh doanh, về cửa hàng, thông tin liên hệ. Điều này sẽ giúp khách hàng cảm thấy tin tưởng khi mua hàng trên website của bạn.</p>
-							<p>Một vài gợi ý cho nội dung trang Giới thiệu:</p>
-							<p>Bạn là ai</p>
-							<p>Giá trị kinh doanh của bạn là gì</p>
+							<p>Trang giới thiệu giúp khách hàng hiểu rõ hơn về Trend Fashtion. Hãy cung cấp thông tin cụ thể về thông tin liên hệ. Điều này sẽ giúp khách hàng cảm thấy tin tưởng khi mua hàng trên website của chúng tôi.</p>
+							<p>Một vài gợi ý cho để khách hàng có thể lựa chọn:</p>
+							<p>Tìm kiếm sản phẩm theo giá</p>
+							<p>Tìm kiếm sản phẩm theo danh mục</p>
 							<p>Địa chỉ cửa hàng</p>
-							<p>Bạn đã kinh doanh trong ngành hàng này bao lâu rồi</p>
-							<p>Bạn kinh doanh ngành hàng online được bao lâu</p>
-							<p>Đội ngũ của bạn gồm những ai</p>
+							<p>Trang giới thiệu sẽ cho khách hàng biết chúng tôi là ai</p>
+							<p>Trend Fashtion đã kinh doanh được 6 tháng</p>
+							<p>Thông tin về sản phẩm</p>
 							<p>Thông tin liên hệ</p>
 							<p>Liên kết đến các trang mạng xã hội (Twitter, Facebook)</p>
-							<p>Bạn có thể chỉnh sửa hoặc xoá bài viết này tại đây hoặc thêm những bài viết mới trong phần quản lý</p>
+							<p>Khách hàng có thể cập nhật hoặc xóa sản phẩm khỏi giỏ hàng</p>
 						</div>
 					</div>
 				</div>
@@ -170,7 +219,7 @@
 				<div class="container footer__container">
 					<div class="footer__item">
 						<h4>Giới thiệu</h4>
-						<p>Trang mua sắm trực tuyến của thương hiệu thời trang Lama, thời trang nam, nữ, phụ kiện, giúp bạn tiếp cận xu hướng thời trang mới nhất.</p>
+						<p>Trang mua sắm trực tuyến của thương hiệu thời trang Trend Fashion, thời trang nam, nữ, phụ kiện, giúp bạn tiếp cận xu hướng thời trang mới nhất.</p>
 					</div>
 					<div class="footer__item">
 						<h4>Liên kết</h4>
@@ -183,7 +232,7 @@
 					</div>
 					<div class="footer__item">
 						<h4>Thông tin liên hệ</h4>
-						<p><i class="fas fa-map-marker-alt"></i> Tầng 4, tòa nhà Flemington, số 182, đường Lê Đại Hành, phường 15, quận 11, Tp. Hồ Chí Minh.</p>
+						<p><i class="fas fa-map-marker-alt"></i>Số 18, đường Võ Văn Tần, quận Thanh Khê, Tp. Đà Nẵng.</p>
 						<p><i class="fas fa-phone-alt"></i> 1900-1080</p>
 					</div>
 					
@@ -194,27 +243,36 @@
 			</div>
 		</footer>
 	</div>
-	
-	<script>
-		var slideIndex = 0;
-		showSlides();
-		
-		function showSlides() {
-		  var i;
-		  var slides = document.getElementsByClassName("mySlides");
-		  var dots = document.getElementsByClassName("dot");
-		  for (i = 0; i < slides.length; i++) {
-		    slides[i].style.display = "none";  
-		  }
-		  slideIndex++;
-		  if (slideIndex > slides.length) {slideIndex = 1}    
-		  for (i = 0; i < dots.length; i++) {
-		    dots[i].className = dots[i].className.replace(" active", "");
-		  }
-		  slides[slideIndex-1].style.display = "block";  
-		  dots[slideIndex-1].className += " active";
-		  setTimeout(showSlides, 2000); // Change image every 2 seconds
-		}
-	</script>
+<script type="text/javascript">
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  var i;
+  var slides = document.getElementsByClassName("mySlides11");
+  var dots = document.getElementsByClassName("dot11");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+
+function bigImg(x){
+	x.style.height = "500px";
+	x.style.width = "600px";
+}
+
+function normalImg(x){
+	x.style.height = "462px";
+	x.style.width = "522px";
+}
+</script>
 </body>
 </html>

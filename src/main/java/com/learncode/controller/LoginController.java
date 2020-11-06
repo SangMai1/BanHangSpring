@@ -8,19 +8,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LoginController {
-	
 
-	@RequestMapping(value="/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(ModelMap model) {
 		return "Login";
 	}
-	
+
 	@RequestMapping(value = "/success", method = RequestMethod.GET)
 	public String successPage() {
 		return "/layout/main-layout";
 	}
 
-	
 	@GetMapping("/403")
 	public String error403() {
 		return "403";

@@ -5,13 +5,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.learncode.models.ChucNang1;
 import com.learncode.repository.ChucNang1Repository;
 
+@Component
 @Service
-@Transactional
 public class ChucNang1Impl implements ChucNang1Service{
 	
 	@Autowired
@@ -32,18 +37,14 @@ public class ChucNang1Impl implements ChucNang1Service{
 		return chucNangRepository.getAllChucNang1Parent();
 	}
 	
+	
 	@Override
+	@Cacheable(value = "chucnang", key = "'ALL'")
 	public Optional<ChucNang1> findByChucNangEditId(Long id){
+		System.out.println("find id");
 		return this.chucNangRepository.findByChucNangEditId(id);
 	}
 
-	@Override
-	public int deleteChucNang1(List<ChucNang1> cn) {
-		for (ChucNang1 chucNang1 : cn) {
-			this.chucNangRepository.deleteChucNang1(chucNang1.getId());
-		}
-		return chucNangRepository.deleteChucNang1(cn.get(0).getId());
-	}
 
 	@Override
 	public Optional<ChucNang1> findById(Long id) {
@@ -56,13 +57,17 @@ public class ChucNang1Impl implements ChucNang1Service{
 	}
 
 	@Override
-	public int insertChucNang1(ChucNang1 cn) {
-		return chucNangRepository.insertChucNang1(cn.getId(), cn.getMachucnang(), cn.getTenchucnang(), cn.getMaapi(), cn.getCreateday(), cn.getNguoitao(), cn.getUpdateday(), cn.getNguoiupdate(), cn.getParentid(), 0);
+	public void insertChucNang1(ChucNang1 cn) {
+		this.chucNangRepository.save(cn);
 	}
 
 	@Override
-	public int updateChucNang1(ChucNang1 cn) {
-		return chucNangRepository.updateChucNang1(cn.getMachucnang(), cn.getTenchucnang(), cn.getMaapi(), cn.getUpdateday(), cn.getNguoiupdate(), cn.getId());
+	@Caching(
+			put = @CachePut(value = "chucnang", condition = "#cn.isdelete='0'", key = "'ALL'"),
+			evict = @CacheEvict(value = "chucnang", allEntries = true))
+	public void updateChucNang1(ChucNang1 cn) {
+		System.out.println("update day");
+		this.chucNangRepository.save(cn);
 	}
 
 	@Override

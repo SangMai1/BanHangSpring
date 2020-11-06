@@ -3,6 +3,9 @@ package com.learncode.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
+
 import com.learncode.models.ChucNang1;
 import com.learncode.models.NhomNguoiDung;
 import com.learncode.models.VaiTro;

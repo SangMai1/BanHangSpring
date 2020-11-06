@@ -19,14 +19,14 @@ import com.learncode.models.ChucNang1;
 @Transactional
 public interface ChucNang1Repository extends JpaRepository<ChucNang1, Long>{
 	
-	@Modifying
-	@Query(value = "INSERT INTO public.qtht_chucnang(id, machucnang, tenchucnang, maapi, createday, nguoitao, updateday, nguoiupdate, parentid, isdelete) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", nativeQuery = true)
-	int insertChucNang1(@Param("id") Long id, @Param("machucnang") String machucnang, @Param("tenchucnang") String tenchucnang, @Param("maapi") String maapi, @Param("createday") Date createday, @Param("nguoitao") String nguoitao, @Param("updateday") Date updateday, @Param("nguoiupdate") String nguoiupdate,@Param("parentid") Long parentid, @Param("isdelete") Integer isdelete);
-	
-	
-	@Modifying
-	@Query(value = "UPDATE public.qtht_chucnang SET machucnang=?, tenchucnang=?, maapi=?, updateday=?, nguoiupdate=? WHERE id=?;", nativeQuery = true)
-	int updateChucNang1(@Param("machucnang") String machucnang, @Param("tenchucnang") String tenchucnang, @Param("maapi") String maapi, @Param("updateday") Date updateday, @Param("nguoiupdate") String nguoiupdate, @Param("id") Long id);
+//	@Modifying
+//	@Query(value = "INSERT INTO public.qtht_chucnang(id, machucnang, tenchucnang, maapi, createday, nguoitao, updateday, nguoiupdate, parentid, isdelete) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", nativeQuery = true)
+//	int insertChucNang1(@Param("id") Long id, @Param("machucnang") String machucnang, @Param("tenchucnang") String tenchucnang, @Param("maapi") String maapi, @Param("createday") Date createday, @Param("nguoitao") String nguoitao, @Param("updateday") Date updateday, @Param("nguoiupdate") String nguoiupdate,@Param("parentid") Long parentid, @Param("isdelete") Integer isdelete);
+//	
+//	
+//	@Modifying
+//	@Query(value = "UPDATE public.qtht_chucnang SET machucnang=?, tenchucnang=?, maapi=?, updateday=?, nguoiupdate=? WHERE id=?;", nativeQuery = true)
+//	int updateChucNang1(@Param("machucnang") String machucnang, @Param("tenchucnang") String tenchucnang, @Param("maapi") String maapi, @Param("updateday") Date updateday, @Param("nguoiupdate") String nguoiupdate, @Param("id") Long id);
 	
 	@Modifying
 	@Query(value = "UPDATE public.qtht_chucnang SET updateday = ?, nguoiupdate=?, isdelete=1 WHERE id=?", nativeQuery = true)

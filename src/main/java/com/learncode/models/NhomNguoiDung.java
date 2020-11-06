@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -16,7 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,46 +27,50 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "qtht_nhomnguoidung")
 public class NhomNguoiDung implements Serializable {
-	
+
 	@Id
+	@GeneratedValue(generator = "bigidn")
+	@GenericGenerator(name = "bigid", strategy = "com.learncode.config.IDGenerator")
 	private long id;
-	
+
 	@Column(name = "manhom")
+	@NotBlank(message = "không được để trống")
 	private String manhom;
-	
+
 	@Column(name = "tennhom")
+	@NotBlank(message = "không được để trống")
 	private String tennhom;
-	
+
 	@Column(name = "nguoitao")
 	private String nguoitao;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date createday;
-	
+
 	@Column(name = "nguoiupdate")
 	private String nguoiupdate;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date updateday;
-	
+
 	@Column(name = "isdelete")
 	private int isdelete = 0;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-	@JoinTable(name = "qtht_nhomnguoidungchucnang",
-				joinColumns = {@JoinColumn(name = "idnhom", referencedColumnName = "id")},
-				inverseJoinColumns = {@JoinColumn(name = "idchucnang", referencedColumnName = "id")})
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@JoinTable(name = "qtht_nhomnguoidungchucnang", joinColumns = {
+			@JoinColumn(name = "idnhom", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "idchucnang", referencedColumnName = "id") })
 	private Set<ChucNang1> chucnang = new HashSet<>();
 
 	public NhomNguoiDung() {
 		super();
 	}
 
-	public NhomNguoiDung(long id, String manhom, String tennhom, String nguoitao, Date createday, String nguoiupdate,
-			Date updateday, int isdelete, Set<ChucNang1> chucnang) {
+	public NhomNguoiDung(long id, @NotBlank(message = "không được để trống") String manhom,
+			@NotBlank(message = "không được để trống") String tennhom, String nguoitao, Date createday,
+			String nguoiupdate, Date updateday, int isdelete, Set<ChucNang1> chucnang) {
 		super();
 		this.id = id;
 		this.manhom = manhom;
@@ -148,6 +155,5 @@ public class NhomNguoiDung implements Serializable {
 		this.chucnang = chucnang;
 	}
 
-	
 	
 }

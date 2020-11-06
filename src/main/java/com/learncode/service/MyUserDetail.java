@@ -18,7 +18,6 @@ import com.learncode.models.VaiTro;
 
 public class MyUserDetail implements UserDetails {
 
-
 	private Nguoidung nguoidung;
 	
 	

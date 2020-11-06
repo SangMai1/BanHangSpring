@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/main-layout}">
 <head>
 <meta charset="UTF-8">
@@ -76,58 +77,8 @@
 											
 											
 											<td>
-												<a class="btn btn-primary edit" th:href="@{/chucnang/chucnang-update/}" data-toggle="modal" data-target="#myEdit" th:attrappend="data-target=${chucnang.id}"><i class="fas fa-edit"></i></a>
-												<!-- The Modal Edit -->
-													 <div class="modal" id="myEdit"  th:attrappend="id=${chucnang.id}">
-													    <div class="modal-dialog">
-													      <div class="modal-content">
-													      
-													        <!-- Modal Header -->
-													        <div class="modal-header">
-													          <h4>Edit chức năng</h4>
-													          <button type="button" class="close" data-dismiss="modal">&times;</button>
-													        </div>
-													        <div id="edit-body">
-													        	<form th:action="@{/chucnang/updateChucNang}" method="put" id="formEdit">
-																		<input type="hidden" name="id" th:value = "${chucnang.id}">
-																	<div class="form-group row">
-																		<label class="col-sm-2 col-form-label">Mã chức năng(*)</label>
-																		<div class="col-sm-10">
-																			<input type="text" class="form-control" name="machucnang" th:value = "${chucnang.machucnang}">
-																		</div>
-																		
-																	</div>
-																	<div class="form-group row">
-																		<label class="col-sm-2 col-form-label">Tên chức năng(*)</label>
-																		<div class="col-sm-10">
-																			<input type="text" class="form-control" name="tenchucnang" th:value = "${chucnang.tenchucnang}">
-																		</div>
-																		
-																	</div>
-																	<div class="form-group row">
-																		<label class="col-sm-2 col-form-label">Mã API(*)</label>
-																		<div class="col-sm-10">
-																			<input type="text" class="form-control" name="maapi" th:value = "${chucnang.maapi}">
-																		</div>
-																		
-																	</div>
-																	<div class="form-group row">
-																		<label class="col-sm-2 col-form-label">Parent</label>
-																		<div class="col-sm-10">
-																			<select name="parentid" class="form-control">
-																				<option th:each="parent : ${PARENTID}" th:value="${parent.id}" th:text="${parent.tenchucnang}"></option>
-																			</select>
-																		</div>
-																	</div>
-																	<button type="submit" id="toggler" class="btn btn-primary capnhat" onClick="action()">Cập nhật</button>
-																</form>
-													        </div>
-													        <div class="modal-footer">
-													          
-													        </div>
-														  </div>
-													   </div>
-													</div>
+												<a class="btn btn-primary edit" th:href="@{/chucnang/chucnang-update/(id=${chucnang.id})}" data-toggle="modal" data-target="#myEdit"><i class="fas fa-edit"></i></a>
+
 												
 												<a class="btn btn-primary chi" th:href="@{/chucnang/chucnang-chitiet/}" data-toggle="modal" data-target="#myChitiet" th:attrappend="data-target=${chucnang.id}"><i class="fas fa-eye"></i></a>
 												<input type="checkbox" id="allDelete" name="lcn" th:value="${chucnang.id}"/>
@@ -233,6 +184,59 @@
 						</ul>
 					
 				</th:block>
+				
+												<!-- The Modal Edit -->
+													 <div class="modal" id="myEdit">
+													    <div class="modal-dialog">
+													      <div class="modal-content">
+													      
+													        <!-- Modal Header -->
+													        <div class="modal-header">
+													          <h4>Edit chức năng</h4>
+													          <button type="button" class="close" data-dismiss="modal">&times;</button>
+													        </div>
+													        <div id="edit-body">
+													        	<form th:action="@{/chucnang/updateChucNang}" method="put" id="formEdit">
+																		<input type="hidden" name="id" id="id_edit">
+																	<div class="form-group row">
+																		<label class="col-sm-2 col-form-label">Mã chức năng(*)</label>
+																		<div class="col-sm-10">
+																			<input type="text" class="form-control" id="ma_edit" name="machucnang">
+																		</div>
+																		
+																	</div>
+																	<div class="form-group row">
+																		<label class="col-sm-2 col-form-label">Tên chức năng(*)</label>
+																		<div class="col-sm-10">
+																			<input type="text" class="form-control" id="ten_edit" name="tenchucnang" >
+																		</div>
+																		
+																	</div>
+																	<div class="form-group row">
+																		<label class="col-sm-2 col-form-label">Mã API(*)</label>
+																		<div class="col-sm-10">
+																			<input type="text" class="form-control" id="maapi_edit" name="maapi">
+																		</div>
+																		
+																	</div>
+																	<div class="form-group row">
+																		<label class="col-sm-2 col-form-label">Parent</label>
+																		<div class="col-sm-10">
+																			<select id="parent_edit" name="parentid" class="form-control">
+																				<option th:each="parent : ${PARENTID}"  th:value="${parent.id}" th:text="${parent.tenchucnang}"></option>
+																				<option th:value="-1">Không có ở trên</option>
+																			</select>
+																		</div>
+																	</div>
+																	<button type="submit" id="toggler" class="btn btn-primary capnhat" onClick="action()">Cập nhật</button>
+																</form>
+													        </div>
+													        <div class="modal-footer">
+													          
+													        </div>
+														  </div>
+													   </div>
+													</div>
 				
 				<!-- The Modal Delete -->
 				<div class="modal" tabindex="-1" role="dialog" id="myDelete">

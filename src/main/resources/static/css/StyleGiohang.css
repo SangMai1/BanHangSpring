@@ -1,0 +1,52 @@
+h2 {
+	margin: 20px;
+	font-size: 20px;
+}
+
+.main-giohang {
+	display: flex;
+	margin-bottom: 130px;
+}
+
+table, td, th {
+  border: 1px solid black;
+  font-size: 18px;
+  text-align: center;
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  height: 20px;
+}
+.main-giohang-left {
+	background-color: #ffc87a;
+	width: 60%;
+	margin-left: 20px;
+}
+
+.main-giohang-right {
+	background-color: rgb(239, 239, 239);
+	width: 40%;
+	text-align: center;
+}
+
+h3 {
+	padding-bottom: 30px;
+	font-size: 18px;
+	padding-top: 15px;
+}
+
+.dathang {
+	text-align: center;
+	vertical-align: center;
+	padding: 10px;
+	background-color: yellow;
+	color: black;
+	font-size: 18px;
+	
+}

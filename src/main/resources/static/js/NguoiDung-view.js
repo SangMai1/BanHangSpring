@@ -28,16 +28,11 @@ $(document).ready(function(){
 		$.ajax({
 			type: "GET",
 			contentType: "application/json",
-//				url: "/login/check",
 			url: "/nguoidung/nguoidung-update",
 			data: {
 				id: id
 				
 			},
-//				console.log(data1);
-//				data: {
-//					url: url
-//				},
 			dataType: "json",
 			timeout: 10000,
 			success: function(data){

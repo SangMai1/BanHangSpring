@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -18,6 +19,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.learncode.comon.Xuly;
 import com.learncode.models.ChucNang1;
 import com.learncode.models.Nguoidung;
 import com.learncode.models.NhomNguoiDung;
@@ -35,51 +38,55 @@ import com.learncode.service.NguoiDungService;
 @Controller
 @RequestMapping("/nguoidung")
 public class NguoiDungController {
-	
+
 	@Autowired
 	NguoiDungService nguoiDungService;
-	
-	
+
 	@ModelAttribute("NHOMS")
 	public List<NhomNguoiDung> getAllNhom() {
 		return this.nguoiDungService.findAllNhom();
 	}
-	
+
 	@ModelAttribute("CHUCNANGS")
-	public List<ChucNang1> getAllChucNang(){
+	public List<ChucNang1> getAllChucNang() {
 		return this.nguoiDungService.finAllChucNang();
 	}
-	
+
 	@ModelAttribute("VAITROS")
-	public List<VaiTro> getAllVaiTro(){
+	public List<VaiTro> getAllVaiTro() {
 		return this.nguoiDungService.finAllVaiTro();
 	}
-	
+
 	@RequestMapping("/")
 	public String addOrEdit(ModelMap model) {
 		Nguoidung nd = new Nguoidung();
 		model.addAttribute("NGUOIDUNG", nd);
 		return "Nguoidung-register";
 	}
-	
-	@RequestMapping(value = "/saveNguoiDung", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+
+	@RequestMapping(value = "/saveNguoiDung", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	@PreAuthorize("hasPermission('', 'tmnd')")
-	public String saveNguoiDung(Nguoidung nd, Principal principal) {
-		nd.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
-		nd.setCreateday(new Timestamp(new Date().getTime()));
-		nd.setNguoitao(principal.getName());
-		nd.setUpdateday(new Timestamp(new Date().getTime()));
-		nd.setNguoiupdate(principal.getName());
-		this.nguoiDungService.insertNguoidung(nd);
-		return "redirect:/nguoidung/list";
+	public String saveNguoiDung(@Valid @ModelAttribute("NGUOIDUNG") Nguoidung nd, BindingResult bindingResult, Principal principal) {
+		if (bindingResult.hasErrors()) {
+			return "Nguoidung-register";
+		} else {
+			// nd.setId(ThreadLocalRandom.current().nextLong(0, new
+			// Long("9000000000000000")));
+			Xuly.giaiMd5(nd.getPassword());
+			nd.setCreateday(new Timestamp(new Date().getTime()));
+			nd.setNguoitao(principal.getName());
+			nd.setUpdateday(new Timestamp(new Date().getTime()));
+			nd.setNguoiupdate(principal.getName());
+			this.nguoiDungService.insertNguoidung(nd);
+			return "redirect:/nguoidung/list";
+		}
 	}
-	
+
 	@GetMapping(value = "/nguoidung-update", produces = "application/json")
 	@ResponseBody
 	@PreAuthorize("hasPermission('', 'cnnd')")
-	public Map<String, String> update(Long id, ModelMap model){
+	public Map<String, String> update(Long id, ModelMap model) {
 		Nguoidung nd = this.nguoiDungService.findById1(id);
-		System.out.println("nguoidung:" +nd);
 		List<Long> lsn = this.nguoiDungService.findByIdnhom(id);
 		List<Long> lsvt = this.nguoiDungService.findByIdvaitro(id);
 		Map<String, String> map = new HashMap<String, String>();
@@ -92,17 +99,16 @@ public class NguoiDungController {
 		map.put("phone", nd.getPhone());
 		map.put("nhoms", String.valueOf(lsn));
 		map.put("vaitros", String.valueOf(lsvt));
-		System.out.println("map day:"+map);
 		return map;
 	}
-	
+
 	@GetMapping("/nguoidung-chitiet")
 	@PreAuthorize("hasPermission('', 'xctnd')")
-	public Optional<Nguoidung> ChiTiet(Long id){
+	public Optional<Nguoidung> ChiTiet(Long id) {
 		return this.nguoiDungService.findNguoidungById(id);
 	}
-	
-	@RequestMapping(value = "/doUpdate", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+
+	@RequestMapping(value = "/doUpdate", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(Nguoidung nd, Principal principal) {
 		nd.setIsdelete((Integer) 0);
 		nd.setUpdateday(new Timestamp(new Date().getTime()));
@@ -110,21 +116,22 @@ public class NguoiDungController {
 		this.nguoiDungService.updateNguoidung(nd);
 		return "redirect:/nguoidung/list";
 	}
-	
-	@RequestMapping(value="/list", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+
+	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	@PreAuthorize("hasPermission('', 'xdsnd')")
 	public String list(ModelMap model, HttpSession session, HttpServletRequest request) {
 		request.getSession().setAttribute("nguoidunglist", null);
 		return "redirect:/nguoidung/list/page/1";
 	}
-	
-	@RequestMapping(value="/list/page/{pageNumber}", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+
+	@RequestMapping(value = "/list/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST,
+			RequestMethod.PUT })
 	public String showNguoidungPages(ModelMap model, HttpServletRequest request, @PathVariable int pageNumber) {
 		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("nguoidunglist");
 		int pageSize = 5;
 		List<Nguoidung> list = (List<Nguoidung>) this.nguoiDungService.getAllNguoiDung();
 		int sum = list.size();
-		if(pages == null) {
+		if (pages == null) {
 			pages = new PagedListHolder<>(list);
 			pages.setPageSize(pageSize);
 		} else {
@@ -133,39 +140,40 @@ public class NguoiDungController {
 				pages.setPage(gotoPage);
 			}
 		}
-		
+
 		request.getSession().setAttribute("nguoidunglist", pages);
-		
+
 		int current = pages.getPage() + 1;
-		
+
 		int begin = Math.max(1, current - list.size());
-		
+
 		int end = Math.min(begin + 5, pages.getPageCount());
-		
+
 		int totalPageCount = pages.getPageCount();
-		
+
 		String baseUrl = "/list/page/";
-		
+
 		model.addAttribute("sum", sum);
-		
+
 		model.addAttribute("beginIndex", begin);
-		
+
 		model.addAttribute("endIndex", end);
-		
+
 		model.addAttribute("currentIndex", current);
-		
+
 		model.addAttribute("totalPageCount", totalPageCount);
-		
+
 		model.addAttribute("baseUrl", baseUrl);
-		
+
 		model.addAttribute("NGUOIDUNGS", pages);
-		
+
 		return "Nguoidung-view.html";
 	}
-	
+
 	@RequestMapping("/list/search/{pageNumber}")
-	public String search(ModelMap model, HttpServletRequest request, @RequestParam("keyword") String tennguoidung, @PathVariable int pageNumber) {
-		if(tennguoidung.equals("")) {
+	public String search(ModelMap model, HttpServletRequest request, @RequestParam("keyword") String tennguoidung,
+			@PathVariable int pageNumber) {
+		if (tennguoidung.equals("")) {
 			return "redirect:/nguoidung/list";
 		}
 		List<Nguoidung> list = this.nguoiDungService.findByTennguoidung(tennguoidung);
@@ -181,30 +189,31 @@ public class NguoiDungController {
 			pages.setPage(goToPage);
 		}
 		request.getSession().setAttribute("nguoidunglist", pages);
-		
+
 		int current = pages.getPage() + 1;
-		
+
 		int begin = Math.max(1, current - list.size());
-		
+
 		int end = Math.min(begin + 5, pages.getPageCount());
-		
+
 		int totalPageCount = pages.getPageCount();
-		
+
 		String baseUrl = "/list/page/";
-		
+
 		model.addAttribute("beginIndex", begin);
-	
+
 		model.addAttribute("endIndex", end);
 
 		model.addAttribute("currentIndex", current);
 
 		model.addAttribute("totalPageCount", totalPageCount);
-	
+
 		model.addAttribute("baseUrl", baseUrl);
 
 		model.addAttribute("NGUOIDUNGS", pages);
 		return "Nguoidung-view.html";
 	}
+
 	@RequestMapping("/delete")
 	@PreAuthorize("hasPermission('', 'xnd')")
 	public String delete(ModelMap model, @RequestParam("id[]") List<Long> ids, Principal principal) {

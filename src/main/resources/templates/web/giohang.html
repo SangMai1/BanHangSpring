@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/trangchu}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="/css/StyleGiohang.css">
+</head>
+<body>
+	<div layout:fragment="content">
+	
+		<h2>Giỏ hàng</h2>
+		<div class="main-giohang">
+			<div class="main-giohang-left">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Hình ảnh</th>
+							<th>Kích thước</th>
+							<th>Số lượng</th>
+							<th>Giá bán</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item: ${session.myCartItems}">
+							<td>
+								<img th:src="@{${item.value.product.sanphams.getLogoImagePath()}}" width="80" height="70"/>
+							</td>
+							<td th:text="${item.value.product.kichthuoc}"></td>
+							<td th:text="${item.value.quantity}"></td>
+							<td th:text="${#numbers.formatCurrency(item.value.quantity * (item.value.product.giatien - item.value.product.giamgia))}"></td>
+							<td>
+								
+								<a th:href="@{'/web/remove/' + ${item.value.product.id}}">Remove</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="main-giohang-right">
+				<h3 th:text="'Thành tiền :'+ ${#numbers.formatCurrency(session.myCartTotal)}"></h3>
+				<a class="dathang" th:href="@{'/web/checkout'}">Tiến hành đặt hàng</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -6,11 +6,18 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.learncode.models.Sanpham;
 import com.learncode.repository.SanphamRepository;
 
+import groovyjarjarpicocli.CommandLine.Command;
+
+@Component
 @Service
 public class SanphamImpl implements SanphamService{
 	
@@ -19,35 +26,49 @@ public class SanphamImpl implements SanphamService{
 	
 	@Override
 	public void insertSanpham(Sanpham sp) {
-		sp.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000000")));
-		this.sanphamRepository.insertSanpham(sp.getId(), sp.getMasanpham(), sp.getTensanpham(), sp.getImage(), sp.getCreateday(), sp.getCreateby(), sp.getUpdateday(), sp.getUpdateby(), sp.getXuatxu(), sp.getMota(), sp.getIsdelete(), sp.getLoaisanpham().getId());
+		System.out.println("11");
+		this.sanphamRepository.save(sp);
 	}
 	
 	@Override
-	public int updateSanpham(Sanpham sp) {
-		return this.sanphamRepository.updateSanpham(sp.getMasanpham(), sp.getTensanpham(), sp.getImage(), sp.getUpdateday(), sp.getUpdateby(), sp.getXuatxu(), sp.getMota(), sp.getIsdelete(), sp.getLoaisanpham().getId(), sp.getId());
+//	@Cacheable(value = "sanpham", key = "#sp.updateby")
+	public void updateSanpham(Sanpham sp) {
+	//	System.out.println("update day");
+		this.sanphamRepository.save(sp);
 	}
 
 
 	@Override
+	@Cacheable(value = "sanpham", key="#id")
 	public Optional<Sanpham> finBySanphamId(Long id) {
-		return sanphamRepository.finBySanphamId(id);
+		System.out.println("aaaa");
+		return this.sanphamRepository.finBySanphamId(id);
 	}
 
 
 	@Override
 	public List<Sanpham> getAllSanpham() {
-		return sanphamRepository.getAllSanpham();
+		return this.sanphamRepository.getAllSanpham();
 	}
 
 	@Override
 	public List<Sanpham> getSanphamAndSanphamchitiet() {
-		return sanphamRepository.getSanphamAndSanphamchitiet();
+		return this.sanphamRepository.getSanphamAndSanphamchitiet();
 	}
 
 	@Override
 	public List<Sanpham> getSanphammoi() {
-		return sanphamRepository.getSanphammoi();
+		return this.sanphamRepository.getSanphammoi();
+	}
+
+	@Override
+	public List<Sanpham> searchGiatien(float min, float max) {
+		return sanphamRepository.searchGiatien(min, max);
+	}
+
+	@Override
+	public List<Sanpham> searchSize(String size) {
+		return sanphamRepository.searchSize(size);
 	}
 	
 	

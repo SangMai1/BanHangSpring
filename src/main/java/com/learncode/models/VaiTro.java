@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -16,50 +17,58 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="qtht_vaitro")
-public class VaiTro implements Serializable{
-	
+@Table(name = "qtht_vaitro")
+public class VaiTro implements Serializable {
+
 	@Id
+	@GeneratedValue(generator = "bigid")
+	@GenericGenerator(name = "bigid", strategy = "com.learncode.config.IDGenerator")
 	private long id;
-	
+
 	@Column(name = "mavaitro")
+	@NotBlank(message = "không được để trống")
 	private String mavaitro;
-	
+
 	@Column(name = "tenvaitro")
+	@NotBlank(message = "không được để trống")
 	private String tenvaitro;
-	
+
 	@Column(name = "nguoitao")
 	private String nguoitao;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date createday;
-	
+
 	@Column(name = "nguoiupdate")
 	private String nguoiupdate;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date updateday;
-	
-	@Column(name="isdelete")
+
+	@Column(name = "isdelete")
 	private int isdelete;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-	@JoinTable(name = "qtht_vaitrovachucnang",
-				joinColumns = {@JoinColumn(name = "idvaitro", referencedColumnName = "id")},
-				inverseJoinColumns = {@JoinColumn(name = "idchucnang", referencedColumnName = "id")})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@JoinTable(name = "qtht_vaitrovachucnang", joinColumns = {
+			@JoinColumn(name = "idvaitro", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "idchucnang", referencedColumnName = "id") })
 	private List<ChucNang1> chucnang = new ArrayList<>();
 
 	public VaiTro() {
 		super();
 	}
 
-	public VaiTro(long id, String mavaitro, String tenvaitro, String nguoitao, Date createday, String nguoiupdate,
-			Date updateday, int isdelete, List<ChucNang1> chucnang) {
+	public VaiTro(long id, @NotBlank(message = "không được để trống") String mavaitro,
+			@NotBlank(message = "không được để trống") String tenvaitro, String nguoitao, Date createday,
+			String nguoiupdate, Date updateday, int isdelete, List<ChucNang1> chucnang) {
 		super();
 		this.id = id;
 		this.mavaitro = mavaitro;
@@ -150,7 +159,7 @@ public class VaiTro implements Serializable{
 				+ ", createday=" + createday + ", nguoiupdate=" + nguoiupdate + ", updateday=" + updateday
 				+ ", isdelete=" + isdelete + ", chucnang=" + chucnang + "]";
 	}
+
 	
-	
-	
+
 }

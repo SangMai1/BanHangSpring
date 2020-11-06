@@ -45,10 +45,10 @@
 }
 
 .feature__info1-product-title h5 {
-	font-weight: bold;
-	font-size: 1.8rem;
-	margin-top: -350px;
-	margin-bottom: 10px;
+	font-weight: 700 !important;
+	font-size: 2rem !important;
+	margin-top: -340px !important;
+	margin-bottom: 10px !important;
 }
 
 .feature__info1-product-title p {
@@ -88,9 +88,7 @@
 	padding-left: 10px;
 }
 
-.feature__info1-product-size {
-	margin-top: 10px;
-}
+
 .size{
 	display: inline-block;
 	position: relative;
@@ -152,4 +150,29 @@
 
 .feature__info1-product-description p {
 	font-size: 14px;
+}
+
+/* Style the buttons */
+.btn {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Style the active class, and buttons on mouse-over */
+.active, .btn:hover {
+  background-color: #666;
+  color: white;
+}
+
+#myDIV {
+	display: inline-block;
+	padding: 0 10px;
+}
+
+#myDIV {
+	color: black;
 }

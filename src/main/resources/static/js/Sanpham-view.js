@@ -60,7 +60,10 @@ $(document).ready(function(){
 		
 		$('.new').on('click', function(event){
 			event.preventDefault();
-			$('#myNew').modal();
+			var href = $(this).attr('href');
+			$.get(href, function(act, st){
+				$('#idsanpham').val(act.id);
+			})
 		});
 		
 		$('#fileImages').change(function(){

@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -18,6 +19,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,36 +40,37 @@ public class VaiTroController {
 
 	@Autowired
 	VaiTroService vaiTroService;
-	
-	@Autowired
-	ChucNang1Service chucNang1Service;
-	
+
 	@ModelAttribute("CHUCNANGS")
-	public List<ChucNang1> getAllChucNang(){
+	public List<ChucNang1> getAllChucNang() {
 		return this.vaiTroService.finAllChucNang();
 	}
-	
+
 	@RequestMapping("/")
 	public String addOrEdit(ModelMap model) {
 		VaiTro vt = new VaiTro();
 		model.addAttribute("VAITRO", vt);
 		return "Vaitro-register";
 	}
-	
-	@RequestMapping(value = "/saveVaitro", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+
+	@RequestMapping(value = "/saveVaitro", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	@PreAuthorize("hasPermission('', 'tmvt')")
-	public String saveVaiTro(ModelMap model, @ModelAttribute("VAITRO") VaiTro vt, Principal principal) {
-		vt.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
-		vt.setCreateday(new Timestamp(new Date().getTime()));
-		vt.setUpdateday(new Timestamp(new Date().getTime()));
-		vt.setNguoitao(principal.getName());
-		vt.setNguoiupdate(principal.getName());
-		this.vaiTroService.insertVaitro(vt);
-		model.addAttribute("VAITROS", this.vaiTroService.listVaiTro());
-		return "redirect:/vaitro/list";
+	public String saveVaiTro(ModelMap model, @Valid @ModelAttribute("VAITRO") VaiTro vt, BindingResult bindingResult,
+			Principal principal) {
+		if (bindingResult.hasErrors()) {
+			return "Vaitro-register";
+		} else {
+//		vt.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
+			vt.setCreateday(new Timestamp(new Date().getTime()));
+			vt.setUpdateday(new Timestamp(new Date().getTime()));
+			vt.setNguoitao(principal.getName());
+			vt.setNguoiupdate(principal.getName());
+			this.vaiTroService.insertVaitro(vt);
+			return "redirect:/vaitro/list";
+		}
 	}
-	
-	@GetMapping(value="/update", produces = "application/json")
+
+	@GetMapping(value = "/update", produces = "application/json")
 	@ResponseBody
 	@PreAuthorize("hasPermission('', 'cnvt')")
 	public Map<String, String> update(Long id) {
@@ -80,14 +83,14 @@ public class VaiTroController {
 		map.put("chucnangs", String.valueOf(lscn));
 		return map;
 	}
-	
+
 	@GetMapping("/vaitro-chitiet")
 	@PreAuthorize("hasPermission('', 'xctvt')")
 	public Optional<VaiTro> chitiet(Long id) {
 		return this.vaiTroService.findByVaitroId(id);
 	}
-	
-	@RequestMapping(value = "/updateVaiTro",  method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+
+	@RequestMapping(value = "/updateVaiTro", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(ModelMap model, VaiTro vt, Principal principal) {
 		vt.setIsdelete((Integer) 0);
 		vt.setUpdateday(new Timestamp(new Date().getTime()));
@@ -95,34 +98,35 @@ public class VaiTroController {
 		this.vaiTroService.updateVaitro(vt);
 		return "redirect:/vaitro/list";
 	}
-	
-	@GetMapping("/list")
+
+	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list(ModelMap model, HttpServletRequest request) {
 		request.getSession().setAttribute("vaitrolist", null);
 		return "redirect:/vaitro/list/page/1";
 	}
-	
-	@GetMapping("/list/page/{pageNumber}")
+
+	@RequestMapping(value = "/list/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
 	@PreAuthorize("hasPermission('', 'xdsvt')")
 	public String showVaiTrosPage(HttpServletRequest request, @PathVariable int pageNumber, ModelMap model) {
-		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("vaitrolist");
+		PagedListHolder<?> pages1 = (PagedListHolder<?>) request.getSession().getAttribute("vaitrolist");
 		int pagesize = 5;
 		List<VaiTro> list = (List<VaiTro>) this.vaiTroService.listVaiTro();
+		System.out.println("vaitro11111" + list);
 		int sum = list.size();
-		if (pages == null) {
-			pages = new PagedListHolder<>(list);
-			pages.setPageSize(pagesize);
+		if (pages1 == null) {
+			pages1 = new PagedListHolder<>(list);
+			pages1.setPageSize(pagesize);
 		} else {
-			final int goToPage = pageNumber - 1; 
-			if (goToPage <= pages.getPageCount() && goToPage >= 0) {
-				pages.setPage(goToPage);
+			final int goToPage = pageNumber - 1;
+			if (goToPage <= pages1.getPageCount() && goToPage >= 0) {
+				pages1.setPage(goToPage);
 			}
 		}
-		request.getSession().setAttribute("vaitrolist", pages);
-		int current = pages.getPage() + 1;
+		request.getSession().setAttribute("vaitrolist", pages1);
+		int current = pages1.getPage() + 1;
 		int begin = Math.max(1, current - list.size());
-		int end = Math.min(begin + 5, pages.getPageCount());
-		int totalPageCount = pages.getPageCount();
+		int end = Math.min(begin + 5, pages1.getPageCount());
+		int totalPageCount = pages1.getPageCount();
 		String baseUrl = "/list/page/";
 		model.addAttribute("sum", sum);
 		model.addAttribute("beginIndex", begin);
@@ -130,12 +134,13 @@ public class VaiTroController {
 		model.addAttribute("currentIndex", current);
 		model.addAttribute("totalPageCount", totalPageCount);
 		model.addAttribute("baseUrl", baseUrl);
-		model.addAttribute("VAITROS", pages);
+		model.addAttribute("VAITROS", pages1);
 		return "Vaitro-view";
 	}
-	
+
 	@RequestMapping("/dataSearch")
-	public String dataSearch(@RequestParam("namvt") String tenvaitro, @RequestParam("keyvt") String mavaitro, HttpSession session) {
+	public String dataSearch(@RequestParam("namvt") String tenvaitro, @RequestParam("keyvt") String mavaitro,
+			HttpSession session) {
 		session.setAttribute("NAMEVT", tenvaitro);
 		session.setAttribute("KEYVT", mavaitro);
 		if (tenvaitro == null || tenvaitro.equals("")) {
@@ -154,8 +159,10 @@ public class VaiTroController {
 			return "redirect:/vaitro/list/search/1";
 		}
 	}
+
 	@RequestMapping("/list/search/{numberPage}")
-	public String search(ModelMap model, HttpServletRequest request, @PathVariable int numberPage, HttpSession session) {
+	public String search(ModelMap model, HttpServletRequest request, @PathVariable int numberPage,
+			HttpSession session) {
 		String tenvaitro = (String) session.getAttribute("NAMEVT");
 		String mavaitro = (String) session.getAttribute("KEYVT");
 		Integer temp = (Integer) session.getAttribute("SEARCH");
@@ -173,7 +180,7 @@ public class VaiTroController {
 		if (list == null) {
 			return "redirect:/vaitro/list";
 		}
-		
+
 		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("vaitrolist");
 		int pagesize = 5;
 		pages = new PagedListHolder<>(list);
@@ -196,7 +203,7 @@ public class VaiTroController {
 		model.addAttribute("VAITROS", pages);
 		return "Vaitro-view";
 	}
-	
+
 	@RequestMapping("/del")
 	@PreAuthorize("hasPermission('', 'xvt')")
 	public String delete(ModelMap model, @RequestParam("lvt") List<Long> ids, Principal principal) {

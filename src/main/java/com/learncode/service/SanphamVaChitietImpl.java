@@ -16,14 +16,15 @@ public class SanphamVaChitietImpl implements SanphamVaChitietService{
 	SanphamVaChitietRepository sanphamVaChitietRepository;
 
 	@Override
-	public int insertSanphamVaChitiet(SanphamVaChitiet spvct) {
-		return this.sanphamVaChitietRepository.insertSanphamVaChitiet(spvct.getId(), spvct.getIdsanpham(), spvct.getKichthuoc(), spvct.getSoluong(), spvct.getGiatien(), spvct.getIsdelete());
+	public void insertSanphamVaChitiet(SanphamVaChitiet spvct) {
+		this.sanphamVaChitietRepository.save(spvct);
+		//this.sanphamVaChitietRepository.insertSanphamVaChitiet(spvct.getId(), spvct.getSanphams().getId(), spvct.getKichthuoc(), spvct.getSoluong(), spvct.getGiatien(), spvct.getGiamgia(), spvct.getIsdelete());
 	}
 
 	
 	@Override
-	public int updateSanphamVaChitiet(String kichthuoc, Integer soluong, Float giatien, Integer isdelete, Long id) {
-		return this.sanphamVaChitietRepository.updateSanphamVaChitiet(kichthuoc, soluong, giatien, isdelete, id);
+	public void updateSanphamVaChitiet(SanphamVaChitiet spvct) {
+		this.sanphamVaChitietRepository.updateSanphamVaChitiet(spvct.getKichthuoc(), spvct.getSoluong(), spvct.getGiatien(), spvct.getGiamgia(), spvct.getIsdelete(), spvct.getId());
 	}
 
 
@@ -41,8 +42,21 @@ public class SanphamVaChitietImpl implements SanphamVaChitietService{
 
 	@Override
 	public List<SanphamVaChitiet> findBySizeSanpham(Long idsanpham) {
-		return sanphamVaChitietRepository.findBySizeSanpham(idsanpham);
+		return this.sanphamVaChitietRepository.findBySizeSanpham(idsanpham);
 	}
+
+
+	@Override
+	public Optional<SanphamVaChitiet> findBySanphamId(Long id) {
+		return this.sanphamVaChitietRepository.findBySanphamId(id);
+	}
+
+
+	@Override
+	public List<SanphamVaChitiet> searchGiatien(float min, float max) {
+		return sanphamVaChitietRepository.searchGiatien(min, max);
+	}
+	
 	
 	
 }

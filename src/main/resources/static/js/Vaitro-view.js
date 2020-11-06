@@ -1,28 +1,10 @@
 	$(document).ready(function(){
 		var urls = "/vaitro/ #myModals";
 		$('#model-body').html(event).load(urls);
-		$('#bnn').on('click',function(event){
-			event.preventDefault();
-			var url = $('#myModals').attr('action');
-			$.ajax({
-				contentType: "application/json",
-				url: "/login/check",
-				data: {
-					url: url
-				},
-				dataType: "json",
-				timeout: 10000,
-				success: function(data){
-					if(data > 0){
-						$('#myModal').modal("show");
-						
-					} else {
-						alert("Bạn không dùng được chức năng này");
-						$('#myModal').modal("hide");
-					}
-				},
-			});
-		});
+//		$('#bnn').on('click',function(event){
+//			event.preventDefault();
+//			
+//		});
 		
 		$('.buttonDelete').on('click', function(event){
 			event.preventDefault();

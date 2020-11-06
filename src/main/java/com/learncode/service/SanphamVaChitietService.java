@@ -7,14 +7,18 @@ import com.learncode.models.SanphamVaChitiet;
 
 public interface SanphamVaChitietService {
 
-	int insertSanphamVaChitiet(SanphamVaChitiet spvct);
+	void insertSanphamVaChitiet(SanphamVaChitiet spvct);
 
 	List<SanphamVaChitiet> getAll();
 
 	Optional<SanphamVaChitiet> findBySanphamVaChitietId(Long id);
 
-	int updateSanphamVaChitiet(String kichthuoc, Integer soluong, Float giatien, Integer isdelete, Long id);
+	void updateSanphamVaChitiet(SanphamVaChitiet spvct);
 
 	List<SanphamVaChitiet> findBySizeSanpham(Long idsanpham);
+
+	Optional<SanphamVaChitiet> findBySanphamId(Long id);
+
+	List<SanphamVaChitiet> searchGiatien(float min, float max);
 
 }

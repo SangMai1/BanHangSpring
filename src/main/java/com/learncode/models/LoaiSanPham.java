@@ -1,27 +1,35 @@
 package com.learncode.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "qtht_loaisanpham")
 public class LoaiSanPham {
-	
+
 	@Id
+	@GeneratedValue(generator = "bigid")
+    @GenericGenerator(name = "bigid",strategy = "com.learncode.config.IDGenerator")
 	private long id;
 	
 	@Column(name = "maloaisanpham")
+	@NotBlank(message = "không được để trống")
 	private String maloaisanpham;
 	
 	@Column(name = "tenloaisanpham")
+	@NotBlank(message = "không được để trống")
 	private String tenloaisanpham;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -45,7 +53,8 @@ public class LoaiSanPham {
 		super();
 	}
 
-	public LoaiSanPham(long id, String maloaisanpham, String tenloaisanpham, Date createday, String createby,
+	public LoaiSanPham(long id, @NotBlank(message = "không được để trống") String maloaisanpham,
+			@NotBlank(message = "không được để trống") String tenloaisanpham, Date createday, String createby,
 			Date updateday, String updateby, int isdelete) {
 		super();
 		this.id = id;
@@ -122,5 +131,6 @@ public class LoaiSanPham {
 		this.isdelete = isdelete;
 	}
 
+	
 	
 }

@@ -1,0 +1,90 @@
+h4 {
+	padding-top: 30px;
+	color: black;
+	font-size: 18px;
+	font-weight: 600;
+}
+img {
+	width: 50px;
+}
+
+.table {
+  font-family: arial, sans-serif !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+    height: 300px !important;
+}
+
+td, th {
+  border: 1px solid #dddddd !important;
+  text-align: left !important;
+  padding: 8px !important;
+    font-size: 14px !important;
+  font-weight: 600px !important;
+}
+.form-group img {
+	width: 100px;
+	height: 130px;
+	display: block;
+	border: 1px solid red;
+	margin-left: 300px;
+	margin-bottom: 5px;
+	max-width: 100%;
+}
+.btn-primary {
+	font-size: 15px !important;
+	font-weight: 600;
+}
+
+
+#bnn, .buttonDelete{
+	margin-bottom: 10px;
+	margin-left: 5px;
+}
+#dataSearch {
+	float: right;
+	background-color: #4db6ac;
+    width: 40%;
+    margin: 0 auto;
+    padding: 10px;
+}
+.main__menu-search-form-input, .main__menu-search-form-button {
+  padding: 0;
+}
+.main__menu-search-form-input1 {
+  border: 0;
+  outline: none;
+  background-color: transparent;
+  font-size: 1rem;
+  font-family: "Poppins";
+  flex-grow: 1;
+  width: 90%;
+  padding-right: 0.5rem;
+  color: white;
+}
+.main__menu-search-form-button1 {
+  float: right;
+  width: 10%;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-family: "Poppins";
+  color: white;
+}
+
+.showin {
+	text-align: center;
+	color: black;
+	font-size: 12px;
+}
+
+.showcount {
+	color: black;
+	font-size: 12px;
+}
+.pagination {
+	 justify-content: center !important;
+	 font-size: 16px;
+}

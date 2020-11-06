@@ -1,7 +1,5 @@
 package com.learncode.controller;
 
-
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,18 +18,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,7 +37,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.zxing.qrcode.encoder.QRCode;
 import com.learncode.comon.ZXingHelper;
 import com.learncode.models.LoaiSanPham;
 import com.learncode.models.Sanpham;
@@ -52,131 +45,150 @@ import com.learncode.service.LoaisanphamService;
 import com.learncode.service.SanphamService;
 import com.learncode.service.SanphamVaChitietService;
 
-
 @Controller
 @RequestMapping("/sanpham")
 public class SanphamController {
-	
+
 	@Autowired
 	SanphamService sanphamService;
-	
+
 	@Autowired
 	LoaisanphamService loaisanphamService;
-	
+
 	@Autowired
 	SanphamVaChitietService sanphamVaChitietService;
-	
-	@RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+
+	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String home(ModelMap model) {
 		Sanpham sp = new Sanpham();
 		model.addAttribute("SANPHAM", sp);
 		return "Sanpham-register";
 	}
-	
-	@RequestMapping(value = "/doSave", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
-	public String doSave(@ModelAttribute("SANPHAM") Sanpham sp, Principal principal, @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
-		sp.setCreateday(new Timestamp(new Date().getTime()));
-		sp.setCreateby(principal.getName());
-		sp.setUpdateday(new Timestamp(new Date().getTime()));
-		sp.setUpdateby(principal.getName());
-		sp.setIsdelete((Integer) 0);
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		sp.setImage(fileName);
-		this.sanphamService.insertSanpham(sp);
-		
-		String uploadDir = "./uploads/" + sp.getId();
-		
-		Path uploadPath = Paths.get(uploadDir);
-		System.out.println(uploadPath);
-		if (!Files.exists(uploadPath)) {
-			Files.createDirectories(uploadPath);
+
+	@RequestMapping(value = "/doSave", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
+	public String doSave(@Valid @ModelAttribute("SANPHAM") Sanpham sp, BindingResult bindingResult, Principal principal,
+			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+		if (bindingResult.hasErrors()) {
+			return "Sanpham-register";
+		} else {
+			sp.setCreateday(new Timestamp(new Date().getTime()));
+			sp.setCreateby(principal.getName());
+			sp.setUpdateday(new Timestamp(new Date().getTime()));
+			sp.setUpdateby(principal.getName());
+			sp.setIsdelete((Integer) 0);
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			sp.setImage(fileName);
+			this.sanphamService.insertSanpham(sp);
+
+			String uploadDir = "./uploads/" + sp.getId();
+
+			Path uploadPath = Paths.get(uploadDir);
+			System.out.println(uploadPath);
+			if (!Files.exists(uploadPath)) {
+				Files.createDirectories(uploadPath);
+			}
+
+			try (InputStream inputStream = multipartFile.getInputStream()) {
+				Path filePath = uploadPath.resolve(fileName);
+				Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+			} catch (Exception e) {
+				throw new IOException("Could not save uploaded file: " + fileName);
+			}
+			return "redirect:/sanpham/list";
 		}
-		
-		try (InputStream inputStream = multipartFile.getInputStream()) {
-			Path filePath = uploadPath.resolve(fileName);
-			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-		} catch (Exception e) {
-			throw new IOException("Could not save uploaded file: " + fileName);
-		}
-		return "redirect:/sanpham/list";
 	}
-	
+
 	@GetMapping("/sanpham-update/{id}")
-	public String findBySanphamId(@PathVariable Long id,ModelMap model){
+	public String findBySanphamId(@PathVariable Long id, ModelMap model) {
 		model.addAttribute("sp", this.sanphamService.finBySanphamId(id).get());
-		return "form-san-pham";  
+		return "form-san-pham";
 	}
-	
+
 	@GetMapping("/sanpham-chitiet")
 	@ResponseBody
-	public Optional<Sanpham> findBySanphamChitiet(Long id){
+	public Optional<Sanpham> findBySanphamChitiet(Long id) {
 		return this.sanphamService.finBySanphamId(id);
 	}
-	
+
 	@GetMapping("/add-chitiet")
 	@ResponseBody
 	public Optional<Sanpham> getSanphamchitiet(Long id) {
 		return this.sanphamService.finBySanphamId(id);
 	}
-	
+
 	@RequestMapping(value = "/doUpdate", method = RequestMethod.POST)
 	public String doUpdate(@RequestParam("id") Long id, @RequestParam("masanpham") String masanpham,
-			@RequestParam("tensanpham") String tensanpham,
-			@RequestParam("loaisanpham") LoaiSanPham loaisanpham,
-			@RequestParam("xuatxu") String xuatxu,
-			@RequestParam("mota") String mota, Principal principal, @RequestPart("fileImages") MultipartFile multipartFile) throws IOException {
-		
+			@RequestParam("tensanpham") String tensanpham, @RequestParam("loaisanpham") LoaiSanPham loaisanpham,
+			@RequestParam("xuatxu") String xuatxu, @RequestParam("mota") String mota, Principal principal,
+			@RequestPart("fileImages") MultipartFile multipartFile) throws IOException {
+
 		Sanpham sp = new Sanpham(id, masanpham, tensanpham, loaisanpham, xuatxu, mota);
+		sp.setCreateby(sp.getCreateby());
+		sp.setCreateday(sp.getCreateday());
 		sp.setUpdateday(new Timestamp(new Date().getTime()));
 		sp.setUpdateby(principal.getName());
 		sp.setIsdelete((Integer) 0);
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		System.out.println("ten anh" + fileName);
 		sp.setImage(fileName);
-		Path deleteFile = Paths.get("uploads/" + sp.getId());
+		this.sanphamService.updateSanpham(sp);
+		Path deleteFile = Paths.get("./uploads/" + sp.getId());
 		{
 			File file = deleteFile.toFile();
-			if(file.isDirectory()) {
-				for(File f : deleteFile.toFile().listFiles()) {
+			if (file.isDirectory()) {
+				for (File f : deleteFile.toFile().listFiles()) {
+					System.out.println("da xoa" + f);
 					f.delete();
+					
 				}
-			}else {
+			} else {
 				file.deleteOnExit();
 			}
+			if (file.delete()) {
+				System.out.println("da deleted foler" + file.toString());
+			}
+			
 		}
-		System.out.println("aaaa"+this.sanphamService.updateSanpham(sp));
-		this.sanphamService.updateSanpham(sp);
 		
+		
+
 		String uploadDir = "./uploads/" + sp.getId();
-		
+
 		Path uploadPath = Paths.get(uploadDir);
 		System.out.println(uploadPath);
 
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);
 		}
-		
+
 		try (InputStream inputStream = multipartFile.getInputStream()) {
 			Path filePath = uploadPath.resolve(fileName);
-			System.out.println("=>" + ImageIO.read(multipartFile.getInputStream()) == null + " ="+ filePath.toString());
+			System.out.println("sang dang upload" + filePath.toString());
+			if (ImageIO.read(multipartFile.getInputStream()) == null) {
+				filePath.toString();
+			}
+			  
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-		} catch (Exception e) {	
-			System.out.println(e); 
+		} catch (Exception e) {
+			System.out.println(e);
 		}
+		
 		return "redirect:/sanpham/list";
 	}
-	
+
 	@ModelAttribute("LOAISANPHAM")
-	public List<LoaiSanPham> getLoaisanpham(){
+	public List<LoaiSanPham> getLoaisanpham() {
 		return this.loaisanphamService.findAllLoaisanpham();
 	}
-	
-	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+
+	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String list(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphamlist", null);
 		return "redirect:/sanpham/list/page/1";
 	}
-	
-	@RequestMapping(value="/list/page/{pageNumber}", method = {RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT})
+
+	@RequestMapping(value = "/list/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST,
+			RequestMethod.PUT })
 	public String showSanPhamsPage(HttpServletRequest request, @PathVariable int pageNumber, ModelMap model) {
 		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("sanphamlist");
 		int pagesize = 5;
@@ -192,64 +204,64 @@ public class SanphamController {
 			}
 		}
 		request.getSession().setAttribute("sanphamlist", pages);
-		
+
 		int current = pages.getPage() + 1;
-		
+
 		int begin = Math.max(1, current - list.size());
-		
+
 		int end = Math.min(begin + 5, pages.getPageCount());
-		
+
 		int totalPageCount = pages.getPageCount();
-		
+
 		String baseUrl = "/list/page/";
-		
-		model.addAttribute("sum", sum);		
-		
+
+		model.addAttribute("sum", sum);
+
 		model.addAttribute("beginIndex", begin);
-	
+
 		model.addAttribute("endIndex", end);
 
 		model.addAttribute("currentIndex", current);
 
 		model.addAttribute("totalPageCount", totalPageCount);
-	
+
 		model.addAttribute("baseUrl", baseUrl);
 
 		model.addAttribute("SANPHAMS", pages);
 
 		return "Sanpham-view";
 	}
-	
-//	@GetMapping(value = "/del")
-//	public String delete(@RequestParam("lsp[]") List<Long> ids, HttpSession session) {
-//		for (Long long1 : ids) {
-//			Sanpham sp = this.sanphamService.finBySanphamId(long1).get();
-//			sp.setUpdateday(new Timestamp(new Date().getTime()));
-//			sp.setUpdateby((String) session.getAttribute("USERNAME"));
-//			sp.setIsdelete((Integer) 1);
-//			this.sanphamService.updateSanpham(sp);
-//		}
-//		return "redirect:/sanpham/list";
-//	}
-	
-	@RequestMapping(value = "/add", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
-	public String add(@RequestParam("idsanpham") Long idsanpham, @RequestParam("kichthuoc") String kichthuoc, @RequestParam("soluong") Integer soluong, @RequestParam("giatien") Float giatien, @RequestParam("giamgia") Integer giamgia) {
-		SanphamVaChitiet spct = new SanphamVaChitiet(0, idsanpham, kichthuoc, soluong, giatien, 0);
-		spct.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
+
+	@GetMapping(value = "/del")
+	public String delete(@RequestParam("lsp[]") List<Long> ids, Principal principal) {
+		for (Long long1 : ids) {
+			Sanpham sp = this.sanphamService.finBySanphamId(long1).get();
+			sp.setUpdateday(new Timestamp(new Date().getTime()));
+			sp.setUpdateby(principal.getName());
+			sp.setIsdelete((Integer) 1);
+			this.sanphamService.updateSanpham(sp);
+		}
+		return "redirect:/sanpham/list";
+	}
+
+	@RequestMapping(value = "/add", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
+	public String add(@RequestParam("idsanpham") Sanpham idsanpham, @RequestParam("kichthuoc") String kichthuoc,
+			@RequestParam("soluong") Integer soluong, @RequestParam("giatien") Float giatien,
+			@RequestParam("giamgia") Integer giamgia) {
+		SanphamVaChitiet spct = new SanphamVaChitiet(idsanpham, kichthuoc, soluong, giatien, giamgia, 0);
+		
 		this.sanphamVaChitietService.insertSanphamVaChitiet(spct);
 		return "redirect:/sanpham/list";
 	}
-	
-	@RequestMapping(value ="/barcode/{id}", method = RequestMethod.GET)
+
+	@GetMapping("/barcode/{id}")
 	public void barcode(@PathVariable Long id, HttpServletResponse response) throws Exception {
 		response.setContentType("image/png");
 		OutputStream outputStream = response.getOutputStream();
 		System.out.println(outputStream);
-		outputStream.write(ZXingHelper.getBarCodeImage(String.valueOf(id), 100, 100));
+		outputStream.write(ZXingHelper.getQRCodeImage(String.valueOf(id), 100, 100));
 		outputStream.flush();
 		outputStream.close();
 	}
-
-
 
 }

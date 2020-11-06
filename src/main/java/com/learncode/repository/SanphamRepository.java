@@ -13,18 +13,19 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.learncode.models.Sanpham;
+import com.learncode.models.SanphamVaChitiet;
 
 @Repository
 @Transactional
 public interface SanphamRepository extends CrudRepository<Sanpham, Long> {
 
-	@Modifying
-	@Query(value = "INSERT INTO public.qtht_sanpham(id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", nativeQuery = true)
-	void insertSanpham(@Param("id") Long id, @Param("masanpham") String masanpham, @Param("tensanpham") String tensanpham, @Param("image") String image, @Param("createday") Date createday, @Param("createby") String createby, @Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("xuatxu") String xuatxu, @Param("mota") String mota, @Param("isdelete") Integer isdelete, @Param("maloaisanpham") Long maloaisanpham);
+//	@Modifying
+//	@Query(value = "INSERT INTO public.qtht_sanpham(id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", nativeQuery = true)
+//	void insertSanpham( Long id, @Param("masanpham") String masanpham, @Param("tensanpham") String tensanpham, @Param("image") String image, @Param("createday") Date createday, @Param("createby") String createby, @Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("xuatxu") String xuatxu, @Param("mota") String mota, @Param("isdelete") Integer isdelete, @Param("maloaisanpham") Long maloaisanpham);
 	
-	@Modifying
-	@Query(value = "UPDATE public.qtht_sanpham SET masanpham=?, tensanpham=?, image=?, updateday=?, updateby=?, xuatxu=?, mota=?, isdelete=?, maloaisanpham=? WHERE id = ?;", nativeQuery = true)
-	int updateSanpham(@Param("masanpham") String masanpham, @Param("tensanpham") String tensanpham, @Param("image") String image, @Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("xuatxu") String xuatxu, @Param("mota") String mota, @Param("isdelete") Integer isdelete, @Param("maloaisanpham") Long maloaisanpham, @Param("id") Long id);
+//	@Modifying
+//	@Query(value = "UPDATE public.qtht_sanpham SET masanpham=?, tensanpham=?, image=?, updateday=?, updateby=?, xuatxu=?, mota=?, isdelete=?, maloaisanpham=? WHERE id = ?;", nativeQuery = true)
+//	int updateSanpham(@Param("masanpham") String masanpham, @Param("tensanpham") String tensanpham, @Param("image") String image, @Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("xuatxu") String xuatxu, @Param("mota") String mota, @Param("isdelete") Integer isdelete, @Param("maloaisanpham") Long maloaisanpham, @Param("id") Long id);
 	
 	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham FROM qtht_sanpham WHERE id = ?", nativeQuery = true)
 	Optional<Sanpham> finBySanphamId(@Param("id") Long id);
@@ -44,4 +45,16 @@ public interface SanphamRepository extends CrudRepository<Sanpham, Long> {
 			"ORDER BY ngay ASC\r\n" + 
 			"LIMIT 5", nativeQuery = true)
 	List<Sanpham> getSanphammoi();
+	
+	@Query(value = "SELECT sp.id, sp.tensanpham, sp.image FROM qtht_sanpham sp\r\n" + 
+			"INNER JOIN qtht_sanphamvachitiet spvct ON spvct.idsanpham = sp.id\r\n" + 
+			"WHERE sp.isdelete = 0 AND spvct.isdelete = 0 AND spvct.giatien BETWEEN ? AND ?\r\n" + 
+			"GROUP BY sp.id", nativeQuery = true)
+	List<Sanpham> searchGiatien(@Param("min") float min, @Param("max") float max);
+	
+	@Query(value = "SELECT sp.id, sp.tensanpham, sp.image FROM qtht_sanpham sp\r\n" + 
+			"			INNER JOIN qtht_sanphamvachitiet spvct ON spvct.idsanpham = sp.id\r\n" + 
+			"			WHERE sp.isdelete = 0 AND spvct.isdelete = 0 AND spvct.kichthuoc = ?\r\n" + 
+			"			GROUP BY sp.id", nativeQuery = true)
+	List<Sanpham> searchSize(@Param("size") String size);
 }

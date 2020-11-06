@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/trangchu}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<form action="/web/checkLogin" method="post" id="myModals">
+			<img src="/slides/anh-avatar-dep.jpg" alt="Avatar" class="avatar"
+				style="width: 30% !important; border-radius: 50% !important; margin-left: 180px !important;">
+			<div class="container" style="padding: 16px !important;">
+				<label style="font-weight: 700 !important; font-size: 16px !important;">Username</label> <input
+					type="text" name="email" placeholder="Enter email" required="required"
+					style="width: 100% !important; padding: 12px 20px !important; margin: 8px 0 !important; display: inline-block !important; border: 1px solid #ccc !important; box-sizing: border-box !important; font-size: 16px !important" />
+
+
+				<label style="font-weight: 700 !important; font-size: 16px !important;">Password</label> <input
+					type="password" name="password" placeholder="Enter password" required="required"
+					style="width: 100% !important; padding: 12px 20px !important; margin: 8px 0 !important; display: inline-block !important; border: 1px solid #ccc !important; box-sizing: border-box !important; font-size: 16px !important" />
+
+				<input type="submit" value="Login"
+					style="background-color: #4CAF50 !important; color: white !important; padding: 14px 20px !important; margin: 8px 0 !important; border: none !important; cursor: pointer !important; width: 100% !important; font-size: 16px !important" />
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -5,44 +5,54 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "qtht_chucnang")
-public class ChucNang1 implements Serializable{
+public class ChucNang1 {
+
 	@Id
+	@GeneratedValue(generator = "bigid")
+	@GenericGenerator(name = "bigid", strategy = "com.learncode.config.IDGenerator")
 	private long id;
-	
+
 	@Column(name = "machucnang")
+	@NotBlank(message = "không được để trống")
 	private String machucnang;
-	
+
 	@Column(name = "tenchucnang")
+	@NotBlank(message = "không được để trống")
 	private String tenchucnang;
-	
+
 	@Column(name = "maapi")
+	@NotBlank(message = "không được để trống")
 	private String maapi;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date createday;
-	
+
 	@Column(name = "nguoitao")
 	private String nguoitao;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date updateday;
-	
+
 	@Column(name = "nguoiupdate")
 	private String nguoiupdate;
-	
 
 	@Column(name = "parentid")
 	private long parentid;
@@ -54,8 +64,9 @@ public class ChucNang1 implements Serializable{
 		super();
 	}
 
-	public ChucNang1(long id, String machucnang, String tenchucnang, String maapi, Date createday, String nguoitao,
-			Date updateday, String nguoiupdate, long parentid, int isdelete) {
+	public ChucNang1(long id, String machucnang, @NotBlank(message = "không được để trống") String tenchucnang,
+			String maapi, Date createday, String nguoitao, Date updateday, String nguoiupdate, long parentid,
+			int isdelete) {
 		super();
 		this.id = id;
 		this.machucnang = machucnang;
@@ -149,12 +160,6 @@ public class ChucNang1 implements Serializable{
 		this.isdelete = isdelete;
 	}
 
-	@Override
-	public String toString() {
-		return "ChucNang1 [id=" + id + ", machucnang=" + machucnang + ", tenchucnang=" + tenchucnang + ", maapi="
-				+ maapi + ", createday=" + createday + ", nguoitao=" + nguoitao + ", updateday=" + updateday
-				+ ", nguoiupdate=" + nguoiupdate + ", parentid=" + parentid + ", isdelete=" + isdelete + "]";
-	}
 
 	
 }
