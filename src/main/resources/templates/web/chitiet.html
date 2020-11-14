@@ -94,6 +94,20 @@
 					<a href="#">Sản phẩm liên quan</a>
 				</div>
 			</section>
+			
+			<section class="category">
+				<div class="container">
+					<ul class="category__list">
+						<li th:each="spm : ${SANPHAMMOI}" class="category__item">
+							<a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
+							<a href="#" th:text="${spm.sanphams.tensanpham}" class="category__name"></a>
+						</li>
+						
+					</ul>
+				</div>
+				
+			</section>
+			<hr class="hr1">
 	</div>
 
 </body>

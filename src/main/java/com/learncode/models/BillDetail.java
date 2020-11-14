@@ -1,6 +1,7 @@
 package com.learncode.models;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,12 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.transaction.Transactional;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Proxy;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Proxy(lazy = false)
 @Table(name = "ql_billdetails")
-public class BillDetail implements Serializable {
+public class BillDetail {
 	
 	@Id
 	@GeneratedValue(generator = "bigid")
@@ -45,12 +52,17 @@ public class BillDetail implements Serializable {
 	@Column(name = "billdetail_status")
 	private Integer billdetail_status;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
+	private Date billdetail_date;
+
 	public BillDetail() {
 		super();
 	}
 
 	public BillDetail(long billdetail_id, Bills bills, SanphamVaChitiet sanphamvachitiet, Integer billdetail_quantity,
-			Float billdetail_price, Integer billdetail_sale, Integer billdetail_pay, Integer billdetail_status) {
+			Float billdetail_price, Integer billdetail_sale, Integer billdetail_pay, Integer billdetail_status,
+			Date billdetail_date) {
 		super();
 		this.billdetail_id = billdetail_id;
 		this.bills = bills;
@@ -60,6 +72,7 @@ public class BillDetail implements Serializable {
 		this.billdetail_sale = billdetail_sale;
 		this.billdetail_pay = billdetail_pay;
 		this.billdetail_status = billdetail_status;
+		this.billdetail_date = billdetail_date;
 	}
 
 	public long getBilldetail_id() {
@@ -126,5 +139,13 @@ public class BillDetail implements Serializable {
 		this.billdetail_status = billdetail_status;
 	}
 
+	public Date getBilldetail_date() {
+		return billdetail_date;
+	}
+
+	public void setBilldetail_date(Date billdetail_date) {
+		this.billdetail_date = billdetail_date;
+	}
+	
 	
 }

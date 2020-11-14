@@ -59,10 +59,33 @@
                 <a href="/slides/">Slide</a>
                 <a href="/loaisanpham/">Loại sản phẩm</a>
                 <a href="/sanpham/">Sản phẩm</a>
-                <a href="/nguoimuahang/list">Người mua</a>
-                <a href="/sanphamdamua/list">Sản phẩm đã mua</a>
               </div>
-              <a href="#">Statistical</a>
+              <button class="main__menu-function-dropdown-btn">Quản lý khách hàng
+                <i class="fas fa-caret-down"></i>
+              </button>
+              <div class="dropdown-container">
+                
+                <a href="/nguoimuahang/list">Người mua</a>
+                <a href="/sanphamdamua/listMuaThanhCong">Sản phẩm đã mua</a>
+              </div>
+              <button class="main__menu-function-dropdown-btn">Quản lý kho
+                <i class="fas fa-caret-down"></i>
+              </button>
+              <div class="dropdown-container">
+                <a href="/sanphamdamua/listKho">Đã mua chưa xuất kho</a>
+              </div>
+              <button class="main__menu-function-dropdown-btn">Quản lý đơn hàng
+                <i class="fas fa-caret-down"></i>
+              </button>
+              <div class="dropdown-container">
+                <a href="/sanphamdamua/list">Đơn hàng</a>
+              </div>
+              <button class="main__menu-function-dropdown-btn">Thống kê
+                <i class="fas fa-caret-down"></i>
+              </button>
+              <div class="dropdown-container">
+                <a href="/thongke/">7 ngày gần nhất</a>
+              </div>
         	  <a th:href="@{/logout}">Logout</a>
             </div>
           </div>

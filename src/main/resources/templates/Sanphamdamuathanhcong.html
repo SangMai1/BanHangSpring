@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<head>
+<meta charset="UTF-8">
+<title>SAN PHAM DA MUA</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/StyleSanPhamDaMua-view.css">
+<link rel="stylesheet"
+	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/SanPhamDaMua-view.js}"></script>
+</head>
+<body>
+	<section class="main__content" layout:fragment="content">
+		<div class="container">
+			<h4>Danh sách sản phẩm đã đặt hàng thành công</h4>
+			<hr>
+			<form th:action="@{/sanphamdamua/dataSearch}" id="dataSearch">
+				<input type="text" class="main__menu-search-form-input1"
+					name="keyword" placeholder="Search...">
+				<button type="submit" class="main__menu-search-form-button1"
+					id="search">Search</button>
+
+			</form>
+			<th:block th:if="${#lists.isEmpty(SANPHAMDAMUATHANHCONGS.pageList)}">
+				<h2>Không có sản phẩm đã mua</h2>
+			</th:block>
+
+			<th:block th:unless="${#lists.isEmpty(SANPHAMDAMUATHANHCONGS.pageList)}">
+
+				<div class="sang">
+					<form id="formDelete">
+
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Họ Tên</th>
+									<th>Số lượng</th>
+									<th>Tiền</th>
+									<th>Trạng thái</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="sanphamdamua, iterStat: ${SANPHAMDAMUATHANHCONGS.pageList}">
+
+									<td th:text="${iterStat.count}"></td>
+									
+									<td th:text="${sanphamdamua.bills.bill_name}"></td>
+									<td th:text="${sanphamdamua.billdetail_quantity}"></td>
+									<td th:text="${sanphamdamua.billdetail_price}"></td>
+									<td>
+										<span th:if="${sanphamdamua.billdetail_status == 0}">Đang ở kho</span>
+										<span th:if="${sanphamdamua.billdetail_status == 1}">Đang giao hàng</span>
+										<span th:if="${sanphamdamua.billdetail_status == 2}">Đã nhận hàng</span>
+									</td>
+
+									
+
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+
+				<p class="showcount" th:text="'Record: ' + ${sum}"></p>
+				<p class="showin"
+					th:text="'Show '+ ${pageNumber} + ' in ' + ${totalPageCount}"></p>
+
+				<!-- phan trang-->
+				<ul class="pagination">
+					<li
+						th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+						<a class="page-link" th:href="@{/sanphamdamua/listMuaThanhCong}">First</a>
+					</li>
+					<li
+						th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+						<a class="page-link" aria-label="Previous"
+						th:href="@{|/sanphamdamua${baseUrl}${currentIndex - 1}|}"
+						title='Go to previous page'> <span aria-hidden="true"><<</span>
+							<span class="sr-only">Previous</span></a>
+					</li>
+					<li th:each="item: ${#numbers.sequence(beginIndex, endIndex)}"
+						th:class="${item == currentIndex ? 'page-item active' : 'page-item'}">
+						<a class="page-link" th:href="@{|/sanphamdamua${baseUrl}${item}|}">
+							<span th:text='${item}'>1</span>
+					</a>
+					</li>
+					<li
+						th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+						<a class="page-link" aria-label="Next"
+						th:href="@{|/sanphamdamua${baseUrl}${currentIndex + 1}|}"
+						title='Go to next page'> <span aria-hidden="true">>></span> <span
+							class="sr-only">Next</span></a>
+					</li>
+					<li
+						th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+						<a class="page-link"
+						th:href="@{|/sanphamdamua${baseUrl}${totalPageCount}|}">Last</a>
+					</li>
+				</ul>
+
+			</th:block>
+			
+		
+		</div>
+	</section>
+</body>
+</html>

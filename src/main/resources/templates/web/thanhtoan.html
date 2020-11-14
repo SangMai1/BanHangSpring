@@ -9,53 +9,56 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<div class="wrapper1">
-			<div class="left">
-				<h3>Chọn hình thức thanh toán</h3>
-				<form th:action="@{/web/savePay}" method="post">
-					<input th:unless="${session.EMAIL_WEB}"
-						th:value="${session.INFO.bill_id}" name="bill_id" type="hidden">
-					<input th:if="${session.EMAIL_WEB}"
-						th:value="${session.EMAIL_WEB.bill_id}" name="bill_id"
-						type="hidden">
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="billdetail_pay"
-							id="exampleRadios1" value="0" checked> <label
-							class="form-check-label" for="exampleRadios1"> Thanh toán
-							tiền mặt khi nhận hàng </label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="billdetail_pay"
-							id="exampleRadios2" value="1"> <label
-							class="form-check-label" for="exampleRadios2"> Thẻ ATM
-							nội địa/Internet Banking (Miễn phí thanh toán) </label>
-					</div>
-					<div class="form-check disabled">
-						<input class="form-check-input" type="radio" name="billdetail_pay"
-							id="exampleRadios3" value="2"> <label
-							class="form-check-label" for="exampleRadios3"> Thanh toán
-							bằng ví MoMo </label>
-					</div>
+		<div class="list_thanhtoan">
+			<div class="wrapper1">
+				<div class="left">
+					<h3>Chọn hình thức thanh toán</h3>
+					<form th:action="@{/web/savePay}" method="post">
+						<input th:unless="${session.EMAIL_WEB}"
+							th:value="${session.INFO.bill_id}" name="bill_id" type="hidden">
+						<input th:if="${session.EMAIL_WEB}"
+							th:value="${session.EMAIL_WEB.bill_id}" name="bill_id"
+							type="hidden">
+						<div class="form-check">
+							<input class="form-check-input" type="radio"
+								name="billdetail_pay" id="exampleRadios1" value="0" checked>
+							<label class="form-check-label" for="exampleRadios1">
+								Thanh toán tiền mặt khi nhận hàng </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio"
+								name="billdetail_pay" id="exampleRadios2" value="1"> <label
+								class="form-check-label" for="exampleRadios2"> Thẻ ATM
+								nội địa/Internet Banking (Miễn phí thanh toán) </label>
+						</div>
+						<div class="form-check disabled">
+							<input class="form-check-input" type="radio"
+								name="billdetail_pay" id="exampleRadios3" value="2"> <label
+								class="form-check-label" for="exampleRadios3"> Thanh
+								toán bằng ví MoMo </label>
+						</div>
 
-					<button type="submit" class="btn btn-primary">Đặt mua</button>
-				</form>
-			</div>
+						<button type="submit" class="btn btn-primary">Đặt mua</button>
+					</form>
+				</div>
 
-			<div th:unless="${session.EMAIL_WEB}" class="right">
-				<p th:text="'Name, '+${session.INFO.bill_name}"></p>
-				<p th:text="'Phone, '+${session.INFO.bill_phone}"></p>
-				<p th:text="'Quantity, '+${session.myCartNum}"></p>
-				<p
-					th:text="'Tong tien '+${#numbers.formatCurrency(session.myCartTotal)}"></p>
-			</div>
-			<div th:if="${session.EMAIL_WEB}" class="right">
-				<p th:text="'Name, '+${session.EMAIL_WEB.bill_name}"></p>
-				<p th:text="'Phone, '+${session.EMAIL_WEB.bill_phone}"></p>
-				<p th:text="'Quantity, '+${session.myCartNum}"></p>
-				<p
-					th:text="'Tong tien '+${#numbers.formatCurrency(session.myCartTotal)}"></p>
+				<div th:unless="${session.EMAIL_WEB}" class="right">
+					<p th:text="'Họ Tên: '+${session.INFO.bill_name}"></p>
+					<p th:text="'SĐT: '+${session.INFO.bill_phone}"></p>
+					<p th:text="'Số lượng: '+${session.myCartNum}"></p>
+					<p
+						th:text="'Tổng tiền: '+${#numbers.formatCurrency(session.myCartTotal)}"></p>
+				</div>
+				<div th:if="${session.EMAIL_WEB}" class="right">
+					<p th:text="'Name, '+${session.EMAIL_WEB.bill_name}"></p>
+					<p th:text="'Phone, '+${session.EMAIL_WEB.bill_phone}"></p>
+					<p th:text="'Quantity, '+${session.myCartNum}"></p>
+					<p
+						th:text="'Tong tien '+${#numbers.formatCurrency(session.myCartTotal)}"></p>
+				</div>
 			</div>
 		</div>
+
 	</div>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.learncode.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -30,4 +31,5 @@ public interface BillRepository extends CrudRepository<Bills, Long> {
 	
 	@Query(value = "SELECT * FROM ql_bill WHERE bill_status = 0", nativeQuery = true)
 	List<Bills> getAllNguoiMuaDaDangKi();
+	
 }

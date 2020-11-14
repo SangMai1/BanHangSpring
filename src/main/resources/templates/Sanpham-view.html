@@ -77,9 +77,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="sp: ${SANPHAMS.pageList}">
+								<tr th:each="sp,iterStat : ${SANPHAMS.pageList}">
 
-									<td th:text="${sp.id}"></td>
+									<td th:text="${iterStat.count}"></td>
 									<td><img th:src="@{${sp.getLogoImagePath()}}" /></td>
 									<td th:text="${sp.masanpham}"></td>
 									<td th:text="${sp.tensanpham}"></td>

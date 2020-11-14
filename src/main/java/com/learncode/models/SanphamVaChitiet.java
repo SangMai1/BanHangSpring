@@ -10,10 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Proxy;
 
 @Entity
+@Proxy(lazy = false)
 @Table(name = "qtht_sanphamvachitiet")
 public class SanphamVaChitiet {
 
@@ -125,6 +128,7 @@ public class SanphamVaChitiet {
 		this.isdelete = isdelete;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "SanphamVaChitiet [id=" + id + ", sanphams=" + sanphams + ", kichthuoc=" + kichthuoc + ", soluong="

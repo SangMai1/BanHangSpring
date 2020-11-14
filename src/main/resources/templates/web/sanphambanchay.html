@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/trangchu}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/StyleTatcasanpham.css">
+<link rel="stylesheet" type="text/css" href="/css/StyleChitiet.css">
+</head>
+<body>
+	<div layout:fragment="content">
+		<section class="path__chitiet">
+			<div class="wrapper1">
+				<p>Trang chủ / Sản phẩm</p>
+			</div>
+		</section>
+
+		<section class="feature2">
+			<div class="wrapper1">
+				<div class="feature__item2">
+					<div class="feature__image2">
+						<div class="feature__image2-small">
+							<h4>Khoảng Giá</h4>
+							<form th:action="@{/web/dataSearch}" id="dataSearch">
+							<div class="feature__iamge2-amout">
+
+								<input type="text" maxlength="13" class="fillter_input"
+									placeholder="đ TỪ" name="min">
+								<div class="fillter_line"></div>
+								<input type="text" maxlength="13" class="fillter_input"
+									placeholder="đ ĐẾN" name="max">
+
+							</div>
+							<button type="submit" class="button-solid button-solid_primary">Áp
+								dụng</button>
+							</form>
+							
+						</div>
+						<hr>
+						<div class="feature__info1-product-size">
+							<h4>Kích cỡ</h4>
+							<a th:href="@{/web/dataSize/(size=S)}" name="size" value="S">S <span>(1m60-1m65) (55-60kg)</span></a><hr>
+							<a th:href="@{/web/dataSize/(size=M)}" name="size" value="M">M <span>(1m64-1m69) (60-65kg)</span></a><hr>
+							<a th:href="@{/web/dataSize/(size=L)}" name="size" value="L">L <span>(1m70-1m74) (66-70kg)</span></a><hr>
+							<a th:href="@{/web/dataSize/(size=XL)}" name="size" value="XL">XL <span>(1m74-1m76) (70-76kg)</span></a><hr>
+							<a th:href="@{/web/dataSize/(size=XXL)}" name="size" value="XXL">XXL <span>(1m65-1m77) (76-80kg)</span></a>
+							
+						</div>
+					</div>
+					<div class="feature__info2">
+						<th:block th:if="${#lists.isEmpty(SANPHAMBANCHAYLIST.pageList)}">
+							<h2>Không có sản phẩm mới</h2>
+						</th:block>
+						<th:block th:unless="${#lists.isEmpty(SANPHAMBANCHAYLIST.pageList)}">
+
+							<div class="container">
+								<ul class="category__list1">
+									<li th:each="tcsp : ${SANPHAMBANCHAYLIST.pageList}"
+										class="category__item1"><a
+										th:href="${'/web/sanpham-chitiet1/' + tcsp.sanphams.id}"><img
+											class="category__image1"
+											th:src="@{${tcsp.sanphams.getLogoImagePath()}}"></a> <a href="#"
+										th:text="${tcsp.sanphams.tensanpham}" class="category__name1"></a>
+										<span class="category__name-price" th:text="${#numbers.formatCurrency(tcsp.giatien)}"></span>
+										</li>
+
+								</ul>
+							</div>
+
+
+
+							<!-- phan trang-->
+							<ul class="pagination">
+								<li
+									th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link" th:href="@{/web/list}">First</a>
+								</li>
+								<li
+									th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link" aria-label="Previous"
+									th:href="@{|/web${baseUrl}${currentIndex - 1}|}"
+									title='Go to previous page'> <span aria-hidden="true"><<</span>
+										<span class="sr-only">Previous</span></a>
+								</li>
+								<li th:each="item: ${#numbers.sequence(beginIndex, endIndex)}"
+									th:class="${item == currentIndex ? 'page-item active' : 'page-item'}">
+									<a class="page-link"
+									th:href="@{|/web${baseUrl}${item}|}"> <span
+										th:text='${item}'>1</span>
+								</a>
+								</li>
+								<li
+									th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link" aria-label="Next"
+									th:href="@{|/web${baseUrl}${currentIndex + 1}|}"
+									title='Go to next page'> <span aria-hidden="true">>></span>
+										<span class="sr-only">Next</span></a>
+								</li>
+								<li
+									th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link"
+									th:href="@{|/web${baseUrl}${totalPageCount}|}">Last</a>
+								</li>
+							</ul>
+
+						</th:block>
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

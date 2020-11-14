@@ -67,9 +67,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="sl: ${SLIDESS.pageList}">
+								<tr th:each="sl, iterStat: ${SLIDESS.pageList}">
 								
-									<td th:text="${sl.id}"></td>
+									<td th:text="${iterStat.count}"></td>
 									<td>
 										<img th:src="@{${sl.getSlidesImagePath()}}"/>
 									</td>

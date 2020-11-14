@@ -131,6 +131,13 @@ public class LoaiSanPham {
 		this.isdelete = isdelete;
 	}
 
+	@Override
+	public String toString() {
+		return "LoaiSanPham [id=" + id + ", maloaisanpham=" + maloaisanpham + ", tenloaisanpham=" + tenloaisanpham
+				+ ", createday=" + createday + ", createby=" + createby + ", updateday=" + updateday + ", updateby="
+				+ updateby + ", isdelete=" + isdelete + "]";
+	}
+
 	
 	
 }

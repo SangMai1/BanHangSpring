@@ -67,8 +67,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="nguoi : ${NGUOIDUNGS.pageList}">
-										<td th:text="${nguoi.id}"></td>
+									<tr th:each="nguoi,iterStat : ${NGUOIDUNGS.pageList}">
+										<td th:text="${iterStat.count}"></td>
 										<td th:text="${nguoi.manguoidung}"></td>
 										<td th:text="${nguoi.tennguoidung}"></td>
 										<td th:text="${nguoi.email}"></td>

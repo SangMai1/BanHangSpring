@@ -1,6 +1,8 @@
 package com.learncode.models;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,9 +19,11 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Proxy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Proxy(lazy = false)
 @Table(name = "qtht_sanpham")
 public class Sanpham {
 	
@@ -67,6 +72,9 @@ public class Sanpham {
 	@Column(name = "isdelete")
 	private Integer isdelete;
 
+	@Column(name = "highlight")
+	private Integer highlight;
+	
 	public Sanpham() {
 		super();
 	}
@@ -83,12 +91,12 @@ public class Sanpham {
 		this.xuatxu = xuatxu;
 		this.mota = mota;
 	}
-
+	
 	public Sanpham(long id, @NotBlank(message = "không được để trống") String masanpham,
 			@NotBlank(message = "không được để trống") String tensanpham, String image, LoaiSanPham loaisanpham,
 			Date createday, String createby, Date updateday, String updateby,
 			@NotBlank(message = "không được để trống") String xuatxu,
-			@NotBlank(message = "không được để trống") String mota, Integer isdelete) {
+			@NotBlank(message = "không được để trống") String mota, Integer isdelete, Integer highlight) {
 		super();
 		this.id = id;
 		this.masanpham = masanpham;
@@ -102,10 +110,10 @@ public class Sanpham {
 		this.xuatxu = xuatxu;
 		this.mota = mota;
 		this.isdelete = isdelete;
+		this.highlight = highlight;
 	}
-	
-	
 
+	
 	public long getId() {
 		return id;
 	}
@@ -202,6 +210,14 @@ public class Sanpham {
 		this.isdelete = isdelete;
 	}
 
+	public Integer getHighlight() {
+		return highlight;
+	}
+
+	public void setHighlight(Integer highlight) {
+		this.highlight = highlight;
+	}
+
 	@Transient
 	public String getLogoImagePath() {
 		if (image == null) {
@@ -215,10 +231,8 @@ public class Sanpham {
 		return "Sanpham [id=" + id + ", masanpham=" + masanpham + ", tensanpham=" + tensanpham + ", image=" + image
 				+ ", loaisanpham=" + loaisanpham + ", createday=" + createday + ", createby=" + createby
 				+ ", updateday=" + updateday + ", updateby=" + updateby + ", xuatxu=" + xuatxu + ", mota=" + mota
-				+ ", isdelete=" + isdelete + "]";
+				+ ", isdelete=" + isdelete + ", highlight=" + highlight + "]";
 	}
 
-	
-	
 	
 }

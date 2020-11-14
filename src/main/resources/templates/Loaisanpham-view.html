@@ -64,8 +64,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="loai: ${LIST.pageList}">
-										<td th:text="${loai.id}"></td>
+									<tr th:each="loai, iterStat: ${LIST.pageList}">
+										<td th:text="${iterStat.count}"></td>
 										<td th:text="${loai.maloaisanpham}"></td>
 										<td th:text="${loai.tenloaisanpham}"></td>
 										<td>

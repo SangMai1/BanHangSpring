@@ -51,9 +51,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="nguoimuahang: ${NGUOIMUAHANGS.pageList}">
+								<tr th:each="nguoimuahang, iterStat: ${NGUOIMUAHANGS.pageList}">
 
-									<td th:text="${nguoimuahang.bill_id}"></td>
+									<td th:text="${iterStat.count}"></td>
 									<td th:text="${nguoimuahang.bill_name}"></td>
 									<td th:text="${nguoimuahang.bill_email}"></td>
 									<td th:text="${nguoimuahang.bill_phone}"></td>

@@ -86,3 +86,10 @@ td, th {
 	margin-left: 200px;
 }
 
+.hide{
+    display : none;
+}
+
+.show{
+    display : inline;
+}

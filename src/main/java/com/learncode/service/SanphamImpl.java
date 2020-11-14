@@ -70,6 +70,26 @@ public class SanphamImpl implements SanphamService{
 	public List<Sanpham> searchSize(String size) {
 		return sanphamRepository.searchSize(size);
 	}
+
+	@Override
+	public List<Sanpham> getAllSanphammoi() {
+		return sanphamRepository.getAllSanphammoi();
+	}
+
+	@Override
+	public List<Sanpham> getAllSanphamnoibat() {
+		return sanphamRepository.getAllSanphamnoibat();
+	}
+
+	@Override
+	public List<Sanpham> getAllSanphambanchay() {
+		return sanphamRepository.getAllSanphambanchay();
+	}
+
+	@Override
+	public List<Sanpham> getAllSanphamsale() {
+		return sanphamRepository.getAllSanphamsale();
+	}
 	
 	
 }

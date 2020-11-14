@@ -64,8 +64,8 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="nhom: ${NHOMS.pageList}">
-											<td id="up1" name="aa" th:text="${nhom.id}"></td>
+										<tr th:each="nhom, iterStat: ${NHOMS.pageList}">
+											<td th:text="${iterStat.count}"></td>
 											<td th:text="${nhom.manhom}"></td>
 											<td th:text="${nhom.tennhom}"></td>
 											

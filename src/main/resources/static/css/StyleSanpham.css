@@ -32,3 +32,9 @@ form {
 .button-all {
 	text-align: center;
 }
+
+.form-check-label {
+	color: black;
+	font-size: 12px;
+	font-weight: 400;
+}

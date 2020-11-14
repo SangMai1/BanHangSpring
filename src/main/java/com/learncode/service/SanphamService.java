@@ -27,4 +27,12 @@ public interface SanphamService {
 
 	List<Sanpham> searchSize(String size);
 
+	List<Sanpham> getAllSanphammoi();
+
+	List<Sanpham> getAllSanphamsale();
+
+	List<Sanpham> getAllSanphambanchay();
+
+	List<Sanpham> getAllSanphamnoibat();
+
 }

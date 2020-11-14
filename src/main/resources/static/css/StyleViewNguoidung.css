@@ -1,13 +1,13 @@
 h4 {
-	padding-top: 30px;
-	color: black;
-	font-size: 18px;
-	font-weight: 600;
+	padding-top: 40px !important;
+	color: black !important;
+	font-size: 18px !important;
+	font-weight: 600 !important;
 }
 
 
 .table-bordered {
-  margin-top: 10px;
+
   font-family: arial, sans-serif !important;
   border-collapse: collapse !important;
   width: 100% !important;
@@ -32,8 +32,10 @@ td, th {
 }
 
 #btn, .buttonDelete{
-	margin: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
 }
+
 #dataSearch {
 	float: right;
     background-color: #4db6ac;

@@ -13,7 +13,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -101,6 +100,7 @@ public class SanphamController {
 	@GetMapping("/sanpham-update/{id}")
 	public String findBySanphamId(@PathVariable Long id, ModelMap model) {
 		model.addAttribute("sp", this.sanphamService.finBySanphamId(id).get());
+		System.out.println("sang day" + this.sanphamService.finBySanphamId(id).get());
 		return "form-san-pham";
 	}
 
@@ -129,7 +129,6 @@ public class SanphamController {
 		sp.setUpdateby(principal.getName());
 		sp.setIsdelete((Integer) 0);
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		System.out.println("ten anh" + fileName);
 		sp.setImage(fileName);
 		this.sanphamService.updateSanpham(sp);
 		Path deleteFile = Paths.get("./uploads/" + sp.getId());
@@ -155,7 +154,7 @@ public class SanphamController {
 		String uploadDir = "./uploads/" + sp.getId();
 
 		Path uploadPath = Paths.get(uploadDir);
-		System.out.println(uploadPath);
+		
 
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);
@@ -163,7 +162,7 @@ public class SanphamController {
 
 		try (InputStream inputStream = multipartFile.getInputStream()) {
 			Path filePath = uploadPath.resolve(fileName);
-			System.out.println("sang dang upload" + filePath.toString());
+			
 			if (ImageIO.read(multipartFile.getInputStream()) == null) {
 				filePath.toString();
 			}
@@ -258,7 +257,6 @@ public class SanphamController {
 	public void barcode(@PathVariable Long id, HttpServletResponse response) throws Exception {
 		response.setContentType("image/png");
 		OutputStream outputStream = response.getOutputStream();
-		System.out.println(outputStream);
 		outputStream.write(ZXingHelper.getQRCodeImage(String.valueOf(id), 100, 100));
 		outputStream.flush();
 		outputStream.close();

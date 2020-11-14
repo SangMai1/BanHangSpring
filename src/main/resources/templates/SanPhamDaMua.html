@@ -42,7 +42,7 @@
 							<thead>
 								<tr>
 									<th>Id</th>
-									
+									<th>Họ Tên</th>
 									<th>Số lượng</th>
 									<th>Tiền</th>
 									<th>Trạng thái</th>
@@ -50,20 +50,22 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="sanphamdamua: ${SANPHAMDAMUAS.pageList}">
+								<tr th:each="sanphamdamua, iterStat: ${SANPHAMDAMUAS.pageList}">
 
-									<td th:text="${sanphamdamua.billdetail_id}"></td>
+									<td th:text="${iterStat.count}"></td>
 									
-
+									<td th:text="${sanphamdamua.bills.bill_name}"></td>
 									<td th:text="${sanphamdamua.billdetail_quantity}"></td>
 									<td th:text="${sanphamdamua.billdetail_price}"></td>
 									<td>
-										<span th:if="${sanphamdamua.billdetail_status == 0}">Chưa giao hàng</span>
+										<span th:if="${sanphamdamua.billdetail_status == 0}">Đang ở kho</span>
 										<span th:if="${sanphamdamua.billdetail_status == 1}">Đang giao hàng</span>
 										<span th:if="${sanphamdamua.billdetail_status == 2}">Đã nhận hàng</span>
 									</td>
 
-									<td><a class="btn btn-primary edit" th:href="@{/sanphamdamua/sanphamdamua-chitiet/(id=${sanphamdamua.billdetail_id})}" data-toggle="modal" data-target="#myEdit"><i class="fas fa-edit"></i></a></td>
+									<td><a class="btn btn-primary edit" th:href="@{/sanphamdamua/sanphamdamua-chitiet/(id=${sanphamdamua.billdetail_id})}" data-toggle="modal" data-target="#myEdit"><i class="fas fa-edit"></i></a>
+									
+									</td>
 
 								</tr>
 							</tbody>
@@ -128,13 +130,13 @@
 																		<label class="col-sm-2 col-form-label">Trạng thái</label>
 																		<div class="col-sm-10">
 																			<select id="parent_edit" name="billdetail_status" class="form-control">
-																				<option th:value="0">Chưa giao hàng</option>
+																				<option th:value="0">Đang ở kho</option>
 																				<option th:value="1">Đang giao hàng</option>
-																				<option th:value="2">Đã giao hàng</option>
+																				<option th:value="2">Đã nhận hàng</option>
 																			</select>
 																		</div>
 																	</div>
-																	<button type="submit" id="toggler" class="btn btn-primary capnhat" onClick="action()">Cập nhật</button>
+																	<button type="submit" id="toggler" class="btn btn-primary capnhat">Cập nhật</button>
 																</form>
 													        </div>
 													        <div class="modal-footer">

@@ -56,6 +56,57 @@ public class SanphamVaChitietImpl implements SanphamVaChitietService{
 	public List<SanphamVaChitiet> searchGiatien(float min, float max) {
 		return sanphamVaChitietRepository.searchGiatien(min, max);
 	}
+
+
+	@Override
+	public List<SanphamVaChitiet> getSanphammoi() {
+		return sanphamVaChitietRepository.getSanphammoi();
+	}
+
+
+	@Override
+	public List<SanphamVaChitiet> getSanphamnoibat() {
+		return sanphamVaChitietRepository.getSanphamnoibat();
+	}
+
+
+	@Override
+	public List<SanphamVaChitiet> getTatcasanpham() {
+		return sanphamVaChitietRepository.getTatcasanpham();
+	}
+
+
+	@Override
+	public List<SanphamVaChitiet> getAllSanphammoi() {
+		return sanphamVaChitietRepository.getAllSanphammoi();
+	}
+
+
+	@Override
+	public List<SanphamVaChitiet> getAllSanphamnoibat() {
+		return sanphamVaChitietRepository.getAllSanphamnoibat();
+	}
+
+
+	@Override
+	public List<SanphamVaChitiet> getAllSanphamsale() {
+		return sanphamVaChitietRepository.getAllSanphamsale();
+	}
+
+
+	@Override
+	public List<SanphamVaChitiet> getAllSanphambanchay() {
+		return sanphamVaChitietRepository.getAllSanphambanchay();
+	}
+
+
+	@Override
+	public List<SanphamVaChitiet> getSearchSize(String size) {
+		return sanphamVaChitietRepository.getSearchSize(size);
+	}
+
+	
+
 	
 	
 	

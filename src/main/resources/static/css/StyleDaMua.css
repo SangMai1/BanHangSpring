@@ -1,0 +1,22 @@
+.damua {
+	background: rgb(239, 239, 239);
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 80px;
+	text-align: center;
+	height: 290px;
+}
+
+.damua h1 {
+	padding-top: 20px;
+	font-weight: 700;
+	font-size: 20px;
+	padding-bottom: 40px;
+}
+
+.tieptucmuahang {
+	background: #fdd835;
+	padding: 10px 20px;
+	font-size: 16px;
+	font-weight: 400;
+}

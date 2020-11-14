@@ -68,9 +68,9 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="chucnang: ${CHUCNANGS.pageList}">
+										<tr th:each="chucnang, iterStat: ${CHUCNANGS.pageList}">
 										
-											<td th:text="${chucnang.id}"></td>
+											<td th:text="${iterStat.count}"></td>
 											<td th:text="${chucnang.machucnang}"></td>
 											<td th:text="${chucnang.tenchucnang}"></td>
 											<td th:text="${chucnang.maapi}"></td>

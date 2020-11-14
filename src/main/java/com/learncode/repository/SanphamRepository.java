@@ -27,7 +27,7 @@ public interface SanphamRepository extends CrudRepository<Sanpham, Long> {
 //	@Query(value = "UPDATE public.qtht_sanpham SET masanpham=?, tensanpham=?, image=?, updateday=?, updateby=?, xuatxu=?, mota=?, isdelete=?, maloaisanpham=? WHERE id = ?;", nativeQuery = true)
 //	int updateSanpham(@Param("masanpham") String masanpham, @Param("tensanpham") String tensanpham, @Param("image") String image, @Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("xuatxu") String xuatxu, @Param("mota") String mota, @Param("isdelete") Integer isdelete, @Param("maloaisanpham") Long maloaisanpham, @Param("id") Long id);
 	
-	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham FROM qtht_sanpham WHERE id = ?", nativeQuery = true)
+	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight FROM qtht_sanpham WHERE id = ?", nativeQuery = true)
 	Optional<Sanpham> finBySanphamId(@Param("id") Long id);
 	
 	@Query(value ="SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.createday, sp.createby, sp.updateday, sp.updateby, sp.xuatxu, sp.mota, sp.maloaisanpham, sp.isdelete, spct.kichthuoc, spct.giatien\r\n" + 
@@ -36,25 +36,51 @@ public interface SanphamRepository extends CrudRepository<Sanpham, Long> {
 			"WHERE sp.isdelete = 0 and spct.isdelete = 0", nativeQuery = true)
 	List<Sanpham> getSanphamAndSanphamchitiet();
 
-	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham FROM qtht_sanpham WHERE isdelete = 0", nativeQuery = true)
+	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight FROM qtht_sanpham WHERE isdelete = 0", nativeQuery = true)
 	List<Sanpham> getAllSanpham();
 	
-	@Query(value = "SELECT max(id) id, max(masanpham) masanpham, tensanpham, max(image) image, max(createday) createday, max(createby) createby, max(updateday) updateday, max(updateby) updateby, max(xuatxu) xuatxu, max(mota) mota, max(isdelete) isdelete, max(maloaisanpham) maloaisanpham, min(now() - createday) as ngay \r\n" + 
-			"FROM qtht_sanpham\r\n" + 
-			"GROUP BY tensanpham\r\n" + 
-			"ORDER BY ngay ASC\r\n" + 
+	@Query(value = "SELECT sp.*, min(ps.giatien) FROM qtht_sanpham sp\r\n" + 
+			"LEFT JOIN \r\n" + 
+			"(SELECT spct.id, spct.idsanpham FROM qtht_sanphamvachitiet spct\r\n" + 
+			"GROUP BY spct.id, spct.idsanpham) pssum\r\n" + 
+			"ON pssum.idsanpham = sp.id\r\n" + 
+			"LEFT JOIN qtht_sanphamvachitiet ps\r\n" + 
+			"ON ps.idsanpham = pssum.idsanpham\r\n" + 
+			"AND pssum.id = ps.id\r\n" + 
+			"GROUP BY sp.id\r\n" + 
 			"LIMIT 5", nativeQuery = true)
 	List<Sanpham> getSanphammoi();
 	
-	@Query(value = "SELECT sp.id, sp.tensanpham, sp.image FROM qtht_sanpham sp\r\n" + 
+	@Query(value = "SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.maloaisanpham, sp.createby, sp.createday, sp.updateday, sp.updateby, sp.xuatxu, sp.mota, sp.isdelete, sp.highlight FROM qtht_sanpham sp\r\n" + 
 			"INNER JOIN qtht_sanphamvachitiet spvct ON spvct.idsanpham = sp.id\r\n" + 
 			"WHERE sp.isdelete = 0 AND spvct.isdelete = 0 AND spvct.giatien BETWEEN ? AND ?\r\n" + 
 			"GROUP BY sp.id", nativeQuery = true)
 	List<Sanpham> searchGiatien(@Param("min") float min, @Param("max") float max);
 	
-	@Query(value = "SELECT sp.id, sp.tensanpham, sp.image FROM qtht_sanpham sp\r\n" + 
+	@Query(value = "SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.maloaisanpham, sp.createby, sp.createday, sp.updateday, sp.updateby, sp.xuatxu, sp.mota, sp.isdelete, sp.highlight FROM qtht_sanpham sp\r\n" + 
 			"			INNER JOIN qtht_sanphamvachitiet spvct ON spvct.idsanpham = sp.id\r\n" + 
 			"			WHERE sp.isdelete = 0 AND spvct.isdelete = 0 AND spvct.kichthuoc = ?\r\n" + 
 			"			GROUP BY sp.id", nativeQuery = true)
 	List<Sanpham> searchSize(@Param("size") String size);
+	
+	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight \r\n" + 
+			"FROM qtht_sanpham \r\n" + 
+			"WHERE isdelete = 0 AND highlight = 0", nativeQuery = true)
+	List<Sanpham> getAllSanphammoi();
+	
+	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight \r\n" + 
+			"FROM qtht_sanpham \r\n" + 
+			"WHERE isdelete = 0 AND highlight = 1", nativeQuery = true)
+	List<Sanpham> getAllSanphamnoibat();
+	
+	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight \r\n" + 
+			"FROM qtht_sanpham \r\n" + 
+			"WHERE isdelete = 0 AND highlight = 2", nativeQuery = true)
+	List<Sanpham> getAllSanphambanchay();
+	
+	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight \r\n" + 
+			"FROM qtht_sanpham \r\n" + 
+			"WHERE isdelete = 0 AND highlight = 3", nativeQuery = true)
+	List<Sanpham> getAllSanphamsale();
+	
 }

@@ -32,17 +32,21 @@
 						</li>
 						<li class="header__icon-item dropdown">
 							<a href="#" class="header__icon-link"><i class="fas fa-user-circle dropbtn"></i></a>
-							<ul th:unless="${session.EMAIL_WEB} or ${session.INFO}" class="dropdown-content">
-								<li class="dropdown-content-li"><a class="dropdown-coontent-li-a" href="/web/login1">Đăng nhập</a></li>
-								<li class="dropdown-content-li"><a class="dropdown-coontent-li-a1" href="/web/checkout">Tạo tài khoản</a></li>
+							<div th:unless="${session.EMAIL_WEB} or ${session.INFO}" class="dropdown-content">
+								<div class="dropdown-content-li"><a class="dropdown-coontent-li-a" th:href="@{/web/login1}">Đăng nhập</a></div>
+								<div class="dropdown-content-li"><a class="dropdown-coontent-li-a1" th:href="@{/web/checkout}">Tạo tài khoản</a></div>
 								
-							</ul>
-							<div th:if="${session.EMAIL_WEB}" class="dropdown-content">
-								<h3 th:text="${session.EMAIL_WEB.bill_name}"></h3>
 							</div>
-							<div th:if="${session.INFO}" class="dropdown-content">
-								<h3 th:text="${session.INFO.bill_name}"></h3>
+							<div th:if="${session.EMAIL_WEB}" class="dropdown-content2">
+								<div class="dropdown-content-li2"><a th:href="@{/web/thongtincoban}" class="dropdown-content-li-a2" th:text="${session.EMAIL_WEB.bill_name}"></a></div>
+								<div class="dropdown-content-li2"><a th:href="@{/web/lichsumuahang}" class="dropdown-content-li-a12">Lịch sử mua hàng</a></div>
 							</div>
+							<div th:if="${session.INFO}" class="dropdown-content3">
+								<div class="dropdown-content-li3"><a th:href="@{/web/thongtincoban1}" class="dropdown-content-li-a3" th:text="${session.INFO.bill_name}"></a></div>
+								<div class="dropdown-content-li3"><a href="#" class="dropdown-content-li-a13">Thông tin cơ bản</a></div>
+							</div>
+							
+							
 						</li>
 						<li class="header__icon-item "><a href="#"
 							class="header__icon-link"><i class="fas fa-shopping-cart"></i><span
@@ -94,18 +98,18 @@
 		<nav class="container menu__inner">
 			<ul class="menu__inner-list">
 				<li class="menu__inner-item">
-					<a href="#" class="menu__inner-link">Trang chủ</a>
+					<a href="/web/" class="menu__inner-link">Trang chủ</a>
 				</li>
 				<li class="menu__inner-item dropdown1">
-					<a href="#" class="menu__inner-link dropbtn1">Sản phẩm</a>
+					<a href="/web/list" class="menu__inner-link dropbtn1">Sản phẩm</a>
 					<div class="dropdown-content1">
-						<a href="#">Sản phẩm nổi bật</a>
-						<a href="#">Sản phẩm mới</a>
-						<a href="#">Sản phẩm bán chạy</a>
+						<a href="/web/noibatlist">Sản phẩm nổi bật</a>
+						<a href="/web/moilist">Sản phẩm mới</a>
+						<a href="/web/banchaylist">Sản phẩm bán chạy</a>
 					</div>
 				</li>
 				<li class="menu__inner-item">
-					<a href="#" class="menu__inner-link">Sale</a>
+					<a href="/web/salelist" class="menu__inner-link">Sale</a>
 				</li>
 				<li class="menu__inner-item">
 					<a href="#" class="menu__inner-link">Blog</a>
@@ -144,8 +148,9 @@
 				<div class="container">
 					<ul class="category__list">
 						<li th:each="spm : ${SANPHAMMOI}" class="category__item">
-							<a th:href="${'/web/sanpham-chitiet1/' + spm.id}"><img class="category__image" th:src="@{${spm.getLogoImagePath()}}"></a>
-							<a href="#" th:text="${spm.tensanpham}" class="category__name"></a>
+							<a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
+							<a href="#" th:text="${spm.sanphams.tensanpham}" class="category__name"></a>
+							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien)}"></span>
 						</li>
 						
 					</ul>
@@ -180,9 +185,10 @@
 			<section class="category">
 				<div class="container">
 					<ul class="category__list">
-						<li th:each="spm : ${SANPHAMMOI}" class="category__item">
-							<a href="#"><img class="category__image" th:src="@{${spm.getLogoImagePath()}}"></a>
-							<a href="#" th:text="${spm.tensanpham}" class="category__name"></a>
+						<li th:each="spm : ${SANPHAMNOIBAT}" class="category__item">
+							<a href="#"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
+							<a href="#" th:text="${spm.sanphams.tensanpham}" class="category__name"></a>
+							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien)}"></span>
 						</li>
 						
 					</ul>

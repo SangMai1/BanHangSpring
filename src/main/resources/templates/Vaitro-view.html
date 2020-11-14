@@ -63,8 +63,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="items : ${VAITROS.pageList}">
-										<td th:text="${items.id}"></td>
+									<tr th:each="items, iterStat : ${VAITROS.pageList}">
+										<td th:text="${iterStat.count}"></td>
 										<td th:text="${items.mavaitro}"></td>
 										<td th:text="${items.tenvaitro}"></td>
 										<td>

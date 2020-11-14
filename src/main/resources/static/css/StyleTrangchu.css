@@ -156,14 +156,110 @@ a {
 	border-radius: 4px;
 }
 
+
+
+
+.dropdown-content2 {
+/* 	right: 110px;
+	bottom: 130px; */
+	text-align: center;
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 250px;
+	box-shadown: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	right: -110px;
+	top: 35px;
+	
+	height: 100px;
+}
+
+.dropdown-content2 a {
+	color: black !important;
+	padding: 12px 6px;
+	text-decoration: none;
+	display: block;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.dropdown-content2 a:hover {
+	background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content2 {
+	display: block;
+}
+
+.dropdown-content-li2 {
+
+    width: 236px;
+    height: 40px;
+    color: #000;
+  /*  background: #fdd835; */ 
+    border-radius: 4px;
+	margin: 10px 10px;
+	border-radius: 4px;
+}
+
+
+
+
+.dropdown-content3 {
+/* 	right: 110px;
+	bottom: 130px; */
+	text-align: center;
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 250px;
+	box-shadown: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	right: -110px;
+	top: 35px;
+	
+	height: 100px;
+}
+
+.dropdown-content3 a {
+	color: black !important;
+	padding: 12px 6px;
+	text-decoration: none;
+	display: block;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.dropdown-content3 a:hover {
+	background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content3 {
+	display: block;
+}
+
+.dropdown-content-li3 {
+
+    width: 236px;
+    height: 40px;
+    color: #000;
+  /*  background: #fdd835; */ 
+    border-radius: 4px;
+	margin: 10px 10px;
+	border-radius: 4px;
+}
+
+
+
 .dropdown1 {
 	display: inline-block;
 	padding-bottom: 10px;
 }
 
 .dropdown-content1 {
-/* 	right: 110px;
-	bottom: 130px; */
 	text-align: center;
 	display: none;
 	position: absolute;
@@ -282,13 +378,12 @@ a {
 	white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.category__name {
   font-size: 18px;
   margin-bottom: 2.5rem; 
   color: black !important;
 }
+
+
 
 .banner-category {
 	margin-bottom: 40px;
@@ -427,4 +522,11 @@ a {
 }
 .banner-category__image {
 	transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+}
+
+.category__name-price {
+	text-align: center;
+	font-size: 20px;
+	font-weight: 400;
+	color: red;
 }

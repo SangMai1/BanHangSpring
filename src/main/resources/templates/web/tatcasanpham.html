@@ -34,11 +34,12 @@
 									placeholder="đ ĐẾN" name="max">
 
 							</div>
-							<button type="submit" class="button-solid button-solid--primary ">Áp
+							<button type="submit" class="button-solid button-solid_primary">Áp
 								dụng</button>
 							</form>
 							
 						</div>
+						<hr>
 						<div class="feature__info1-product-size">
 							<h4>Kích cỡ</h4>
 							<a th:href="@{/web/dataSize/(size=S)}" name="size" value="S">S <span>(1m60-1m65) (55-60kg)</span></a><hr>
@@ -48,19 +49,6 @@
 							<a th:href="@{/web/dataSize/(size=XXL)}" name="size" value="XXL">XXL <span>(1m65-1m77) (76-80kg)</span></a>
 							
 						</div>
-						<div class="feature__info1-product-season">
-							<h4>Sản phẩm theo mùa</h4>
-							<ul class="feature__image-list">
-								<li><input type="checkbox"> <label>Mùa xuân</label>
-								</li>
-								<li><input type="checkbox"> <label>Mùa hạ</label></li>
-								<li><input type="checkbox"> <label>Mùa thu</label>
-								</li>
-								<li><input type="checkbox"> <label>Mùa đông</label>
-								</li>
-
-							</ul>
-						</div>
 					</div>
 					<div class="feature__info2">
 						<th:block th:if="${#lists.isEmpty(TATCASANPHAMS.pageList)}">
@@ -69,13 +57,14 @@
 						<th:block th:unless="${#lists.isEmpty(TATCASANPHAMS.pageList)}">
 
 							<div class="container">
-								<ul class="category__list">
+								<ul class="category__list1">
 									<li th:each="tcsp : ${TATCASANPHAMS.pageList}"
-										class="category__item"><a
-										th:href="${'/web/sanpham-chitiet1/' + tcsp.id}"><img
-											class="category__image"
-											th:src="@{${tcsp.getLogoImagePath()}}"></a> <a href="#"
-										th:text="${tcsp.tensanpham}" class="category__name"></a></li>
+										class="category__item1"><a
+										th:href="${'/web/sanpham-chitiet1/' + tcsp.sanphams.id}"><img
+											class="category__image1"
+											th:src="@{${tcsp.sanphams.getLogoImagePath()}}"></a> <a href="#"
+										th:text="${tcsp.sanphams.tensanpham}" class="category__name1"></a>
+										<span class="category__name-price" th:text="${#numbers.formatCurrency(tcsp.giatien)}"></span></li>
 
 								</ul>
 							</div>

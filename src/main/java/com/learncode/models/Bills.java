@@ -14,13 +14,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.transaction.Transactional;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Proxy;
 import org.springframework.format.annotation.DateTimeFormat;
 
+
 @Entity
+@Proxy(lazy = false)
 @Table(name = "ql_bill")
-public class Bills implements Serializable {
+public class Bills{
 
 	@Id
 	@GeneratedValue(generator = "bigid")
@@ -75,7 +79,7 @@ public class Bills implements Serializable {
 	}
 
 	public String getBill_name() {
-		return bill_name;
+		return this.bill_name;
 	}
 
 	public void setBill_name(String bill_name) {

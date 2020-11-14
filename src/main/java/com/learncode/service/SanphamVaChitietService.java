@@ -21,4 +21,21 @@ public interface SanphamVaChitietService {
 
 	List<SanphamVaChitiet> searchGiatien(float min, float max);
 
+	List<SanphamVaChitiet> getSanphammoi();
+
+	List<SanphamVaChitiet> getSanphamnoibat();
+
+	List<SanphamVaChitiet> getTatcasanpham();
+
+	List<SanphamVaChitiet> getAllSanphambanchay();
+
+	List<SanphamVaChitiet> getAllSanphamsale();
+
+	List<SanphamVaChitiet> getAllSanphamnoibat();
+
+	List<SanphamVaChitiet> getAllSanphammoi();
+
+	List<SanphamVaChitiet> getSearchSize(String size);
+
+
 }

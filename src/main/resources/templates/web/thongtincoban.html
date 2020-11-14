@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/trangchu}">
+<head>
+<meta charset="UTF-8">
+<title>Thong tin co ban</title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+		<h3>THÔNG TIN TÀI KHOẢN</h3>
+		<form method="post" 
+			id="myModals1" style="padding: 20px;">
+			<input type="hidden" th:value="${session.EMAIL_WEB.bill_id}" name="bill_id">
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" style="font-size: 14px;">
+					Họ tên</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control"
+						placeholder="Nhập họ và tên" th:value="${session.EMAIL_WEB.bill_name}" required="required"
+						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" style="font-size: 14px;">
+					Password</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control"
+						placeholder="Nhập password" th:value="${session.EMAIL_WEB.bill_password}" required="required"
+						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" style="font-size: 14px;">
+					Email(*)</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="Nhập email" required="required"
+						th:value="${session.EMAIL_WEB.bill_email}"
+						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" style="font-size: 14px;">Nhập
+					SĐT(*)</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="Nhập SĐT" required="required"
+						th:value="${session.EMAIL_WEB.bill_phone}"
+						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" style="font-size: 14px;">Nhập
+					địa chỉ(*)</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="Nhập địa chỉ" required="required"
+						th:value="${session.EMAIL_WEB.bill_address}"
+						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+				</div>
+			</div>
+			<button type="submit" class="btn"
+				style="width: 100%; background-color: #4CAF50; color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; font-size: 14px">Đăng
+				kí</button>
+		</form>
+	</div>
+	
+</body>
+</html>
