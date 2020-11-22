@@ -43,14 +43,14 @@
 							</div>
 							<div th:if="${session.INFO}" class="dropdown-content3">
 								<div class="dropdown-content-li3"><a th:href="@{/web/thongtincoban1}" class="dropdown-content-li-a3" th:text="${session.INFO.bill_name}"></a></div>
-								<div class="dropdown-content-li3"><a href="#" class="dropdown-content-li-a13">Thông tin cơ bản</a></div>
+								<div class="dropdown-content-li3"><a th:href="@{/web/lichsumuahang}" class="dropdown-content-li-a13">Lịch sử mua hàng</a></div>
 							</div>
 							
 							
 						</li>
-						<li class="header__icon-item "><a href="#"
+						<li class="header__icon-item "><a href="/web/cart"
 							class="header__icon-link"><i class="fas fa-shopping-cart"></i><span
-								class="text-shopping-cart" th:text="${session.myCartNum}"></span></a>
+								class="text-shopping-cart" th:text="${session.quantity}"></span></a>
 						</li>
 					</ul>
 				</div>
@@ -103,9 +103,9 @@
 				<li class="menu__inner-item dropdown1">
 					<a href="/web/list" class="menu__inner-link dropbtn1">Sản phẩm</a>
 					<div class="dropdown-content1">
-						<a href="/web/noibatlist">Sản phẩm nổi bật</a>
-						<a href="/web/moilist">Sản phẩm mới</a>
-						<a href="/web/banchaylist">Sản phẩm bán chạy</a>
+						<a class="dropdown_item-1" href="/web/noibatlist">Sản phẩm nổi bật</a>
+						<a class="dropdown_item-2" href="/web/moilist">Sản phẩm mới</a>
+						<a class="dropdown_item-3" href="/web/banchaylist">Sản phẩm bán chạy</a>
 					</div>
 				</li>
 				<li class="menu__inner-item">
@@ -161,15 +161,15 @@
 				<div class="container">
 					<ul class="banner-category__list">
 						<li class="banner-category__item">
-							<a href="/web/chitiet/"><img class="banner-category__image" src="/img/b1.png"></a>
+							<a href="/web/salelist"><img class="banner-category__image" src="/img/b1.png"></a>
 							<p class="banner-category__tails">Khuyến mãi tới 50%</p>
 						</li>
 						<li class="banner-category__item">
-							<a href="#"><img class="banner-category__image" src="/img/b2.png"></a>
+							<a href="/web/noibatlist"><img class="banner-category__image" src="/img/b2.png"></a>
 							<p class="banner-category__tails">Cùng bạn xuống phố</p>
 						</li>
 						<li class="banner-category__item">
-							<a href="#"><img class="banner-category__image" src="/img/b3.png"></a>
+							<a href="/web/noibatlist"><img class="banner-category__image" src="/img/b3.png"></a>
 							<p class="banner-category__tails">Thời trang công sở</p>
 						</li>
 					</ul>
@@ -186,7 +186,7 @@
 				<div class="container">
 					<ul class="category__list">
 						<li th:each="spm : ${SANPHAMNOIBAT}" class="category__item">
-							<a href="#"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
+							<a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
 							<a href="#" th:text="${spm.sanphams.tensanpham}" class="category__name"></a>
 							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien)}"></span>
 						</li>

@@ -43,12 +43,11 @@
 				<form th:action="@{'/nguoidung/list/search/1'}" id="dataSearch">
 					<input class="main__menu-search-form-input1" type="text" name="keyword" th:value="${session.KEYWORK}" placeholder="Search..."/>
 					<button type="submit" class="main__menu-search-form-button1" id="search">Search</button>
-				<!-- 	<input type="text" name="keyword" th:value="${keyword}" placeholder="Key word"/>
-					<input type="submit" value="Search" class="btn btn-primary"/> -->
+				
 				</form>
 				
 				<th:block th:if="${#lists.isEmpty(NGUOIDUNGS.pageList)}">
-						<h2>Không người dùng</h2>
+						<h2>Không có người dùng</h2>
 				</th:block>
 				
 				

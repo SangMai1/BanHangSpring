@@ -63,24 +63,6 @@ public interface SanphamRepository extends CrudRepository<Sanpham, Long> {
 			"			GROUP BY sp.id", nativeQuery = true)
 	List<Sanpham> searchSize(@Param("size") String size);
 	
-	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight \r\n" + 
-			"FROM qtht_sanpham \r\n" + 
-			"WHERE isdelete = 0 AND highlight = 0", nativeQuery = true)
-	List<Sanpham> getAllSanphammoi();
-	
-	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight \r\n" + 
-			"FROM qtht_sanpham \r\n" + 
-			"WHERE isdelete = 0 AND highlight = 1", nativeQuery = true)
-	List<Sanpham> getAllSanphamnoibat();
-	
-	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight \r\n" + 
-			"FROM qtht_sanpham \r\n" + 
-			"WHERE isdelete = 0 AND highlight = 2", nativeQuery = true)
-	List<Sanpham> getAllSanphambanchay();
-	
-	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight \r\n" + 
-			"FROM qtht_sanpham \r\n" + 
-			"WHERE isdelete = 0 AND highlight = 3", nativeQuery = true)
-	List<Sanpham> getAllSanphamsale();
+
 	
 }

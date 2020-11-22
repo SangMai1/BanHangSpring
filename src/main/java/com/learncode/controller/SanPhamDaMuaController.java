@@ -1,6 +1,8 @@
 package com.learncode.controller;
 
 import java.io.IOException;
+import java.security.Principal;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,12 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.w3c.dom.ls.LSInput;
@@ -27,6 +31,7 @@ import org.w3c.dom.ls.LSInput;
 import com.learncode.models.BillDetail;
 import com.learncode.models.Kho;
 import com.learncode.models.SanphamdamuaPDFExporter;
+import com.learncode.models.VaiTro;
 import com.learncode.service.BillDetailService;
 import com.learncode.service.KhoService;
 import com.lowagie.text.DocumentException;
@@ -235,5 +240,16 @@ public class SanPhamDaMuaController {
 		Optional<Kho> k = this.khoService.findById(id);
 		SanphamdamuaPDFExporter exporter = new SanphamdamuaPDFExporter(k);
 		exporter.export(response);
+	}
+	
+	@RequestMapping("/del")
+
+	public String delete(ModelMap model, @RequestParam("lvt") List<Long> ids, @RequestParam("billdetail_status123") Integer billdetail_status123, Principal principal) {
+		for (Long long1 : ids) {
+			BillDetail bi = this.billDetailService.findById(long1).get();
+			bi.setBilldetail_status(billdetail_status123);
+			this.billDetailService.updateBillDetail(bi);
+		}
+		return "redirect:/sanphamdamua/list";
 	}
 }

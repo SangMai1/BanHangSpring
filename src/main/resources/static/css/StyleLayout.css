@@ -81,11 +81,12 @@ body {
 
 .main {
   width: 100% !important;
-  height: 660px !important;
+  /* height: 660px !important; */
+  display: flex;
 }
 .main__menu {
   width: 15% !important;
-  height: 660px !important;
+  min-height: 660px;
   background-color: yellow !important;
   float: left !important;
 }
@@ -166,7 +167,7 @@ body {
 }
 .main__content {
   width: 85% !important;
-  height: 660px !important;
+  min-height: 660px;
   background-color: #ecf0f5 !important;
   float: left !important;
 }
@@ -206,4 +207,44 @@ body {
   font-weight: 400 !important;
 }
 
+.container {
+	margin: 20px auto;
+	max-width: 1270px;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.category__list {
+	display: flex;
+	align-items: stretch;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+.category__item:first-child {
+    background: #748cb3;
+}
+.category__item:nth-child(2) {
+	background: #c7c461;
+}
+.category__item:nth-last-child(2) {
+	background: #5ed158;
+	}
+.category__item:last-child {
+	background: #d16658;
+
+	}
+.category__item {
+	width: calc(25% - 22.5px);
+	height: 100px;
+	padding: 2.5rem;
+	background-color: red;
+	border-radius: 5px;
+	display: flex;
+	align-items: stretch;
+	justify-content: flex-start;
+	flex-wrap: nowrap;
+	flex-direction: column;
+}
 /*# sourceMappingURL=style.css.map */

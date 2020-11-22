@@ -7,12 +7,14 @@
 <title>SAN PHAM DA MUA</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/css/StyleSanPhamDaMua-view.css">
+<link rel="stylesheet" type="text/css"
+	href="/css/StyleSanPhamDaMua-view.css">
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" th:src="@{/js/SanPhamDaMua-view.js}"></script>
@@ -22,6 +24,7 @@
 		<div class="container">
 			<h4>Danh sách sản phẩm đã đặt hàng thành công</h4>
 			<hr>
+			
 			<form th:action="@{/sanphamdamua/dataSearch}" id="dataSearch">
 				<input type="text" class="main__menu-search-form-input1"
 					name="keyword" placeholder="Search...">
@@ -36,8 +39,21 @@
 			<th:block th:unless="${#lists.isEmpty(SANPHAMDAMUAS.pageList)}">
 
 				<div class="sang">
-					<form id="formDelete">
-
+					
+						<form th:action="@{/sanphamdamua/del}" id="formDelete">
+						<div class="form-group row">
+			
+				<label class="col-sm-2 col-form-label">Trạng thái</label>
+				<div class="col-sm-10">
+					<select id="parent_edit" name="billdetail_status123"
+						class="form-control">
+						<option th:value="0">Đang ở kho</option>
+						<option th:value="1">Đang giao hàng</option>
+						<option th:value="2">Đã nhận hàng</option>
+					</select>
+				</div>
+			</div>
+			<button type="submit">Update</button>
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -53,19 +69,23 @@
 								<tr th:each="sanphamdamua, iterStat: ${SANPHAMDAMUAS.pageList}">
 
 									<td th:text="${iterStat.count}"></td>
-									
+
 									<td th:text="${sanphamdamua.bills.bill_name}"></td>
 									<td th:text="${sanphamdamua.billdetail_quantity}"></td>
 									<td th:text="${sanphamdamua.billdetail_price}"></td>
-									<td>
-										<span th:if="${sanphamdamua.billdetail_status == 0}">Đang ở kho</span>
-										<span th:if="${sanphamdamua.billdetail_status == 1}">Đang giao hàng</span>
-										<span th:if="${sanphamdamua.billdetail_status == 2}">Đã nhận hàng</span>
-									</td>
+									<td><span th:if="${sanphamdamua.billdetail_status == 0}">Đang
+											ở kho</span> <span th:if="${sanphamdamua.billdetail_status == 1}">Đang
+											giao hàng</span> <span
+										th:if="${sanphamdamua.billdetail_status == 2}">Đã nhận
+											hàng</span></td>
 
-									<td><a class="btn btn-primary edit" th:href="@{/sanphamdamua/sanphamdamua-chitiet/(id=${sanphamdamua.billdetail_id})}" data-toggle="modal" data-target="#myEdit"><i class="fas fa-edit"></i></a>
-									
-									</td>
+									<td><a class="btn btn-primary edit"
+										th:href="@{/sanphamdamua/sanphamdamua-chitiet/(id=${sanphamdamua.billdetail_id})}"
+										data-toggle="modal" data-target="#myEdit"><i
+											class="fas fa-edit"></i></a>
+											<input type="checkbox" id="allDelete"
+										name="lvt" th:value="${sanphamdamua.billdetail_id}" />
+											</td>
 
 								</tr>
 							</tbody>
@@ -111,40 +131,41 @@
 				</ul>
 
 			</th:block>
-			
+
 			<!-- The Modal Edit -->
-													 <div class="modal" id="myEdit">
-													    <div class="modal-dialog">
-													      <div class="modal-content">
-													      
-													        <!-- Modal Header -->
-													        <div class="modal-header">
-													          <h4>Edit giao hang</h4>
-													          <button type="button" class="close" data-dismiss="modal">&times;</button>
-													        </div>
-													        <div id="edit-body">
-													        	<form th:action="@{/sanphamdamua/updateSanphamdamua}" method="put" id="formEdit">
-																		<input type="hidden" name="billdetail_id" id="id_edit">
-																	
-																	<div class="form-group row">
-																		<label class="col-sm-2 col-form-label">Trạng thái</label>
-																		<div class="col-sm-10">
-																			<select id="parent_edit" name="billdetail_status" class="form-control">
-																				<option th:value="0">Đang ở kho</option>
-																				<option th:value="1">Đang giao hàng</option>
-																				<option th:value="2">Đã nhận hàng</option>
-																			</select>
-																		</div>
-																	</div>
-																	<button type="submit" id="toggler" class="btn btn-primary capnhat">Cập nhật</button>
-																</form>
-													        </div>
-													        <div class="modal-footer">
-													          
-													        </div>
-														  </div>
-													   </div>
-													</div>
+			<div class="modal" id="myEdit">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4>Edit giao hang</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div id="edit-body">
+							<form th:action="@{/sanphamdamua/updateSanphamdamua}"
+								method="put" id="formEdit">
+								<input type="hidden" name="billdetail_id" id="id_edit">
+
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">Trạng thái</label>
+									<div class="col-sm-10">
+										<select id="parent_edit" name="billdetail_status"
+											class="form-control">
+											<option th:value="0">Đang ở kho</option>
+											<option th:value="1">Đang giao hàng</option>
+											<option th:value="2">Đã nhận hàng</option>
+										</select>
+									</div>
+								</div>
+								<button type="submit" id="toggler"
+									class="btn btn-primary capnhat">Cập nhật</button>
+							</form>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 </body>

@@ -56,6 +56,30 @@ public class BillDetailImpl implements BillDetailService {
 	}
 
 
+	@Override
+	public long countSanPhamBanRa() {
+		return billdetailsRepository.countSanPhamBanRa();
+	}
+
+
+	@Override
+	public long countSoLuongDonHang() {
+		return billdetailsRepository.countSoLuongDonHang();
+	}
+
+
+	@Override
+	public long countTongDoanhThu() {
+		return billdetailsRepository.countTongDoanhThu();
+	}
+
+
+	@Override
+	public Integer thongkeNguoiDangKiThang(Integer thang) {
+		return billdetailsRepository.thongkeNguoiDangKiThang(thang);
+	}
+
+
 	
 	
 	

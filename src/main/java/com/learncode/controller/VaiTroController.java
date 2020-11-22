@@ -139,23 +139,15 @@ public class VaiTroController {
 	}
 
 	@RequestMapping("/dataSearch")
-	public String dataSearch(@RequestParam("namvt") String tenvaitro, @RequestParam("keyvt") String mavaitro,
+	public String dataSearch(@RequestParam("keyvt") String tenvaitro, 
 			HttpSession session) {
 		session.setAttribute("NAMEVT", tenvaitro);
-		session.setAttribute("KEYVT", mavaitro);
+		
 		if (tenvaitro == null || tenvaitro.equals("")) {
-			if (mavaitro == null || mavaitro.equals("")) {
-				return "redirect:/vaitro/list";
-			} else {
-				mavaitro = Xuly.xuLySearch(mavaitro);
-				session.setAttribute("KEYVT", mavaitro);
-				session.setAttribute("SEARCH", 1);
-				return "redirect:/vaitro/list/search/1";
-			}
+			return "redirect:/vaitro/list";
 		} else {
 			tenvaitro = Xuly.xuLySearch(tenvaitro);
 			session.setAttribute("NAMEVT", tenvaitro);
-			session.setAttribute("SEARCH", 2);
 			return "redirect:/vaitro/list/search/1";
 		}
 	}
@@ -164,19 +156,9 @@ public class VaiTroController {
 	public String search(ModelMap model, HttpServletRequest request, @PathVariable int numberPage,
 			HttpSession session) {
 		String tenvaitro = (String) session.getAttribute("NAMEVT");
-		String mavaitro = (String) session.getAttribute("KEYVT");
-		Integer temp = (Integer) session.getAttribute("SEARCH");
-		List<VaiTro> list = null;
-		switch (temp) {
-		case 1:
-			list = this.vaiTroService.findByMavaitro(mavaitro);
-			break;
-		case 2:
-			list = this.vaiTroService.findByTenvaitro(tenvaitro);
-			break;
-		default:
-			break;
-		}
+		
+		List<VaiTro> list = this.vaiTroService.findByTenvaitro(tenvaitro);
+		
 		if (list == null) {
 			return "redirect:/vaitro/list";
 		}

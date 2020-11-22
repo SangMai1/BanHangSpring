@@ -20,8 +20,9 @@
 <body>
 	<section class="main__content" layout:fragment="content">
 		<div class="container">
-			<h4>Danh sách sản phẩm đã đặt hàng thành công</h4>
+			<h4>Danh sách người mua hàng thành công</h4>
 			<hr>
+			
 			<form th:action="@{/sanphamdamua/dataSearch}" id="dataSearch">
 				<input type="text" class="main__menu-search-form-input1"
 					name="keyword" placeholder="Search...">
@@ -54,13 +55,13 @@
 
 									<td th:text="${iterStat.count}"></td>
 									
-									<td th:text="${sanphamdamua.bills.bill_name}"></td>
-									<td th:text="${sanphamdamua.billdetail_quantity}"></td>
-									<td th:text="${sanphamdamua.billdetail_price}"></td>
+									<td th:text="${sanphamdamua.billdetails_id.bills.bill_name}"></td>
+									<td th:text="${sanphamdamua.billdetails_id.billdetail_quantity}"></td>
+									<td th:text="${sanphamdamua.billdetails_id.billdetail_price}"></td>
 									<td>
-										<span th:if="${sanphamdamua.billdetail_status == 0}">Đang ở kho</span>
-										<span th:if="${sanphamdamua.billdetail_status == 1}">Đang giao hàng</span>
-										<span th:if="${sanphamdamua.billdetail_status == 2}">Đã nhận hàng</span>
+										<span th:if="${sanphamdamua.billdetails_id.billdetail_status == 0}">Đang ở kho</span>
+										<span th:if="${sanphamdamua.billdetails_id.billdetail_status == 1}">Đang giao hàng</span>
+										<span th:if="${sanphamdamua.billdetails_id.billdetail_status == 2}">Đã nhận hàng</span>
 									</td>
 
 									

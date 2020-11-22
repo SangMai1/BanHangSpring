@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	layout:decorate="~{layout/main-layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+
+</head>
+<body>
+
+	<section class="main__content" layout:fragment="content">
+
+		<div class="inner-block">
+			<div class="chit-chat-layer1">
+
+				<div class="col-md-6 chit-chat-layer1-rit">
+					<div class="glocy-chart">
+						<div class="span-2c">
+							
+							<canvas id="bar" height="300" width="400"
+								style="width: 400px; height: 300px;"></canvas>
+							<script th:inline="javascript">
+                                                var barChartData = {
+                                                    labels: [
+
+                                                    	/*<![CDATA[*/
+
+                                                        /*[# th:each="item : ${ThongKeNguoiDangKiTungThang}"]*/
+                                                            
+                                                            /*[[${item.time}]]*/,
+                                                            
+                                                        /*[/]*/
+
+                                                    /*]]>*/
+
+                                                    ],
+                                                    datasets: [
+                                                        {
+                                                            fillColor: "#FC8213",
+                                                            data: [
+
+                                                            	/*<![CDATA[*/
+
+                                                                /*[# th:each="item : ${ThongKeNguoiDangKiTungThang}"]*/
+                                                                    
+                                                                    /*[[${item.value}]]*/,
+                                                                    
+                                                                /*[/]*/
+
+                                                            /*]]>*/
+
+                                                            ]
+                                                        }
+                                                    ]
+
+                                                };
+                                                new Chart(
+        												document.getElementById("bar")
+        														.getContext("2d"),
+        												{
+
+        													options : {
+        														title : {
+        															display : true,
+        															text : 'Thống kê người đăng kí từng tháng'
+        														},
+        														legend : {
+        															display : true
+        														}
+        													},
+        													type : "line",
+        													data : barChartData
+
+        												});
+
+                                            </script>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+
+		</div>
+
+	</section>
+
+</body>
+</html>

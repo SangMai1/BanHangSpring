@@ -9,4 +9,21 @@ public interface ReportDAO {
 
 	List<MyItems> reportReceipt(Date date, int limit);
 
+	List<MyItems> reportReceiptThang(Date date, int limit);
+
+	List<MyItems> reportReceiptDoangThu7Ngay(Date date, int limit);
+
+	List<MyItems> reportReceiptDoanhThuThang(Date date, int limit);
+
+	List<MyItems> reportReceiptThongKeNguoiDangKiThang(Date date, int limit);
+
+	List<MyItems> reportReceiptThongKeNguoiDangKiTungThang(int year, int month);
+
+	List<MyItems> reportReceiptThongKeSoLuongSanPhamBanRa(Date date, int limit);
+
+	List<MyItems> reportReceiptThongKeSoLuongSanPhamTungThang(int year, int month);
+
+
+
+
 }

@@ -1,121 +1,219 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/css/reset.css"/>
-  <link rel="stylesheet" type="text/css" href="/css/StyleLayout.css"/>
-  <title>ADMIN</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="/css/StyleLayout.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<title>ADMIN</title>
 </head>
 <body>
-    <div class="wrapper">
-      <header class="header">
-        <div class="header__left">
-          <a href="#" class="logo">ADMIN</a>
-        </div>
-        <div class="header__right">
-          <div class="header__right-box">
-            <div class="header__right-box-image">
-              <i class="fas fa-user-circle"></i>
-            </div>
-            <div class="header__right-box-name">
-              <b><span class="header__right-box-name-text" sec:authentication="name">Username</span></b>
-            </div>
-          </div>
-        </div>
-      </header>
+	<div class="wrapper">
+		<header class="header">
+			<div class="header__left">
+				<a href="#" class="logo">ADMIN</a>
+			</div>
+			<div class="header__right">
+				<div class="header__right-box">
+					<div class="header__right-box-image">
+						<i class="fas fa-user-circle"></i>
+					</div>
+					<div class="header__right-box-name">
+						<b><span class="header__right-box-name-text"
+							sec:authentication="name">Username</span></b>
+					</div>
+				</div>
+			</div>
+		</header>
 
-      <div class="main">
-        <section class="main__menu">
-          <div class="main__menu-search">
-            <div class="main__menu-search-form">
-              <input type="text" class="main__menu-search-form-input" placeholder="Search...">
-              <button class="main__menu-search-form-button">Search</button>
-            </div>
-          </div>
-          <div class="main__menu-navigation">
-            <p class="main__menu-navigation-text">MAIN NAVIGATION</p>
-          </div>
-          <div class="main__menu-function">
-            <div class="main__menu-function-sidenav">
-              <a href="#">Home</a>
-              <button class="main__menu-function-dropdown-btn">Quản trị hệ thống
-                <i class="fas fa-caret-down"></i>
-              </button>
-              <div class="dropdown-container">
-                <a href="/nguoidung/">Người dùng</a>
-                <a href="/chucnang/">Chức năng</a>
-                <a href="/vaitro/">Vai trò</a>
-                <a href="/nhom/">Nhóm</a>
-              </div>
-              <button class="main__menu-function-dropdown-btn">Quản lý website
-                <i class="fas fa-caret-down"></i>
-              </button>
-              <div class="dropdown-container">
-                <a href="/slides/">Slide</a>
-                <a href="/loaisanpham/">Loại sản phẩm</a>
-                <a href="/sanpham/">Sản phẩm</a>
-              </div>
-              <button class="main__menu-function-dropdown-btn">Quản lý khách hàng
-                <i class="fas fa-caret-down"></i>
-              </button>
-              <div class="dropdown-container">
-                
-                <a href="/nguoimuahang/list">Người mua</a>
-                <a href="/sanphamdamua/listMuaThanhCong">Sản phẩm đã mua</a>
-              </div>
-              <button class="main__menu-function-dropdown-btn">Quản lý kho
-                <i class="fas fa-caret-down"></i>
-              </button>
-              <div class="dropdown-container">
-                <a href="/sanphamdamua/listKho">Đã mua chưa xuất kho</a>
-              </div>
-              <button class="main__menu-function-dropdown-btn">Quản lý đơn hàng
-                <i class="fas fa-caret-down"></i>
-              </button>
-              <div class="dropdown-container">
-                <a href="/sanphamdamua/list">Đơn hàng</a>
-              </div>
-              <button class="main__menu-function-dropdown-btn">Thống kê
-                <i class="fas fa-caret-down"></i>
-              </button>
-              <div class="dropdown-container">
-                <a href="/thongke/">7 ngày gần nhất</a>
-              </div>
-        	  <a th:href="@{/logout}">Logout</a>
-            </div>
-          </div>
-        </section>
-        
-        <section class="main__content" layout:fragment="content">
+		<div class="main">
+			<section class="main__menu">
+				<div class="main__menu-search">
+					<div class="main__menu-search-form">
+						<input type="text" class="main__menu-search-form-input"
+							placeholder="Search...">
+						<button class="main__menu-search-form-button">Search</button>
+					</div>
+				</div>
+				<div class="main__menu-navigation">
+					<p class="main__menu-navigation-text">MAIN NAVIGATION</p>
+				</div>
+				<div class="main__menu-function">
+					<div class="main__menu-function-sidenav">
+						<a href="#">Home</a>
+						<button class="main__menu-function-dropdown-btn">
+							Quản trị hệ thống <i class="fas fa-caret-down"></i>
+						</button>
+						<div class="dropdown-container">
+							<a href="/nguoidung/">Người dùng</a> <a href="/chucnang/">Chức
+								năng</a> <a href="/vaitro/">Vai trò</a> <a href="/nhom/">Nhóm</a>
+						</div>
+						<button class="main__menu-function-dropdown-btn">
+							Quản lý website <i class="fas fa-caret-down"></i>
+						</button>
+						<div class="dropdown-container">
+							<a href="/slides/">Slide</a> <a href="/loaisanpham/">Loại sản
+								phẩm</a> <a href="/sanpham/">Sản phẩm</a>
+						</div>
+						<button class="main__menu-function-dropdown-btn">
+							Quản lý khách hàng <i class="fas fa-caret-down"></i>
+						</button>
+						<div class="dropdown-container">
 
-        </section>
-      </div>
-      <div class="clear"></div>
-      <footer class="footer">
-        <p class="footer-text">Mai Văn Sang</p>
-      </footer>
-    </div>
-    <script>
-      /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-      var dropdown = document.getElementsByClassName("main__menu-function-dropdown-btn");
-      var i;
+							<a href="/nguoimuahang/list">Người mua</a> <a
+								href="/sanphamdamua/listMuaThanhCong">Sản phẩm đã mua</a>
+						</div>
+						<button class="main__menu-function-dropdown-btn">
+							Quản lý kho <i class="fas fa-caret-down"></i>
+						</button>
+						<div class="dropdown-container">
+							<a href="/sanphamdamua/listKho">Đã mua chưa xuất kho</a>
+						</div>
+						<button class="main__menu-function-dropdown-btn">
+							Quản lý đơn hàng <i class="fas fa-caret-down"></i>
+						</button>
+						<div class="dropdown-container">
+							<a href="/sanphamdamua/list">Đơn hàng</a>
+						</div>
+						<button class="main__menu-function-dropdown-btn">
+							Thống kê <i class="fas fa-caret-down"></i>
+						</button>
+						<div class="dropdown-container">
+							<a href="/thongke/">Đơn hàng 7 ngày gần nhất</a> <a
+								href="/thongke/doanhthu">Doanh thu 7 ngày gần nhất</a> <a
+								href="/thongke/thang">Đơn hàng từng tháng</a> <a
+								href="/thongke/doanhthuthang">Doanh thu từng tháng</a>
+						</div>
+						<a th:href="@{/logout}">Logout</a>
+					</div>
+				</div>
+			</section>
 
-      for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function () {
-          this.classList.toggle("active");
-          var dropdownContent = this.nextElementSibling;
-          if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-          } else {
-            dropdownContent.style.display = "block";
-          }
-        });
-      }
-    </script>
+			<section class="main__content" layout:fragment="content">
+
+				<div class="container">
+					<ul class="category__list">
+						<li class="category__item">
+							<p>Tổng số người đăng kí mới</p>
+							<p th:text="${countNguoiDangKi}"></p>
+						</li>
+						<li class="category__item">
+							<p>Tổng số sản phẩm được bán ra</p>
+							<p th:text="${countSanPhamBanRa}"></p>
+							
+						</li>
+						<li class="category__item">
+							<p>Tổng số lượng đơn hàng</p>
+							<p th:text="${countSoLuongDonHang}"></p>
+						</li>
+						<li class="category__item">
+							<p>Tổng doanh thu</p>
+							<p th:text="${#numbers.formatCurrency(countTongDoanhThu)}"></p>
+						</li>
+					</ul>
+				</div>
+				<div class="inner-block">
+					<div class="chit-chat-layer1">
+
+						<div class="col-md-6 chit-chat-layer1-rit">
+							<div class="glocy-chart">
+								<div class="span-2c">
+
+									<canvas id="bar" height="600" width="800"
+										style="width: 800px; height: 600px;"></canvas>
+									<script th:inline="javascript">
+										var barChartData = {
+											labels : [
+
+											/*<![CDATA[*/
+
+											/*[# th:each="item : ${listReceipt}"]*/
+
+											/*[[${item.time}]]*/,
+
+											/*[/]*/
+
+											/*]]>*/
+
+											],
+											datasets : [ {
+												fillColor : "#FC8213",
+												data : [
+
+												/*<![CDATA[*/
+
+												/*[# th:each="item : ${listReceipt}"]*/
+
+												/*[[${item.value}]]*/,
+
+												/*[/]*/
+
+												/*]]>*/
+
+												]
+											} ]
+
+										};
+										new Chart(
+												document.getElementById("bar")
+														.getContext("2d"),
+												{
+
+													options : {
+														title : {
+															display : true,
+															text : 'Thống kê doanh thu từng tháng'
+														},
+														legend : {
+															display : true
+														}
+													},
+													type : "bar",
+													data : barChartData
+
+												});
+									</script>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+
+				</div>
+			</section>
+		</div>
+		<div class="clear"></div>
+		<footer class="footer">
+			<p class="footer-text">Mai Văn Sang</p>
+		</footer>
+	</div>
+	<script>
+		/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+		var dropdown = document
+				.getElementsByClassName("main__menu-function-dropdown-btn");
+		var i;
+
+		for (i = 0; i < dropdown.length; i++) {
+			dropdown[i].addEventListener("click", function() {
+				this.classList.toggle("active");
+				var dropdownContent = this.nextElementSibling;
+				if (dropdownContent.style.display === "block") {
+					dropdownContent.style.display = "none";
+				} else {
+					dropdownContent.style.display = "block";
+				}
+			});
+		}
+	</script>
 </body>
 </html>

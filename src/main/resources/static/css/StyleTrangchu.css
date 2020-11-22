@@ -100,10 +100,66 @@ a {
 }
 
 .menu__inner-link {
-	font-size: 15px;
+	color: black;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  font-size: 15px;
+  padding: 0 0 5px 0;
+  display: inline-block;
+  position: relative;
+	/* font-size: 15px;
 	font-family: 'Poppins',sans-serif;
 	color: black !important;
-	width: 100%;
+	width: 100%; */
+}
+
+.menu__inner-link:after {
+	background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: black;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.menu__inner-link:hover:after {
+	width: 100%; 
+  left: 0; 
+}
+
+.dropdown_item-1  {
+	transform-origin: top center;
+       animation: translateX 300ms 60ms ease-in-out forwards;
+}
+.dropdown_item-2 {
+	transform-origin: top center;
+       animation: translateX 300ms 220ms ease-in-out forwards;
+}
+
+.dropdown_item-3 {
+	transform-origin: top center;
+       animation: translateX 300ms 380ms ease-in-out forwards;
+}
+
+
+@keyframes translateX {
+  0% {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  
+  80% {
+    transform: translateX(-5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }
 
 .dropdown {
@@ -257,19 +313,20 @@ a {
 .dropdown1 {
 	display: inline-block;
 	padding-bottom: 10px;
+	
 }
 
 .dropdown-content1 {
 	text-align: center;
 	display: none;
+	
 	position: absolute;
 	background-color: #f9f9f9;
-	min-width: 250px;
+	
 	box-shadown: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 	left: 515px;
 	top: 140px;
-	
 	height: 110px;
 }
 
@@ -280,15 +337,36 @@ a {
 	display: block;
 	text-align: center;
 	font-size: 12px;
-	font-weight: 600;
+	letter-spacing: 0.1em;
 }
 
 .dropdown-content1 a:hover {
 	background-color: #f1f1f1;
+
+}
+
+.dropdown_item-1:after, .dropdown_item-2:after, .dropdown_item-3:after {
+	background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: black;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.dropdown_item-1:hover:after, .dropdown_item-2:hover:after, .dropdown_item-3:hover:after {
+	width: 100%; 
+  left: 0; 
 }
 
 .dropdown1:hover .dropdown-content1 {
 	display: block;
+	min-width: 220px;
+	
 }
 .banner11 {
 	  margin-bottom: 82px !important ;

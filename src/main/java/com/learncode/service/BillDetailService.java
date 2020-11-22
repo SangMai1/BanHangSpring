@@ -21,6 +21,14 @@ public interface BillDetailService {
 
 	List<BillDetail> getLichSuMuaHang(Bills b);
 
+	long countSanPhamBanRa();
+
+	long countSoLuongDonHang();
+
+	long countTongDoanhThu();
+
+	Integer thongkeNguoiDangKiThang(Integer thang);
+
 
 
 

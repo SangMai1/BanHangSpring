@@ -1,32 +1,23 @@
 	$(document).ready(function(){
-		var urls = "/vaitro/ #myModals";
+		var urls = "/vaitro/";
+	
+	
+		
 		$('#model-body').html(event).load(urls);
-//		$('#bnn').on('click',function(event){
-//			event.preventDefault();
-//			
-//		});
+		$('#bnn').on('click',function(event){
+			event.preventDefault();
+			$('#model-body .header__left').empty();
+			$('#model-body .header__right').empty();
+			$('#model-body .main__menu').empty();
+			$('#model-body .footer').empty();
+			$('#model-body .themmoi').empty();
+			$('#model-body hr').empty();
+		});
 		
 		$('.buttonDelete').on('click', function(event){
 			event.preventDefault();
-			var url = $('#formDelete').attr('action');
-			console.log(url);
-			$.ajax({
-				contentType: "application/json",
-				url: "/login/check",
-				data: {
-					url: url
-				},
-				dataType: "json",
-				success: function(data){
-					console.log(data);
-					if(data > 0){
-						$('#myDelete').modal("show");
-					} else {
-						alert("Bạn không dùng được chức năng này");
-						$('#myDelete').modal("hide");
-					}
-				},
-			});
+			$('#myDelete').modal();
+			
 			$('#delRef').click(function(){
 				$('#formDelete').submit();
 			});
@@ -39,7 +30,7 @@
 			var id = GetURLParameter(uu, 'id');
 			$.ajax({
 				contentType: "application/json",
-//				url: "/login/check",
+
 				url : "/vaitro/update",
 				data: {
 					id: id
@@ -62,47 +53,10 @@
 		
 		$('.chi').on('click', function(event){
 			event.preventDefault();
-			var url = $('.chi').attr('href');
-			$.ajax({
-				contentType: "application/json",
-				url: "/login/check",
-				data: {
-					url: url
-				},
-				dataType: "json",
-				timeout: 10000,
-				success: function(data){
-					if(data > 0){
-						$('#myChitiet').modal("show");
-					} else {
-						$('#myChitiet').modal("hide");
-						alert("Bạn không dùng được chức năng này");
-					}
-				},
-			});
+			$('#myChitiet').modal("hide");
+			
 		});
 		
-		$('#search').on('click', function(event){
-			event.preventDefault();
-			var url = $('#dataSearch').attr('action');
-			$.ajax({
-				contentType: "application/json",
-				url: "/login/check",
-				data: {
-					url: url
-				},
-				dataType: "json",
-				timeout: 10000,
-				success: function(data){
-					if(data > 0){
-						$('#search').show();
-					} else {
-						$('#search').hide();
-						alert("Bạn không dùng được chức năng này");
-					}
-				},
-			});
-		});
 	});
 	
 	function GetURLParameter(sPageURL, sParam){

@@ -87,7 +87,7 @@
 								
 								<hr>
 								<div class="feature__info1-product-cart">
-								<form action="/web/add" method="GET">
+								<form th:action="@{/web/add}" method="POST">
 									<input type="hidden" th:value="${si.id}" name="id"/>
 									<div class="feature__info1-product-number">
 										<input type="number" name="quantity" value="1" id="dSuggest">
@@ -116,8 +116,9 @@
 				<div class="container">
 					<ul class="category__list">
 						<li th:each="spm : ${SANPHAMMOI}" class="category__item">
-							<a href="#"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
+							<a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
 							<a href="#" th:text="${spm.sanphams.tensanpham}" class="category__name"></a>
+							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien)}"></span>
 						</li>
 						
 					</ul>

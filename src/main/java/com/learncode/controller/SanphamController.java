@@ -1,5 +1,6 @@
 package com.learncode.controller;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,15 +81,16 @@ public class SanphamController {
 			this.sanphamService.insertSanpham(sp);
 
 			String uploadDir = "./uploads/" + sp.getId();
-
+	
 			Path uploadPath = Paths.get(uploadDir);
-			System.out.println(uploadPath);
+			System.out.println("uploadPath1111"+uploadPath);
 			if (!Files.exists(uploadPath)) {
 				Files.createDirectories(uploadPath);
 			}
 
 			try (InputStream inputStream = multipartFile.getInputStream()) {
-				Path filePath = uploadPath.resolve(fileName);
+				Path filePath = uploadPath.resolve(sp.getId()+fileName);
+				System.out.println("filePath"+filePath);
 				Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 			} catch (Exception e) {
 				throw new IOException("Could not save uploaded file: " + fileName);
@@ -131,21 +133,25 @@ public class SanphamController {
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		sp.setImage(fileName);
 		this.sanphamService.updateSanpham(sp);
+		
+		
 		Path deleteFile = Paths.get("./uploads/" + sp.getId());
 		{
-			File file = deleteFile.toFile();
-			if (file.isDirectory()) {
-				for (File f : deleteFile.toFile().listFiles()) {
-					System.out.println("da xoa" + f);
-					f.delete();
-					
+			
+				File file = deleteFile.toFile();
+				if (file.isDirectory()) {
+					for (File f : deleteFile.toFile().listFiles()) {
+						System.out.println("da xoa" + f);
+						f.delete();
+						
+					}
+				} else {
+					file.deleteOnExit();
 				}
-			} else {
-				file.deleteOnExit();
-			}
-			if (file.delete()) {
-				System.out.println("da deleted foler" + file.toString());
-			}
+				
+				file.delete();
+				
+				
 			
 		}
 		
@@ -154,7 +160,7 @@ public class SanphamController {
 		String uploadDir = "./uploads/" + sp.getId();
 
 		Path uploadPath = Paths.get(uploadDir);
-		
+		System.out.println("uploadPath" + uploadPath);
 
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);

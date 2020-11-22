@@ -17,6 +17,7 @@ import com.lowagie.text.FontFactory;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
+import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPRow;
 import com.lowagie.text.pdf.PdfPTable;
@@ -32,20 +33,27 @@ public class SanphamdamuaPDFExporter {
 		this.listKho = k;
 	}
 	
-	private void writeTableHeader(PdfPTable table) {
-		PdfPCell cell = new PdfPCell();
-		
-		cell.setPhrase(new Phrase("Quantity"));
-		table.addCell(cell);
-		
-		cell.setPhrase(new Phrase("Price"));
-		table.addCell(cell);
-	}
+	
 	
 	private void writeTableData(PdfPTable table) {
+		PdfPCell cell = new PdfPCell();
 		Optional<Kho> kho = listKho;
+		cell.setBorder(Rectangle.NO_BORDER);
+		cell.setPaddingTop(30);
+		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+		table.getDefaultCell().setPaddingTop(30);
+		cell.setPhrase(new Phrase("Họ tên:"));
+		table.addCell(cell);
+		table.addCell(kho.get().getBilldetails_id().getBills().getBill_name());
+		cell.setPhrase(new Phrase("Số lượng"));
+		table.addCell(cell);
 		table.addCell(String.valueOf(kho.get().getBilldetails_id().getBilldetail_quantity()));
+		cell.setPhrase(new Phrase("Giá tiền:"));
+		table.addCell(cell);
 		table.addCell(String.valueOf(kho.get().getBilldetails_id().getBilldetail_price()));
+		cell.setPhrase(new Phrase("Địa chỉ:"));
+		table.addCell(cell);
+		table.addCell(kho.get().getBilldetails_id().getBills().getBill_address());
 	}
 	
 	public void export(HttpServletResponse response) throws DocumentException, IOException {
@@ -73,9 +81,9 @@ public class SanphamdamuaPDFExporter {
 		
 		
 		PdfPTable table = new PdfPTable(2);
-		table.setWidthPercentage(100);
 		
-//		writeTableHeader(table);
+		table.setWidthPercentage(40);
+		
 		writeTableData(table);
 		
 		document.add(table);

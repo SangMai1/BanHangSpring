@@ -4,64 +4,55 @@
 <head>
 <meta charset="UTF-8">
 <title>Thong tin co ban</title>
+<link rel="stylesheet" type="text/css" href="/css/StyleThongtincoban.css">
 </head>
 <body>
-	
+
 	<div layout:fragment="content">
 		<h3>THÔNG TIN TÀI KHOẢN</h3>
-		<form method="post" 
-			id="myModals1" style="padding: 20px;">
-			<input type="hidden" th:value="${session.INFO.bill_id}" name="bill_id">
+		<form th:action="@{/web/updateCheckout1}" method="put">
+			<input type="hidden" th:value="${session.EMAIL_WEB.bill_id}"
+				name="bill_id">
 			<div class="form-group row">
-				<label class="col-sm-2 col-form-label" style="font-size: 14px;">
-					Họ tên</label>
+				<label class="col-sm-2 col-form-label"> Họ tên</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control"
-						placeholder="Nhập họ và tên" th:value="${session.INFO.bill_name}" required="required"
-						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+						placeholder="Nhập họ và tên"
+						th:value="${session.EMAIL_WEB.bill_name}" required="required" name="bill_name">
 				</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-2 col-form-label" style="font-size: 14px;">
-					Password</label>
+				<label class="col-sm-2 col-form-label"> Password</label>
 				<div class="col-sm-10">
 					<input type="password" class="form-control"
-						placeholder="Nhập password" th:value="${session.INFO.bill_password}" required="required"
-						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+						placeholder="Nhập password"
+						th:value="${session.EMAIL_WEB.bill_password}" required="required" name="bill_password">
 				</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-2 col-form-label" style="font-size: 14px;">
-					Email(*)</label>
+				<label class="col-sm-2 col-form-label"> Email</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" placeholder="Nhập email" required="required"
-						th:value="${session.INFO.bill_email}"
-						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+					<input type="text" class="form-control" placeholder="Nhập email"
+						required="required" th:value="${session.EMAIL_WEB.bill_email}" name="bill_email">
 				</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-2 col-form-label" style="font-size: 14px;">Nhập
-					SĐT(*)</label>
+				<label class="col-sm-2 col-form-label">Nhập SĐT</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" placeholder="Nhập SĐT" required="required"
-						th:value="${session.INFO.bill_phone}"
-						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+					<input type="text" class="form-control" placeholder="Nhập SĐT"
+						required="required" th:value="${session.EMAIL_WEB.bill_phone}" name="bill_phone">
 				</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-2 col-form-label" style="font-size: 14px;">Nhập
-					địa chỉ(*)</label>
+				<label class="col-sm-2 col-form-label">Nhập địa chỉ</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" placeholder="Nhập địa chỉ" required="required"
-						th:value="${session.INFO.bill_address}"
-						style="width: 100%; padding: 20px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px">
+					<input type="text" class="form-control" placeholder="Nhập địa chỉ"
+						required="required" th:value="${session.EMAIL_WEB.bill_address}" name="bill_address">
 				</div>
 			</div>
-			<button type="submit" class="btn"
-				style="width: 100%; background-color: #4CAF50; color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; font-size: 14px">Đăng
-				kí</button>
+			<button type="submit" class="btn">Cập nhật</button>
 		</form>
 	</div>
-	
+
 </body>
 </html>

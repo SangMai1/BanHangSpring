@@ -2,7 +2,6 @@ package com.learncode.repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -12,7 +11,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.beust.jcommander.Parameter;
 import com.learncode.models.BillDetail;
 import com.learncode.models.Bills;
 import com.learncode.models.SanphamVaChitiet;
@@ -42,5 +40,53 @@ public interface BilldetailsRepository extends CrudRepository<BillDetail, Long> 
 	
 	@Query(value = "SELECT count(*) FROM ql_billdetails WHERE billdetail_date=?", nativeQuery = true)
 	int thongke(@Param("billdetail_date") Date billdetail_date);
+	
+	@Query(value = "SELECT count(*) soluong\r\n" + 
+			"FROM ql_billdetails \r\n" + 
+			"WHERE date_part('month', billdetail_date) = ?", nativeQuery = true)
+	int thongkeThang(@Param("thang") Integer thang);
+	
+	@Query(value = "SELECT sum(billdetail_price) tien\r\n" + 
+			"			FROM ql_billdetails \r\n" + 
+			"			WHERE date_part('month', billdetail_date) = ?", nativeQuery = true)
+	Integer doanhThuThongkeThang(@Param("thang") Integer thang);
+	
+	@Query(value = "SELECT sum(billdetail_price) FROM ql_billdetails WHERE billdetail_date=?", nativeQuery = true)
+	Integer thongkeDoanhThu(@Param("tienngay") Date tienngay);
+	
+	@Query(value = "SELECT SUM(billdetail_quantity) FROM ql_billdetails", nativeQuery = true)
+	long countSanPhamBanRa();
+	
+	@Query(value = "SELECT COUNT(*) FROM ql_billdetails", nativeQuery = true)
+	long countSoLuongDonHang();
+	
+	@Query(value = "SELECT SUM(billdetail_price) FROM ql_billdetails", nativeQuery = true)
+	long countTongDoanhThu();
+	
+	//thống kê người đăng kí mới
+	
+	@Query(value = "SELECT count(*) \r\n" + 
+			"FROM ql_bill\r\n" + 
+			"WHERE date_part('month', bill_date) = ? AND bill_status = 0", nativeQuery = true)
+	Integer thongkeNguoiDangKiThang(@Param("thang") Integer thang);
+	
+	@Query(value = "SELECT count(*) \r\n" + 
+			"			FROM ql_bill \r\n" + 
+			"			WHERE bill_date = ? AND bill_status = 0", nativeQuery = true)
+	Integer thongkeNguoiDangKiTungNgayTrongThang(@Param("thang") Date thang);
+	
+	
+	//thống kê số lượng sản phẩm
+	
+	@Query(value = "SELECT sum(billdetail_quantity)  \r\n" + 
+			"			FROM ql_billdetails \r\n" + 
+			"			WHERE date_part('month', billdetail_date) = ?", nativeQuery = true)
+	Integer thongKeSoLuongSanPham(@Param("thang") Integer thang);
+	
+	@Query(value = "SELECT sum(billdetail_quantity)  \r\n" + 
+			"						FROM ql_billdetails \r\n" + 
+			"						WHERE billdetail_date = ?", nativeQuery = true)
+	Integer thongkeSoLuongSanPhamTrongThang(@Param("thang") Date thang);
+	
 	
 }

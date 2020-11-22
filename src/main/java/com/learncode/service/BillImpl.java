@@ -51,6 +51,16 @@ public class BillImpl implements BillService {
 	}
 
 
-	
-	
+	@Override
+	public void updateBill1(Bills b) {
+		billRepository.updateBill1(b.getBill_name(), b.getBill_email(), b.getBill_phone(), b.getBill_address(), b.getBill_password(), b.getBill_status(), b.getBill_id());
+	}
+
+
+	@Override
+	public long countNguoiDangKi() {
+		return billRepository.countNguoiDangKi();
+	}
+
+		
 }

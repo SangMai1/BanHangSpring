@@ -30,11 +30,17 @@
 									th:src="@{${item.value.product.sanphams.getLogoImagePath()}}"
 									width="80" height="70" /></td>
 								<td th:text="${item.value.product.kichthuoc}"></td>
-								<td th:text="${item.value.quantity}"></td>
+								<td><form  th:action="@{/web/update}" method="post">
+											<input type="hidden" th:value="${item.value.product.id}" name="id1" /> <input
+												type="number" min="1" max="100"
+												th:value="${item.value.quantity}" name="quantity1" />
+											<button type="submit" class="btn btn-primary">update</button>
+										</form></td>
 								<td
 									th:text="${#numbers.formatCurrency(item.value.quantity * (item.value.product.giatien - item.value.product.giamgia))}"></td>
-								<td><a
-									th:href="@{'/web/remove/' + ${item.value.product.id}}">Remove</a>
+								<td>
+									
+									<a th:href="@{'/web/remove/' + ${item.value.product.id}}">Remove</a>
 								</td>
 							</tr>
 						</tbody>

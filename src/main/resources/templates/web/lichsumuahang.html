@@ -4,7 +4,8 @@
 	layout:decorate="~{web/trangchu}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>LICH SU MUA HANG</title>
+<link rel="stylesheet" type="text/css" href="/css/lichsumuahang.css">
 </head>
 <body>
 
@@ -16,7 +17,7 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th>Id</th>
+								<th>STT</th>
 								<th>Sản phẩm</th>
 								<th>Số lượng</th>
 								<th>Giá bán</th>
@@ -24,8 +25,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="item: ${LICHSUMUAHANG}">
-								<td th:text="${item.billdetail_id}"></td>
+							<tr th:each="item, iterStat: ${LICHSUMUAHANG}">
+								<td th:text="${iterStat.count}"></td>
 								<td th:text="${item.sanphamvachitiet.sanphams.tensanpham}"></td>
 								<td th:text="${item.billdetail_quantity}"></td>
 								<td

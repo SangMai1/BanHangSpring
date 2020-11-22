@@ -17,5 +17,9 @@ public interface BillService {
 
 	void updateBill(Bills bills);
 
+	void updateBill1(Bills b);
+
+	long countNguoiDangKi();
+
 
 }

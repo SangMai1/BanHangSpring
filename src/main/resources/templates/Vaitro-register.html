@@ -16,7 +16,7 @@
 <body>
 	<section class="main__content" layout:fragment="content">
 		<div class="container">
-			<h4>Thêm mới vai trò</h4>
+			<h4 class="themmoi">Thêm mới vai trò</h4>
 			<hr>
 			<form th:action="@{/vaitro/saveVaitro}" th:object="${VAITRO}"
 				id="myModals">
@@ -64,6 +64,7 @@
 			</form>
 		</div>
 		<script th:inline="javascript">
+		
 			var message = /*[[${CHUCNANGS}]]*/'default';
 			console.log('mesage', message);
 			(function(cns){
@@ -124,6 +125,8 @@
 				}
 				}
 				})(message)
+		
+		
 		</script>
 	</section>
 </body>

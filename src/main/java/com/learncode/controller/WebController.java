@@ -1,5 +1,6 @@
 package com.learncode.controller;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import com.learncode.comon.Xuly;
 import com.learncode.dto.CartDTO;
 import com.learncode.models.BillDetail;
 import com.learncode.models.Bills;
+import com.learncode.models.ChucNang1;
 import com.learncode.models.Kho;
 import com.learncode.models.Sanpham;
 import com.learncode.models.SanphamVaChitiet;
@@ -169,9 +171,9 @@ public class WebController {
 
 		model.addAttribute("baseUrl", baseUrl);
 
-		model.addAttribute("SANPHAMMOILIST", pages);
+		model.addAttribute("SANPHAMSALELIST", pages);
 
-		return "/web/sanphammoi";
+		return "/web/sanphamsale";
 	}
 	
 	@RequestMapping(value = "/noibatlist", method = { RequestMethod.GET, RequestMethod.POST })
@@ -217,9 +219,9 @@ public class WebController {
 
 		model.addAttribute("baseUrl", baseUrl);
 
-		model.addAttribute("SANPHAMNOIBATLIST", pages);
+		model.addAttribute("SANPHAMSALELIST", pages);
 
-		return "/web/sanphamnoibat";
+		return "/web/sanphamsale";
 	}
 	
 	@RequestMapping(value = "/salelist", method = { RequestMethod.GET, RequestMethod.POST })
@@ -311,9 +313,9 @@ public class WebController {
 
 		model.addAttribute("baseUrl", baseUrl);
 
-		model.addAttribute("SANPHAMBANCHAYLIST", pages);
+		model.addAttribute("SANPHAMSALELIST", pages);
 
-		return "/web/sanphambanchay";
+		return "/web/sanphamsale";
 	}
 	
 	@RequestMapping("/dataSearch")
@@ -479,7 +481,7 @@ public class WebController {
 		return this.sanphamvachitietService.findBySanphamVaChitietId(id);
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/add", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewAdd(ModelMap model, HttpSession session, @RequestParam("id") Long id,
 			@RequestParam("quantity") Integer quantity) {
 		HashMap<Long, CartDTO> cartItems = (HashMap<Long, CartDTO>) session.getAttribute("myCartItems");
@@ -503,6 +505,38 @@ public class WebController {
 		
 		session.setAttribute("myCartTotal", totalPrice(cartItems));
 		session.setAttribute("myCartNum", cartItems.size());
+		session.setAttribute("quantity", totalQuantity(cartItems));
+		return "/web/giohang";
+	}
+	
+	@RequestMapping(value = "/update", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+	public String viewUpdate(ModelMap model, HttpSession session, @RequestParam("id1") long id,
+			@RequestParam("quantity1") Integer quantity) {
+		HashMap<Long, CartDTO> cartItems = (HashMap<Long, CartDTO>) session.getAttribute("myCartItems");
+		if (cartItems == null) {
+			cartItems = new HashMap<>();
+			session.setAttribute("myCartItems", cartItems);
+		}
+
+		SanphamVaChitiet product = this.sanphamvachitietService.findBySanphamId(id).get();
+		
+			CartDTO item = new CartDTO();
+			if (cartItems.containsKey(id)) {
+				item = cartItems.get(id);
+				item.setQuantity(quantity);
+				cartItems.put(id, item);
+			}
+			
+		
+		
+		session.setAttribute("myCartTotal", totalPrice(cartItems));
+		session.setAttribute("myCartNum", cartItems.size());
+		session.setAttribute("quantity", totalQuantity(cartItems));
+		return "redirect:/web/cart";
+	}
+	
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
+	public String cart() {
 		return "/web/giohang";
 	}
 
@@ -515,6 +549,14 @@ public class WebController {
 		return count;
 	}
 
+	public int totalQuantity(HashMap<Long, CartDTO> cartItems) {
+		int count = 0;
+		for (Map.Entry<Long, CartDTO> list : cartItems.entrySet()) {
+			count += list.getValue().getQuantity();
+		}
+		return count;
+	}
+	
 	@RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
 	public String viewRemove(ModelMap model, HttpSession session, @PathVariable("id") Long id) {
 		HashMap<Long, CartDTO> cartItems = (HashMap<Long, CartDTO>) session.getAttribute("myCartItems");
@@ -527,6 +569,7 @@ public class WebController {
 		session.setAttribute("myCartItems", cartItems);
 		session.setAttribute("myCartTotal", totalPrice(cartItems));
 		session.setAttribute("myCartNum", cartItems.size());
+		session.setAttribute("quantity", totalQuantity(cartItems));
 		return "/web/giohang";
 	}
 
@@ -550,6 +593,13 @@ public class WebController {
 		bills.setBill_status((Integer) 0);
 		billService.insertBill(bills);
 		return "/web/thanhtoan";
+	}
+	
+	@RequestMapping(value="/updateCheckout1", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+	public String doUpdate11(Bills b) {
+		b.setBill_status((Integer) 0);
+		this.billService.updateBill1(b);
+		return "redirect:/web/";
 	}
 	
 	@PostMapping("/savePay")

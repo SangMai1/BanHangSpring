@@ -173,7 +173,7 @@ public class NguoiDungController {
 	@RequestMapping("/list/search/{pageNumber}")
 	public String search(ModelMap model, HttpServletRequest request, @RequestParam("keyword") String tennguoidung,
 			@PathVariable int pageNumber) {
-		if (tennguoidung.equals("")) {
+		if (tennguoidung.equals("") || tennguoidung == null) {
 			return "redirect:/nguoidung/list";
 		}
 		List<Nguoidung> list = this.nguoiDungService.findByTennguoidung(tennguoidung);
