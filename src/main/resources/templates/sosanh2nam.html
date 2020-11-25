@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<head>
+<meta charset="UTF-8">
+<title>Danh sach chuc nang</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/StyleSoSanh2Nam.css">
+<link rel="stylesheet" type="text/css"
+	href="/css/StyleRegisterChucNang.css">
+<link rel="stylesheet"
+	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/Chucnang-view.js}"></script>
+</head>
+<body>
+	<section class="main__content" layout:fragment="content">
+	<form th:action="@{/thongke/sosanh2namtruocsau}">
+		<label>So sánh 2 năm</label><br>
+				<input type="text" name="namtruoc" th:value="${session.NAMTRUOC}" placeholder="Năm..."><span>-</span>
+				<input type="text" name="namsau" th:value="${session.NAMSAU}" placeholder="Năm...">
+				<button class="btn btn-primary" type="submit">Search</button>
+			</form>
+		<div class="main_sosanh">
+			<div class="main_sosanh-left">
+
+				<div class="container">
+
+
+				
+
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Tháng</th>
+								<th>Tên sản phẩm</th>
+								<th>Số lượng</th>
+
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr th:each="ss: ${sosanh1}">
+								<td th:text="${ss.time}"></td>
+								<td th:text="${ss.sanpham}"></td>
+								<td th:text="${ss.soluong}"></td>
+
+
+							</tr>
+
+
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+			<div class="main_sosanh-right">
+				<div class="container">
+
+
+
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Tháng</th>
+								<th>Tên sản phẩm</th>
+								<th>Số lượng</th>
+
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr th:each="ss: ${sosanh2}">
+								<td th:text="${ss.time}"></td>
+								<td th:text="${ss.sanpham}"></td>
+								<td th:text="${ss.soluong}"></td>
+
+
+							</tr>
+
+
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+
+
+	</section>
+</body>
+</html>

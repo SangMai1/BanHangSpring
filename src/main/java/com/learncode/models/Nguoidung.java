@@ -231,5 +231,15 @@ public class Nguoidung implements Serializable {
 		this.vaitro = vaitro;
 	}
 
+	@Override
+	public String toString() {
+		return "Nguoidung [id=" + id + ", manguoidung=" + manguoidung + ", tennguoidung=" + tennguoidung + ", password="
+				+ password + ", email=" + email + ", gender=" + gender + ", phone=" + phone + ", createday=" + createday
+				+ ", nguoitao=" + nguoitao + ", updateday=" + updateday + ", nguoiupdate=" + nguoiupdate + ", isdelete="
+				+ isdelete + "]";
+	}
+
+	
+
 	
 }

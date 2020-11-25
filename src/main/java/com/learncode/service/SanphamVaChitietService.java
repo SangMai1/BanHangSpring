@@ -37,5 +37,7 @@ public interface SanphamVaChitietService {
 
 	List<SanphamVaChitiet> getSearchSize(String size);
 
+	List<SanphamVaChitiet> searchKichThuoc(String kichthuoc);
+
 
 }

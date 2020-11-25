@@ -6,12 +6,7 @@
 		$('#model-body').html(event).load(urls);
 		$('#bnn').on('click',function(event){
 			event.preventDefault();
-			$('#model-body .header__left').empty();
-			$('#model-body .header__right').empty();
-			$('#model-body .main__menu').empty();
-			$('#model-body .footer').empty();
-			$('#model-body .themmoi').empty();
-			$('#model-body hr').empty();
+			
 		});
 		
 		$('.buttonDelete').on('click', function(event){

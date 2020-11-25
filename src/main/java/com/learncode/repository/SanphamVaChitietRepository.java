@@ -82,7 +82,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												ON pssum.id = spct.idsanpham \r\n" + 
 			"												LEFT JOIN qtht_sanphamvachitiet ps\r\n" + 
 			"												ON pssum.id = ps.idsanpham \r\n" + 
-			"												WHERE pssum.highlight= 1\r\n" + 
+			"												WHERE pssum.highlight= 0\r\n" + 
 			"												GROUP BY spct.idsanpham", nativeQuery = true)
 	List<SanphamVaChitiet> getAllSanphammoi();
 	
@@ -93,7 +93,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												ON pssum.id = spct.idsanpham \r\n" + 
 			"												LEFT JOIN qtht_sanphamvachitiet ps\r\n" + 
 			"												ON pssum.id = ps.idsanpham \r\n" + 
-			"												WHERE pssum.highlight= 2\r\n" + 
+			"												WHERE pssum.highlight= 1\r\n" + 
 			"												GROUP BY spct.idsanpham", nativeQuery = true)
 	List<SanphamVaChitiet> getAllSanphamnoibat();
 	
@@ -141,4 +141,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												GROUP BY spct.idsanpham\r\n" + 
 			"												", nativeQuery = true)
 	List<SanphamVaChitiet> searchGiatien(@Param("min") float min, @Param("max") float max);
+	
+	@Query(value = "SELECT * FROM qtht_sanphamvachitiet WHERE kichthuoc @@ to_tsquery(?) AND isdelete = 0", nativeQuery = true)
+	List<SanphamVaChitiet> searchKichThuoc(@Param("kichthuoc") String kichthuoc);
 }

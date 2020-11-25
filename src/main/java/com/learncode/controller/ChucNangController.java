@@ -160,9 +160,11 @@ public class ChucNangController {
 			HttpSession session) {
 		String tenchucnang = (String) session.getAttribute("KEYWORK");
 		List<ChucNang1> list = this.chucNangService.findByTenchucnang(tenchucnang);
+		
 		if (list == null) {
 			return "redirect:/chucnang/list/";
 		}
+		int sum = list.size();
 		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("chucnanglist");
 		int pagesize = 5;
 		pages = new PagedListHolder<>(list);
@@ -182,7 +184,9 @@ public class ChucNangController {
 		int totalPageCount = pages.getPageCount();
 
 		String baseUrl = "/list/page/";
-
+		
+		model.addAttribute("sum", sum);
+		
 		model.addAttribute("beginIndex", begin);
 
 		model.addAttribute("endIndex", end);

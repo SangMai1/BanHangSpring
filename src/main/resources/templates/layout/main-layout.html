@@ -21,7 +21,7 @@
 	<div class="wrapper">
 		<header class="header">
 			<div class="header__left">
-				<a href="#" class="logo">ADMIN</a>
+				<a th:href="@{/success}" class="logo">ADMIN</a>
 			</div>
 			<div class="header__right">
 				<div class="header__right-box">
@@ -55,15 +55,15 @@
 							Quản trị hệ thống <i class="fas fa-caret-down"></i>
 						</button>
 						<div class="dropdown-container">
-							<a href="/nguoidung/">Người dùng</a> <a href="/chucnang/">Chức
-								năng</a> <a href="/vaitro/">Vai trò</a> <a href="/nhom/">Nhóm</a>
+							<a href="/nguoidung/list">Người dùng</a> <a href="/chucnang/list">Chức
+								năng</a> <a href="/vaitro/list">Vai trò</a> <a href="/nhom/list">Nhóm</a>
 						</div>
 						<button class="main__menu-function-dropdown-btn">
 							Quản lý website <i class="fas fa-caret-down"></i>
 						</button>
 						<div class="dropdown-container">
-							<a href="/slides/">Slide</a> <a href="/loaisanpham/">Loại sản
-								phẩm</a> <a href="/sanpham/">Sản phẩm</a>
+							<a href="/slides/list">Slide</a> <a href="/loaisanpham/list">Loại sản
+								phẩm</a> <a href="/sanpham/list">Sản phẩm</a>
 						</div>
 						<button class="main__menu-function-dropdown-btn">
 							Quản lý khách hàng <i class="fas fa-caret-down"></i>
@@ -89,10 +89,10 @@
 							Thống kê <i class="fas fa-caret-down"></i>
 						</button>
 						<div class="dropdown-container">
-							<a href="/thongke/">Đơn hàng 7 ngày gần nhất</a> <a
-								href="/thongke/doanhthu">Doanh thu 7 ngày gần nhất</a> <a
-								href="/thongke/thang">Đơn hàng từng tháng</a> <a
-								href="/thongke/doanhthuthang">Doanh thu từng tháng</a>
+							<a th:href="@{/thongke/thongkenguoidangki}">Người đăng kí</a> <a
+								th:href="@{/thongke/thongkesoluongsanpham}">Sản phẩm</a> <a
+								th:href="@{/thongke/thongkesoluongdonhang}">Đơn hàng</a> <a
+								th:href="@{/thongke/thongkedoanhthutungngay}">Doanh thu</a>
 						</div>
 						<a th:href="@{/logout}">Logout</a>
 					</div>
@@ -102,23 +102,36 @@
 			<section class="main__content" layout:fragment="content">
 
 				<div class="container">
+							
 					<ul class="category__list">
 						<li class="category__item">
-							<p>Tổng số người đăng kí mới</p>
-							<p th:text="${countNguoiDangKi}"></p>
-						</li>
-						<li class="category__item">
-							<p>Tổng số sản phẩm được bán ra</p>
-							<p th:text="${countSanPhamBanRa}"></p>
+							<a th:href="@{/thongke/thongkenguoidangki}">
+								<span class="category__item-title">Tổng số người đăng kí mới</span>
+								<span class="category__item-soluong" th:text="${countNguoiDangKi}"></span>
+							</a>
 							
 						</li>
 						<li class="category__item">
-							<p>Tổng số lượng đơn hàng</p>
-							<p th:text="${countSoLuongDonHang}"></p>
+							<a th:href="@{/thongke/thongkesoluongsanpham}">
+								<span class="category__item-title">Tổng sản phẩm bán ra</span><br>
+								<span class="category__item-soluong" th:text="${countSanPhamBanRa}"></span>
+							</a>
+							
+							
 						</li>
 						<li class="category__item">
-							<p>Tổng doanh thu</p>
-							<p th:text="${#numbers.formatCurrency(countTongDoanhThu)}"></p>
+							<a th:href="@{/thongke/thongkesoluongdonhang}">
+								<span class="category__item-title">Tổng số lượng đơn hàng</span><br>
+								<span class="category__item-soluong" th:text="${countSoLuongDonHang}"></span>
+							</a>
+							
+						</li>
+						<li class="category__item">
+							<a th:href="@{/thongke/thongkedoanhthutungngay}">
+								<span class="category__item-title">Tổng doanh thu</span>
+								<span class="category__item-soluong" th:text="${#numbers.formatCurrency(countTongDoanhThu)}"></span>
+							</a>
+							
 						</li>
 					</ul>
 				</div>
@@ -130,7 +143,7 @@
 								<div class="span-2c">
 
 									<canvas id="bar" height="600" width="800"
-										style="width: 800px; height: 600px;"></canvas>
+										style="width: 800px; height: 600px; text-align: center"></canvas>
 									<script th:inline="javascript">
 										var barChartData = {
 											labels : [
@@ -172,7 +185,7 @@
 													options : {
 														title : {
 															display : true,
-															text : 'Thống kê doanh thu từng tháng'
+															text : 'Thống kê doanh thu năm'
 														},
 														legend : {
 															display : true

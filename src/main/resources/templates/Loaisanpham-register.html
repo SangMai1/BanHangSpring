@@ -18,7 +18,7 @@
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Mã loại sản phẩm(*)</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" placeholder="Enter mã loại sản phẩm" th:field="*{maloaisanpham}">
+						<input type="text" class="form-control" placeholder="Enter mã loại sản phẩm" th:field="*{maloaisanpham}" required="required">
 						<p th:if="${#fields.hasErrors('maloaisanpham')}" th:errors="*{maloaisanpham}" class="alert alert-danger"></p>
 					</div>
 					
@@ -26,7 +26,7 @@
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Tên loại sản phẩm(*)</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" placeholder="Enter tên sản phẩm" th:field="*{tenloaisanpham}">
+						<input type="text" class="form-control" placeholder="Enter tên sản phẩm" th:field="*{tenloaisanpham}" required="required">
 						<p th:if="${#fields.hasErrors('tenloaisanpham')}" th:errors="*{tenloaisanpham}" class="alert alert-danger"></p>
 					</div>
 					

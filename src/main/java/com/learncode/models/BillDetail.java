@@ -146,6 +146,14 @@ public class BillDetail {
 	public void setBilldetail_date(Date billdetail_date) {
 		this.billdetail_date = billdetail_date;
 	}
+
+	@Override
+	public String toString() {
+		return "BillDetail [billdetail_id=" + billdetail_id + ", bills=" + bills + ", sanphamvachitiet="
+				+ sanphamvachitiet + ", billdetail_quantity=" + billdetail_quantity + ", billdetail_price="
+				+ billdetail_price + ", billdetail_sale=" + billdetail_sale + ", billdetail_pay=" + billdetail_pay
+				+ ", billdetail_status=" + billdetail_status + ", billdetail_date=" + billdetail_date + "]";
+	}
 	
 	
 }

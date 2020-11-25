@@ -21,7 +21,7 @@
 								<th>Sản phẩm</th>
 								<th>Số lượng</th>
 								<th>Giá bán</th>
-								
+								<th>Trạng thái</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -31,7 +31,11 @@
 								<td th:text="${item.billdetail_quantity}"></td>
 								<td
 									th:text="${#numbers.formatCurrency(item.billdetail_price)}"></td>
-								
+								<td>
+										<span th:if="${item.billdetail_status == 0}">Đang ở kho</span>
+										<span th:if="${item.billdetail_status == 1}">Đang giao hàng</span>
+										<span th:if="${item.billdetail_status == 2}">Đã nhận hàng</span>
+									</td>
 							</tr>
 						</tbody>
 					</table>

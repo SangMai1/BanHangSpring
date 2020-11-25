@@ -43,7 +43,7 @@ public class BillImpl implements BillService {
 
 	@Override
 	public boolean checkLogin(String bill_email, String bill_password) {
-		Bills bi = this.billRepository.findByEmail(bill_email);
+		Bills bi =(Bills) this.billRepository.findByEmail(bill_email);
 		if (null != bi && Xuly.checkMd5(bill_password, bi.getBill_password())) {
 			return true;
 		}
@@ -53,7 +53,7 @@ public class BillImpl implements BillService {
 
 	@Override
 	public void updateBill1(Bills b) {
-		billRepository.updateBill1(b.getBill_name(), b.getBill_email(), b.getBill_phone(), b.getBill_address(), b.getBill_password(), b.getBill_status(), b.getBill_id());
+		billRepository.updateBill1(b.getBill_name(), b.getBill_email(), b.getBill_phone(), b.getBill_address(), Xuly.giaiMd5(b.getBill_password()), b.getBill_status(), b.getBill_id());
 	}
 
 

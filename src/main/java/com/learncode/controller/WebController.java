@@ -430,20 +430,30 @@ public class WebController {
 	public String login() {
 		return "/web/loginweb";
 	}
-	@PostMapping(value = "/checkLogin")
+	@RequestMapping(value = "/checkLogin", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 	public String checkLogin(HttpSession session,@RequestParam("email") String email, @RequestParam("password") String password) {
-		
 		if (this.billService.checkLogin(email, password)) {
 			session.setAttribute("EMAIL_WEB", this.billRepository.findByEmail(email));
 			System.out.println("đăng nhập thành công");
 			return "redirect:/web/";
 		} else {
 			System.out.println("đăng nhập thất bại");
-			
+			return "redirect:/web/";
 		}
-		return "redirect:/web/login1";
+		
 	}
 	
+	
+	@GetMapping("/xoanguoimuahang")
+	public String xoaNguoiMuaHang(HttpSession session, ModelMap model) {
+		session.removeAttribute("EMAIL_WEB");
+		session.removeAttribute("INFO");
+		session.removeAttribute("quantity");
+		session.removeAttribute("myCartNum");
+		session.removeAttribute("myCartTotal");
+		session.removeAttribute("myCartItems");
+		return "redirect:/web/";
+	}
 	@ModelAttribute(name = "SANPHAMMOI")
 	public List<SanphamVaChitiet> getSanphammoi() {
 		System.out.println("san pham moi" + this.sanphamvachitietService.getSanphammoi());
@@ -592,6 +602,10 @@ public class WebController {
 		bills.setBill_date(new Timestamp(new Date().getTime()));
 		bills.setBill_status((Integer) 0);
 		billService.insertBill(bills);
+		Integer q = (Integer) session.getAttribute("quantity");
+		if(q == null) {
+			return "redirect:/web/";
+		}
 		return "/web/thanhtoan";
 	}
 	
@@ -634,17 +648,23 @@ public class WebController {
 		session.setAttribute("myCartItems", cartItems);
 		session.setAttribute("myCartTotal", 0);
 		session.setAttribute("myCartNum", 0);
-
+		session.setAttribute("quantity", 0);
 		return "redirect:/web/damua";
 	}
 	
 	@GetMapping("/thongtincoban")
-	public String thongtincoban() {
+	public String thongtincoban(ModelMap model, HttpSession session) {
+		Bills b =(Bills) session.getAttribute("EMAIL_WEB");
+		String email = b.getBill_email();
+		model.addAttribute("thongtin", this.billRepository.findByEmail(email));
 		return "/web/thongtincoban";
 	}
 
 	@GetMapping("/thongtincoban1")
-	public String thongtincoban1() {
+	public String thongtincoban1(HttpSession session, ModelMap model) {
+		Bills b =(Bills) session.getAttribute("INFO");
+		String email = b.getBill_email();
+		model.addAttribute("thongtin1", this.billRepository.findByEmail(email));
 		return "/web/thongtincoban1";
 	}
 	

@@ -27,7 +27,7 @@
   <div class="form-group row">
     <label class="col-sm-2 col-form-label">Loại sản phẩm</label>
     <div class="col-sm-10">
-	    <select  class="form-control" name="loaisanpham" id="lspUpdate">
+	    <select class="form-control" name="loaisanpham" id="lspUpdate">
 	      <option th:value="${sp.loaisanpham.id}" th:text="${sp.loaisanpham.tenloaisanpham}"></option>
 	    </select>    
     </div>
@@ -53,29 +53,29 @@
 					<div class="col-sm-10">
 
 						<!--value = 0 => Sản phẩm mới| 1 => Sản phẩm nổi bật| 2 => Sản phẩm Sale| 3 => Sản phẩm bán chạy -->
-						<div class="form-check-inline">
-							<input th:if="${sp.highlight == 0}" type="radio" class="form-check-input" name="highlight"
+						<div class="form-check form-check-inline">
+							<input type="radio" th:checked="${sp.highlight} == 0 ? 'checked'" class="form-check-input" name="highlight"
 								value="0" id="highlight1"
-								checked="checked"> <label class="form-check-label">Sản
+								> <label class="form-check-label">Sản
 								phẩm mới</label>
 						</div>
 
-						<div class="form-check-inline">
-							<input th:if="${sp.highlight == 1}" type="radio" class="form-check-input" name="highlight"
-								value="1" id="highlight2" checked="checked"> <label
+						<div class="form-check form-check-inline">
+							<input type="radio" th:checked="${sp.highlight} == 1 ? 'checked'" class="form-check-input" name="highlight"
+								value="1" id="highlight2"> <label
 								class="form-check-label">Sản phẩm nổi bật</label>
 						</div>
 
 
-						<div class="form-check-inline">
-							<input th:if="${sp.highlight == 2}" type="radio" class="form-check-input" name="highlight"
-								value="2" id="highlight3" checked="checked"> <label
+						<div class="form-check form-check-inline">
+							<input type="radio" th:checked="${sp.highlight} == 2 ? 'checked'" class="form-check-input" name="highlight"
+								value="2" id="highlight3"> <label
 								class="form-check-label">Sản phẩm Sale</label>
 						</div>
 
-						<div class="form-check-inline">
-							<input th:if="${sp.highlight == 3}" type="radio" class="form-check-input" name="highlight"
-								value="3" id="highlight4" checked="checked"> <label
+						<div class="form-check form-check-inline">
+							<input type="radio" th:checked="${sp.highlight} == 3 ? 'checked'" class="form-check-input" name="highlight"
+								value="3" id="highlight4"> <label
 								class="form-check-label">Sản phẩm bán chạy</label>
 						</div>
 					</div>

@@ -1,0 +1,44 @@
+form {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+form input {
+	width: 180px;
+	height: 25px;
+	margin-right: 5px;
+	font-size: 16px;
+}
+
+form button {
+	font-size: 14px;
+	height: 25px;
+	margin-bottom: 5px;
+}
+form span, form label {
+	font-size: 18px;
+	color: black;
+}
+.main_sosanh {
+	width: 100%;
+	display: flex;
+}
+
+.main_sosanh-left {
+	width: 50%;
+	float: left;
+}
+
+.main_sosanh-right {
+	width: 50%;
+	float: left;
+}
+
+.container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+table th, table td {
+	font-size: 14px;
+}

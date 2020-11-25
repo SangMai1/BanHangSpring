@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-		var urls = "/sanpham/ #myModals";
+		var urls = "/sanpham/";
 		$('#model-body').html(event).load(urls);
 		$('#bnn').on('click', function(event){
 			event.preventDefault();

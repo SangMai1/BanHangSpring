@@ -105,6 +105,12 @@ public class SanphamVaChitietImpl implements SanphamVaChitietService{
 		return sanphamVaChitietRepository.getSearchSize(size);
 	}
 
+
+	@Override
+	public List<SanphamVaChitiet> searchKichThuoc(String kichthuoc) {
+		return sanphamVaChitietRepository.searchKichThuoc(kichthuoc);
+	}
+
 	
 
 	

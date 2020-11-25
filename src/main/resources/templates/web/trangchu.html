@@ -40,10 +40,12 @@
 							<div th:if="${session.EMAIL_WEB}" class="dropdown-content2">
 								<div class="dropdown-content-li2"><a th:href="@{/web/thongtincoban}" class="dropdown-content-li-a2" th:text="${session.EMAIL_WEB.bill_name}"></a></div>
 								<div class="dropdown-content-li2"><a th:href="@{/web/lichsumuahang}" class="dropdown-content-li-a12">Lịch sử mua hàng</a></div>
+								<div class="dropdown-content-li2"><a th:href="@{/web/xoanguoimuahang}" class="dropdown-content-li-a12">Logout</a></div>
 							</div>
 							<div th:if="${session.INFO}" class="dropdown-content3">
 								<div class="dropdown-content-li3"><a th:href="@{/web/thongtincoban1}" class="dropdown-content-li-a3" th:text="${session.INFO.bill_name}"></a></div>
 								<div class="dropdown-content-li3"><a th:href="@{/web/lichsumuahang}" class="dropdown-content-li-a13">Lịch sử mua hàng</a></div>
+								<div class="dropdown-content-li3"><a th:href="@{/web/xoanguoimuahang}" class="dropdown-content-li-a13">Logout</a></div>
 							</div>
 							
 							
@@ -150,7 +152,12 @@
 						<li th:each="spm : ${SANPHAMMOI}" class="category__item">
 							<a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
 							<a href="#" th:text="${spm.sanphams.tensanpham}" class="category__name"></a>
-							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien)}"></span>
+							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien - spm.giamgia)}"></span>
+							<div class="category__div">
+								<del class="category__name-price-giagoc" th:text="${#numbers.formatCurrency(spm.giatien)}"></del>
+								<span class="category__name-price-giamgia" th:text="${#numbers.formatCurrency(spm.giamgia)}"></span>
+							</div>
+							
 						</li>
 						
 					</ul>
@@ -188,7 +195,11 @@
 						<li th:each="spm : ${SANPHAMNOIBAT}" class="category__item">
 							<a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
 							<a href="#" th:text="${spm.sanphams.tensanpham}" class="category__name"></a>
-							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien)}"></span>
+							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien - spm.giamgia)}"></span>
+							<div class="category__div">
+								<del class="category__name-price-giagoc" th:text="${#numbers.formatCurrency(spm.giatien)}"></del>
+								<span class="category__name-price-giamgia" th:text="${#numbers.formatCurrency(spm.giamgia)}"></span>
+							</div>
 						</li>
 						
 					</ul>

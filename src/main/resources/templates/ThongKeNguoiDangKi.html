@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="/css/StyleThongKeSoLuongSanPham.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
@@ -14,11 +16,12 @@
 
 	<section class="main__content" layout:fragment="content">
 	
-	<form th:action="@{/thongke/thongkenguoidangkitungthang}">
-	<input type="text" name="namdangki" placeholder="Search...">
-		<input type="text" name="thangdangki" placeholder="Search...">
-              		 <button type="submit">Search</button>
-	</form>
+	<div class="container">
+			<div class="title-a">
+				<a th:href="@{/thongke/thongkenguoidangkitungngay}" class="btn btn-primary">Số lượng đơn hàng theo tháng</a>
+			</div>
+			
+
 
 		<div class="inner-block">
 			<div class="chit-chat-layer1">
@@ -91,7 +94,7 @@
 			</div>
 
 		</div>
-
+		</div>
 	</section>
 
 </body>

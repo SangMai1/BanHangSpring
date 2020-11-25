@@ -1,0 +1,16 @@
+.container {
+	width: 90%;
+	margin: 0 auto;
+}
+.title-a {
+	padding-top: 30px;
+	padding-bottom: 20px;
+	text-align: center;
+	
+}
+.title-a a {
+	font-size: 16px;
+}
+.soluong {
+	margin-bottom: 10px;
+}

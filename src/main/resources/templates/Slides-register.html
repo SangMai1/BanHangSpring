@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/main-layout}">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/css/StyleRegisterSlides.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#fileImage').change(function(){
@@ -27,25 +18,20 @@
 		reader.readAsDataURL(file);
 	};
 </script>
-</head>
-<body>
-	<section class="main__content" layout:fragment="content">
-		<div class="container">
-			<h4>Thêm mới slides</h4>
-			<hr>
+
 			<form th:action="@{/slides/doSave}" th:object="${SLIDES}" method="post" enctype="multipart/form-data" id="myModals">
 				<input th:field="*{id}" name="id" type="hidden">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Mã slides</label>
 					<div class="col-sm-10">
-						<input class="form-control" placeholder="Enter mã slides" th:field="*{maslides}" name="maslides" type="text">
+						<input class="form-control" placeholder="Enter mã slides" th:field="*{maslides}" name="maslides" type="text" required="required">
 						<p th:if="${#fields.hasErrors('maslides')}" th:errors="*{maslides}" class="alert alert-danger"></p>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Tên slides</label>
 					<div class="col-sm-10">	
-						<input class="form-control" placeholder="Enter tên slides" th:field="*{tenslides}" name="tenslides" type="text">
+						<input class="form-control" placeholder="Enter tên slides" th:field="*{tenslides}" name="tenslides" type="text" required="required">
 						<p th:if="${#fields.hasErrors('tenslides')}" th:errors="*{tenslides}" class="alert alert-danger"></p>
 					</div>
 					
@@ -68,7 +54,3 @@
 				
 			 	
 			</form>
-		</div>
-	</section>
-</body>
-</html>

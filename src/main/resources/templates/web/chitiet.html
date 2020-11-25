@@ -101,7 +101,11 @@
 						<li th:each="spm : ${SANPHAMMOI}" class="category__item">
 							<a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
 							<a href="#" th:text="${spm.sanphams.tensanpham}" class="category__name"></a>
-							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien)}"></span>
+							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien - spm.giamgia)}"></span>
+							<div class="category__div">
+								<del class="category__name-price-giagoc" th:text="${#numbers.formatCurrency(spm.giatien)}"></del>
+								<span class="category__name-price-giamgia" th:text="${#numbers.formatCurrency(spm.giamgia)}"></span>
+							</div>
 						</li>
 						
 					</ul>

@@ -24,6 +24,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String tennguoidung) throws UsernameNotFoundException {
 
 		Nguoidung nd = this.nguoiDungService.findByTen(tennguoidung);
+		System.out.println("nguoi dung day" + nd);
 		if (nd == null) {
 			throw new UsernameNotFoundException("Could not find nguoi dung");
 		};

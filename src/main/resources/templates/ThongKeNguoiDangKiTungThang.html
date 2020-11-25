@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="/css/StyleThongKeSoLuongSanPhamTungThang.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
@@ -14,6 +16,18 @@
 
 	<section class="main__content" layout:fragment="content">
 
+<div class="container1">
+
+			<div class="form-timkiem1">
+				<label class="form-timkiem-label1">Tìm kiếm</label>
+				<form th:action="@{/thongke/thongkenguoidangkitungthang}">
+					<input type="text" name="thangdangki" th:value="${session.THANGDANGKI}" placeholder="Tháng...">
+					<input type="text" name="namdangki" th:value="${session.NAMDANGKI}" placeholder="Năm...">
+
+					<button class="btn btn-primary" type="submit">Search</button>
+				</form>
+			</div>
+			
 		<div class="inner-block">
 			<div class="chit-chat-layer1">
 
@@ -85,7 +99,7 @@
 			</div>
 
 		</div>
-
+	</div>
 	</section>
 
 </body>

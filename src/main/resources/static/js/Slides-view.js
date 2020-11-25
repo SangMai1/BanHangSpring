@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-		var urls = "/slides/ #myModals";
+		var urls = "/slides/";
 		$('#model-body').html(event).load(urls);
 		$('#bnn').on('click', function(event){
 			event.preventDefault();

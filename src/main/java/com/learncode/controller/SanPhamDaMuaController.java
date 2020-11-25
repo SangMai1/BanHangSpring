@@ -185,7 +185,7 @@ public class SanPhamDaMuaController {
 	
 	@RequestMapping(value = "/listMuaThanhCong/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String showSanPhamDaMuaThanhCongsPage(HttpServletRequest request, @PathVariable int pageNumber, ModelMap model) {
-		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("khosanphamdamualist");
+		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("sanphamdamuathanhconglist");
 		int pagesize = 5;
 		List<BillDetail> list = (List<BillDetail>) this.billDetailService.getSanPhamDaMuaThanhCong();
 		int sum = list.size();

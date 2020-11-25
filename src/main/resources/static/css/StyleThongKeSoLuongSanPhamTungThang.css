@@ -1,0 +1,26 @@
+.container1 {
+	width: 90%;
+	margin: 0 auto;
+}
+.form-timkiem1 {
+	padding-top: 30px;
+	text-align: center;
+}
+.form-timkiem-label1 {
+	color: black;
+	font-size: 16px;
+	padding-bottom: 5px;
+}
+
+.form-timkiem1 input {
+	width: 180px;
+	height: 25px;
+	margin-right: 5px;
+	font-size: 16px;
+}
+
+.form-timkiem1 button {
+	font-size: 14px;
+	height: 25px;
+	margin-bottom: 5px;
+}

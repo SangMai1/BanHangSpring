@@ -122,14 +122,15 @@ public class SanphamController {
 	public String doUpdate(@RequestParam("id") Long id, @RequestParam("masanpham") String masanpham,
 			@RequestParam("tensanpham") String tensanpham, @RequestParam("loaisanpham") LoaiSanPham loaisanpham,
 			@RequestParam("xuatxu") String xuatxu, @RequestParam("mota") String mota, Principal principal,
-			@RequestPart("fileImages") MultipartFile multipartFile) throws IOException {
+			@RequestPart("fileImages") MultipartFile multipartFile, @RequestParam("highlight") Integer highlight) throws IOException {
 
-		Sanpham sp = new Sanpham(id, masanpham, tensanpham, loaisanpham, xuatxu, mota);
+		Sanpham sp = new Sanpham(id, masanpham, tensanpham, loaisanpham, xuatxu, mota, highlight);
 		sp.setCreateby(sp.getCreateby());
 		sp.setCreateday(sp.getCreateday());
 		sp.setUpdateday(new Timestamp(new Date().getTime()));
 		sp.setUpdateby(principal.getName());
 		sp.setIsdelete((Integer) 0);
+	
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		sp.setImage(fileName);
 		this.sanphamService.updateSanpham(sp);

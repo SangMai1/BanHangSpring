@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.learncode.models.Items;
 import com.learncode.models.MyItems;
 
 @Service
@@ -24,10 +25,6 @@ public class ReportServiceImpl implements ReportService {
 		return reportDAO.reportReceiptThang(date, limit);
 	}
 
-	@Override
-	public List<MyItems> reportReceiptDoangThu7Ngay(Date date, int limit) {
-		return reportDAO.reportReceiptDoangThu7Ngay(date, limit);
-	}
 
 	@Override
 	public List<MyItems> reportReceiptDoanhThuThang(Date date, int limit) {
@@ -52,6 +49,27 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<MyItems> reportReceiptThongKeSoLuongSanPhamTungThang(int year, int month) {
 		return reportDAO.reportReceiptThongKeSoLuongSanPhamTungThang(year, month);
+	}
+
+	@Override
+	public List<Items> reportReceiptSoSanh2Nam(int nam, int thang) {
+		return reportDAO.reportReceiptSoSanh2Nam(nam, thang);
+	}
+
+
+	@Override
+	public List<MyItems> reportReceiptThongKeSoLuongDonHangTungThang(int year, int month) {
+		return reportDAO.reportReceiptThongKeSoLuongDonHangTungThang(year, month);
+	}
+
+	@Override
+	public List<MyItems> reportReceiptThongKeDoanhThuTungNgayTrongThang(int year, int month) {
+		return reportDAO.reportReceiptThongKeDoanhThuTungNgayTrongThang(year, month);
+	}
+
+	@Override
+	public List<MyItems> reportReceiptThongKeSoLuongDonHang(Date date, int limit) {
+		return reportDAO.reportReceiptThongKeSoLuongDonHang(date, limit);
 	}
 
 	

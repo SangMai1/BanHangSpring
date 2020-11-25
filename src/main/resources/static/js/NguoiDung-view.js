@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var urls = "/nguoidung/ #myModals";
+	var urls = "/nguoidung/";
 	$('#model-body1').html(event).load(urls);
 	$('#btn').click(function(event){
 		event.preventDefault();

@@ -247,4 +247,19 @@ body {
 	flex-wrap: nowrap;
 	flex-direction: column;
 }
+
+.category__item-title {
+	color: white;
+	font-size: 16px;
+}
+
+.category__item-soluong {
+	color: white;
+	font-size: 20px;
+}
+
+.col-md-6 {
+	margin: 0 auto;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -79,10 +79,12 @@ public class Sanpham {
 		super();
 	}
 
+
+	
 	public Sanpham(long id, @NotBlank(message = "không được để trống") String masanpham,
 			@NotBlank(message = "không được để trống") String tensanpham, LoaiSanPham loaisanpham,
 			@NotBlank(message = "không được để trống") String xuatxu,
-			@NotBlank(message = "không được để trống") String mota) {
+			@NotBlank(message = "không được để trống") String mota, Integer highlight) {
 		super();
 		this.id = id;
 		this.masanpham = masanpham;
@@ -90,8 +92,11 @@ public class Sanpham {
 		this.loaisanpham = loaisanpham;
 		this.xuatxu = xuatxu;
 		this.mota = mota;
+		this.highlight = highlight;
 	}
-	
+
+
+
 	public Sanpham(long id, @NotBlank(message = "không được để trống") String masanpham,
 			@NotBlank(message = "không được để trống") String tensanpham, String image, LoaiSanPham loaisanpham,
 			Date createday, String createby, Date updateday, String updateby,
