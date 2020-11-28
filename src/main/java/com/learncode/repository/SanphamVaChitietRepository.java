@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.beust.jcommander.Parameter;
 import com.learncode.models.Sanpham;
 import com.learncode.models.SanphamVaChitiet;
 
@@ -25,13 +26,17 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 	@Query(value = "UPDATE public.qtht_sanphamvachitiet SET kichthuoc=?, soluong=?, giatien=?, giamgia=?, isdelete=? WHERE id = ?;", nativeQuery = true)
 	int updateSanphamVaChitiet(@Param("kichthuoc") String kichthuoc, @Param("soluong") Integer soluong, @Param("giatien") Float giatien, @Param("giamgia") Integer giamgia, @Param("isdelete") Integer isdelete, @Param("id") Long id);
 	
+	@Modifying
+	@Query(value = "UPDATE public.qtht_sanphamvachitiet SET soluong=? WHERE id = ?;", nativeQuery = true)
+	int updateSoLuongDaMua(@Param("soluong") Integer soluong, @Param("id") Long id);
+	
 	@Query(value = "SELECT id, idsanpham, kichthuoc, soluong, giatien, giamgia, isdelete FROM qtht_sanphamvachitiet WHERE id=? AND isdelete = 0", nativeQuery = true)
 	Optional<SanphamVaChitiet> findBySanphamVaChitietId(Long id);
 	
 	@Query(value = "SELECT id, idsanpham, kichthuoc, soluong, giatien, giamgia, isdelete FROM qtht_sanphamvachitiet WHERE isdelete = 0", nativeQuery = true)
 	List<SanphamVaChitiet> getAll();
 	
-	@Query(value = "SELECT id, idsanpham, kichthuoc, soluong, giatien, isdelete, giamgia FROM qtht_sanphamvachitiet WHERE idsanpham=? and isdelete = 0", nativeQuery = true)
+	@Query(value = "SELECT * FROM qtht_sanphamvachitiet WHERE idsanpham=? and isdelete = 0", nativeQuery = true)
 	List<SanphamVaChitiet> findBySizeSanpham(Long idsanpham);
 	
 	@Query(value = "SELECT spvct.id, spvct.idsanpham,sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.mota, spvct.kichthuoc, spvct.soluong, spvct.giatien, spvct.giamgia, sp.isdelete  \r\n" + 
@@ -142,6 +147,20 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												", nativeQuery = true)
 	List<SanphamVaChitiet> searchGiatien(@Param("min") float min, @Param("max") float max);
 	
-	@Query(value = "SELECT * FROM qtht_sanphamvachitiet WHERE kichthuoc @@ to_tsquery(?) AND isdelete = 0", nativeQuery = true)
+	@Query(value = "SELECT * FROM qtht_sanphamvachitiet \r\n" + 
+			"WHERE kichthuoc = ? AND isdelete = 0", nativeQuery = true)
 	List<SanphamVaChitiet> searchKichThuoc(@Param("kichthuoc") String kichthuoc);
+	
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct\r\n" + 
+			"												LEFT JOIN\r\n" + 
+			"												(SELECT sp.id FROM qtht_sanpham sp\r\n" + 
+			"												GROUP BY sp.id) pssum \r\n" + 
+			"												ON pssum.id = spct.idsanpham   \r\n" + 
+			"												LEFT JOIN qtht_sanphamvachitiet ps \r\n" + 
+			"												ON pssum.id = ps.idsanpham\r\n" + 
+			"												WHERE spct.soluong <= 5 \r\n" + 
+			"												\r\n" + 
+			"												GROUP BY spct.idsanpham\r\n" + 
+			"												ORDER BY max(spct.soluong) ASC ", nativeQuery = true)
+	List<SanphamVaChitiet> listSizeSanPhamGanHet();
 }

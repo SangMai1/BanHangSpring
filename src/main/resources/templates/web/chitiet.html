@@ -32,7 +32,7 @@
 	});
 	
 	// Add active class to the current button (highlight it)
-	var header = document.getElementById("myDIV");
+	var header = document.getElementById("myDIV"); 
 	var btns = header.getElementsByClassName("btn");
 	for (var i = 0; i < btns.length; i++) {
 	  btns[i].addEventListener("click", function() {
@@ -70,9 +70,9 @@
 							<hr>
 							
 							
-							<div class="feature__info1-product-size">
-								<div th:each="size : ${sizesp}" id="myDIV">
-									<a th:href="@{/web/sanpham-size/(id=${size.id}) }" class="btn" th:value="${size.id}" th:text="${size.kichthuoc}"></a>
+							<div class="feature__info1-product-size" id="myDIV">
+								<div th:each="size : ${sizesp}" class="btn">
+									<a th:href="@{/web/sanpham-size/(id=${size.id})}" th:value="${size.id}" th:text=${size.kichthuoc}></a>
 								</div>
 
 							</div>

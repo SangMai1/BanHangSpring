@@ -24,14 +24,20 @@
 		<div class="container">
 			<h4>Danh sách sản phẩm đã đặt hàng thành công</h4>
 			<hr>
-			
-			<form th:action="@{/sanphamdamua/dataSearch}" id="dataSearch">
-				<input type="text" class="main__menu-search-form-input1"
-					name="keyword" placeholder="Search...">
-				<button type="submit" class="main__menu-search-form-button1"
-					id="search">Search</button>
 
-			</form>
+			<div class="form-group row" id="dataSearchdamua">
+				<label class="col-sm-2 col-form-label">Search</label>
+				<div class="col-sm-10">
+					<select id="searchtrangthaidamua_select" class="form-control select_kho">
+						<option name="searchtrangthaidamua" value="0">Đang ở kho</option>
+						<option name="searchtrangthaidamua" value="1">Đang giao hàng</option>
+						<option name="searchtrangthaidamua" value="2">Đã nhận hàng</option>
+
+
+					</select>
+				</div>
+
+			</div>
 			<th:block th:if="${#lists.isEmpty(SANPHAMDAMUAS.pageList)}">
 				<h2>Không có sản phẩm đã mua</h2>
 			</th:block>
@@ -39,21 +45,22 @@
 			<th:block th:unless="${#lists.isEmpty(SANPHAMDAMUAS.pageList)}">
 
 				<div class="sang">
-					
-						<form th:action="@{/sanphamdamua/del}" id="formDelete">
+
+					<form th:action="@{/sanphamdamua/del}" id="formDelete">
 						<div class="form-group row">
-			
-				<label class="col-sm-2 col-form-label">Trạng thái</label>
-				<div class="col-sm-10">
-					<select id="parent_edit" name="billdetail_status123"
-						class="form-control">
-						<option th:value="0">Đang ở kho</option>
-						<option th:value="1">Đang giao hàng</option>
-						<option th:value="2">Đã nhận hàng</option>
-					</select>
-				</div>
-			</div>
-			<button type="submit">Update</button>
+
+							<label class="col-sm-2 col-form-label text_capnhat">Trạng
+								thái</label>
+							<div class="col-sm-10">
+								<select id="parent_edit" name="billdetail_status123"
+									class="form-control select_kho">
+									<option th:value="0">Đang ở kho</option>
+									<option th:value="1">Đang giao hàng</option>
+									<option th:value="2">Đã nhận hàng</option>
+								</select>
+							</div>
+						</div>
+						<button class="btn btn-primary button_update" type="submit">Update</button>
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -72,7 +79,8 @@
 
 									<td th:text="${sanphamdamua.bills.bill_name}"></td>
 									<td th:text="${sanphamdamua.billdetail_quantity}"></td>
-									<td th:text="${sanphamdamua.billdetail_price}"></td>
+									<td
+										th:text="${#numbers.formatCurrency(sanphamdamua.billdetail_price)}"></td>
 									<td><span th:if="${sanphamdamua.billdetail_status == 0}">Đang
 											ở kho</span> <span th:if="${sanphamdamua.billdetail_status == 1}">Đang
 											giao hàng</span> <span
@@ -82,10 +90,9 @@
 									<td><a class="btn btn-primary edit"
 										th:href="@{/sanphamdamua/sanphamdamua-chitiet/(id=${sanphamdamua.billdetail_id})}"
 										data-toggle="modal" data-target="#myEdit"><i
-											class="fas fa-edit"></i></a>
-											<input type="checkbox" id="allDelete"
-										name="lvt" th:value="${sanphamdamua.billdetail_id}" />
-											</td>
+											class="fas fa-edit"></i></a> <input type="checkbox"
+										id="allDelete" name="lvt"
+										th:value="${sanphamdamua.billdetail_id}" /></td>
 
 								</tr>
 							</tbody>

@@ -103,7 +103,7 @@ public class WebController {
 		request.getSession().setAttribute("tatcasanphamlist", pages);
 
 		int current = pages.getPage() + 1;
-		System.out.println(current);
+		
 		int begin = Math.max(1, current - list.size());
 
 		int end = Math.min(begin + 5, pages.getPageCount());
@@ -318,7 +318,7 @@ public class WebController {
 		return "/web/sanphamsale";
 	}
 	
-	@RequestMapping("/dataSearch")
+	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET, RequestMethod.POST})
 	public String datasearch(@RequestParam("min") String min, @RequestParam("max") String max, HttpSession session) {
 		
 		if (min == null && max == null || min.equals("") && max.equals("")) {
@@ -330,7 +330,7 @@ public class WebController {
 		}
 	}
 	
-	@RequestMapping("/list/search/{pageNumber}")
+	@RequestMapping(value = "/list/search/{pageNumber}", method = {RequestMethod.GET})
 	public String search(HttpSession session, HttpServletRequest request, ModelMap model, @PathVariable int pageNumber) {
 		String min =(String) session.getAttribute("MIN");
 		String max =(String) session.getAttribute("MAX");
@@ -373,7 +373,7 @@ public class WebController {
 		return "/web/tatcasanpham";
 	}
 	
-	@RequestMapping("/dataSize")
+	@RequestMapping(value = "/dataSize", method = {RequestMethod.GET})
 	public String datasearch(@PathParam("size") String size, HttpSession session) {
 		
 		if (size == null || size.equals("")) {
@@ -384,7 +384,7 @@ public class WebController {
 		}
 	}
 	
-	@RequestMapping("/list/size/{pageNumber}")
+	@RequestMapping(value = "/list/size/{pageNumber}", method = {RequestMethod.GET})
 	public String searchSize(HttpSession session, HttpServletRequest request, ModelMap model, @PathVariable int pageNumber) {
 		String size =(String) session.getAttribute("SIZE");
 		List<SanphamVaChitiet> list = (List<SanphamVaChitiet>) this.sanphamvachitietService.getSearchSize(size);
@@ -434,10 +434,10 @@ public class WebController {
 	public String checkLogin(HttpSession session,@RequestParam("email") String email, @RequestParam("password") String password) {
 		if (this.billService.checkLogin(email, password)) {
 			session.setAttribute("EMAIL_WEB", this.billRepository.findByEmail(email));
-			System.out.println("đăng nhập thành công");
+			
 			return "redirect:/web/";
 		} else {
-			System.out.println("đăng nhập thất bại");
+			
 			return "redirect:/web/";
 		}
 		
@@ -456,13 +456,11 @@ public class WebController {
 	}
 	@ModelAttribute(name = "SANPHAMMOI")
 	public List<SanphamVaChitiet> getSanphammoi() {
-		System.out.println("san pham moi" + this.sanphamvachitietService.getSanphammoi());
 		return this.sanphamvachitietService.getSanphammoi();
 	}
 
 	@ModelAttribute(name = "SANPHAMNOIBAT")
 	public List<SanphamVaChitiet> getSanphamnoibat() {
-		System.out.println("san pham noi bat" + this.sanphamvachitietService.getSanphamnoibat());
 		return this.sanphamvachitietService.getSanphamnoibat();
 	}
 	
@@ -627,6 +625,7 @@ public class WebController {
 		for (Map.Entry<Long, CartDTO> entry : cartItems.entrySet()) {
 			BillDetail billDetail = new BillDetail();
 			Kho k = new Kho();
+			
 			billDetail.setBills(bill_id);
 			billDetail.setSanphamvachitiet(entry.getValue().getProduct());
 			billDetail.setBilldetail_quantity(entry.getValue().getQuantity());
@@ -642,6 +641,10 @@ public class WebController {
 			k.setTrangthai((Integer) 0);
 			k.setIsdelete((Integer) 0);
 			this.khoService.save(k);
+			
+			SanphamVaChitiet spct = this.sanphamvachitietService.findBySanphamId(billDetail.getSanphamvachitiet().getId()).get();
+			spct.setSoluong(spct.getSoluong() - entry.getValue().getQuantity());
+			this.sanphamvachitietService.updateSoLuongDaMua(spct);
 		}
 		
 		cartItems = new HashMap<>();
@@ -683,5 +686,15 @@ public class WebController {
 	@GetMapping("/damua")
 	public String damua() {
 		return "/web/damua";
+	}
+	
+	@GetMapping("/lienhe") 
+	public String lienhe() {
+		return "/web/lienhe";
+	}
+	
+	@GetMapping("/gioithieu") 
+	public String gioithieu() {
+		return "/web/gioithieu";
 	}
 }

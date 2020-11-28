@@ -41,13 +41,7 @@ td, th {
 	margin-bottom: 10px;
 	margin-left: 5px;
 }
-#dataSearch {
-	float: right;
-	background-color: #4db6ac;
-    width: 40%;
-    margin: 0 auto;
-    padding: 10px;
-}
+
 .main__menu-search-form-input, .main__menu-search-form-button {
   padding: 0;
 }
@@ -87,4 +81,22 @@ td, th {
 .pagination {
 	 justify-content: center !important;
 	 font-size: 16px;
+}
+
+#dataSearch {
+	float: right;
+    width: 40%;
+    margin: 0 auto;
+
+}
+
+#dataSearch label {
+	font-size: 16px;
+	color: black;
+}
+
+.select_kho {
+	width: 250px !important;
+	height: 30px !important;
+	font-size: 14px;
 }

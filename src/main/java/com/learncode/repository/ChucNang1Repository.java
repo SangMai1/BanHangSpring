@@ -48,7 +48,10 @@ public interface ChucNang1Repository extends JpaRepository<ChucNang1, Long>{
 			"SELECT id, machucnang,case when parentid < 0 then concat('--- ', tenchucnang) else tenchucnang end, maapi, createday, nguoitao, updateday, nguoiupdate, parentid, isdelete FROM cte WHERE isdelete = 0 ORDER BY path ", nativeQuery = true)
 	List<ChucNang1> findAllChucNang1();
 	
-	@Query(value = "SELECT id, machucnang, tenchucnang, maapi, createday, nguoitao, updateday, nguoiupdate, parentid, isdelete FROM qtht_chucnang WHERE isdelete = 0", nativeQuery = true)
+	@Query(value = "SELECT *\r\n" + 
+			"			FROM qtht_chucnang cn \r\n" + 
+			"			WHERE isdelete = 0 AND cn.createday < now() \r\n" + 
+			"			ORDER BY cn.createday DESC", nativeQuery = true)
 	List<ChucNang1> getAllChucNang1();
 	
 	@Query(value = "SELECT id, machucnang, tenchucnang, maapi, createday, nguoitao, updateday, nguoiupdate, parentid, isdelete FROM qtht_chucnang WHERE parentid < 0 and isdelete = 0", nativeQuery = true)

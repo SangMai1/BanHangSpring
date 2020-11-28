@@ -98,3 +98,10 @@ td, th {
 .capnhat {
 	margin-left: 200px;
 }
+
+.thoat {
+	background: red;
+}
+.thoat:hover {
+	background: red;
+}

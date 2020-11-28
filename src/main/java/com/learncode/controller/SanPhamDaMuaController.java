@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -30,6 +31,7 @@ import org.w3c.dom.ls.LSInput;
 
 import com.learncode.models.BillDetail;
 import com.learncode.models.Kho;
+import com.learncode.models.SanphamVaChitiet;
 import com.learncode.models.SanphamdamuaPDFExporter;
 import com.learncode.models.VaiTro;
 import com.learncode.service.BillDetailService;
@@ -112,6 +114,67 @@ public class SanPhamDaMuaController {
 		return "SanPhamDaMua";
 	}
 	
+	@RequestMapping(value = "/dataSearchTrangThai", method = {RequestMethod.GET})
+	public String dataSearchTrangThai(@RequestParam("searchtrangthaidamua") Integer searchtrangthaidamua, 
+			HttpSession session) {
+		session.setAttribute("SEARCHTRANGTHAIDAMUA", searchtrangthaidamua);
+		
+		if (searchtrangthaidamua == null || searchtrangthaidamua.equals("")) {
+			return "redirect:/sanphamdamua/list";
+		} else {
+			
+			session.setAttribute("SEARCHTRANGTHAIDAMUA", searchtrangthaidamua);
+			return "redirect:/sanphamdamua/list/search/1";
+		}
+	}
+
+	@RequestMapping(value = "/list/search/{pageNumber}", method = {RequestMethod.GET})
+	public String searchTrangThai(ModelMap model, HttpServletRequest request, @PathVariable int pageNumber,
+			HttpSession session) {
+		Integer searchtrangthai = (Integer) session.getAttribute("SEARCHTRANGTHAIDAMUA");
+		List<BillDetail> list = this.billDetailService.listSearchTrangThai(searchtrangthai);
+		
+		if (list == null) {
+			return "redirect:/sanphamdamua/list/";
+		}
+		int sumSeach = list.size();
+		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("sanphamchitietlist");
+		int pagesize = 5;
+		pages = new PagedListHolder<>(list);
+		pages.setPageSize(pagesize);
+		final int goToPage = pageNumber - 1;
+		if (goToPage <= pages.getPageCount() && goToPage >= 0) {
+			pages.setPage(goToPage);
+		}
+		request.getSession().setAttribute("sanphamdamualist", pages);
+
+		int current = pages.getPage() + 1;
+
+		int begin = Math.max(1, current - list.size());
+
+		int end = Math.min(begin + 5, pages.getPageCount());
+
+		int totalPageCount = pages.getPageCount();
+
+		String baseUrl = "/list/page/";
+		
+		model.addAttribute("sum", sumSeach);
+		
+		model.addAttribute("beginIndex", begin);
+
+		model.addAttribute("endIndex", end);
+
+		model.addAttribute("currentIndex", current);
+
+		model.addAttribute("totalPageCount", totalPageCount);
+
+		model.addAttribute("baseUrl", baseUrl);
+
+		model.addAttribute("SANPHAMDAMUAS", pages);
+
+		return "SanPhamDaMua";
+	}
+	
 	@GetMapping(value="/kho-sanphamdamua", produces = "application/json")
 	@ResponseBody
 	public Map<String, String> findByChitietKhoSanPhamDaMua(ModelMap model, long id) {
@@ -162,6 +225,67 @@ public class SanPhamDaMuaController {
 		String baseUrl = "/listKho/page/";
 
 		model.addAttribute("sum", sum);
+		model.addAttribute("beginIndex", begin);
+
+		model.addAttribute("endIndex", end);
+
+		model.addAttribute("currentIndex", current);
+
+		model.addAttribute("totalPageCount", totalPageCount);
+
+		model.addAttribute("baseUrl", baseUrl);
+
+		model.addAttribute("KHOSANPHAMDAMUAS", pages);
+
+		return "Kho-sanphamdamua";
+	}
+	
+	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
+	public String dataSearch(@RequestParam("searchtrangthai") Integer searchtrangthai, 
+			HttpSession session) {
+		session.setAttribute("SEARCHTRANGTHAI", searchtrangthai);
+		
+		if (searchtrangthai == null || searchtrangthai.equals("")) {
+			return "redirect:/sanphamdamua/listKho";
+		} else {
+			
+			session.setAttribute("SEARCHTRANGTHAI", searchtrangthai);
+			return "redirect:/sanphamdamua/listKho/search/1";
+		}
+	}
+
+	@RequestMapping(value = "/listKho/search/{pageNumber}", method = {RequestMethod.GET})
+	public String search(ModelMap model, HttpServletRequest request, @PathVariable int pageNumber,
+			HttpSession session) {
+		Integer searchtrangthai = (Integer) session.getAttribute("SEARCHTRANGTHAI");
+		List<Kho> list = this.khoService.listSearchSize(searchtrangthai);
+		
+		if (list == null) {
+			return "redirect:/sanphamdamua/listKho/";
+		}
+		int sumSeach = list.size();
+		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("sanphamchitietlist");
+		int pagesize = 5;
+		pages = new PagedListHolder<>(list);
+		pages.setPageSize(pagesize);
+		final int goToPage = pageNumber - 1;
+		if (goToPage <= pages.getPageCount() && goToPage >= 0) {
+			pages.setPage(goToPage);
+		}
+		request.getSession().setAttribute("khosanphamdamualist", pages);
+
+		int current = pages.getPage() + 1;
+
+		int begin = Math.max(1, current - list.size());
+
+		int end = Math.min(begin + 5, pages.getPageCount());
+
+		int totalPageCount = pages.getPageCount();
+
+		String baseUrl = "/listKho/page/";
+		
+		model.addAttribute("sum", sumSeach);
+		
 		model.addAttribute("beginIndex", begin);
 
 		model.addAttribute("endIndex", end);
@@ -242,14 +366,36 @@ public class SanPhamDaMuaController {
 		exporter.export(response);
 	}
 	
-	@RequestMapping("/del")
-
-	public String delete(ModelMap model, @RequestParam("lvt") List<Long> ids, @RequestParam("billdetail_status123") Integer billdetail_status123, Principal principal) {
+	@RequestMapping(value = "/del", method = {RequestMethod.GET})
+	public String delete(ModelMap model, @RequestParam("lvt") List<Long> ids, @RequestParam("billdetail_status123") Integer billdetail_status123) {
 		for (Long long1 : ids) {
 			BillDetail bi = this.billDetailService.findById(long1).get();
 			bi.setBilldetail_status(billdetail_status123);
 			this.billDetailService.updateBillDetail(bi);
 		}
 		return "redirect:/sanphamdamua/list";
+	}
+	
+	@RequestMapping(value = "/update_kho", method = {RequestMethod.GET})
+	public String updateKho(ModelMap model, @RequestParam("kl") List<Long> ids, @RequestParam("kho_list") Integer kho_list) {
+		for (Long long1 : ids) {
+			Kho k = this.khoService.findById(long1).get();
+			k.setTrangthai(kho_list);
+			this.khoService.update(k);
+			if (k.getTrangthai() == 2) {
+				BillDetail bi = this.billDetailService.findById(k.getBilldetails_id().getBilldetail_id()).get();
+				bi.setBilldetail_status((Integer) 1);
+				this.billDetailService.updateBillDetail(bi);
+				
+			}
+			if (k.getTrangthai() == 0 || k.getTrangthai() == 1) {
+				BillDetail bi = this.billDetailService.findById(k.getBilldetails_id().getBilldetail_id()).get();
+				bi.setBilldetail_status((Integer) 0);
+				this.billDetailService.updateBillDetail(bi);
+				
+			}
+		}
+		
+		return "redirect:/sanphamdamua/listKho";
 	}
 }

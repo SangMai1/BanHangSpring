@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.learncode.comon.Xuly;
+import com.learncode.models.ChucNang1;
 import com.learncode.models.LoaiSanPham;
 import com.learncode.models.Sanpham;
 import com.learncode.models.Slides;
@@ -44,7 +47,7 @@ public class SlidesController {
 	@Autowired
 	SlidesService slidesService;
 
-	@RequestMapping("/")
+	@RequestMapping(value = "/", method = {RequestMethod.GET})
 	public String home(ModelMap model) {
 		Slides sli = new Slides();
 		model.addAttribute("SLIDES", sli);
@@ -52,15 +55,15 @@ public class SlidesController {
 	}
 
 	@RequestMapping(value = "/doSave", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
-	public String doSave(@Valid @ModelAttribute("SLIDES") Slides sli, BindingResult bindingResult, Principal principal,
+	public String doSave(@ModelAttribute("SLIDES") Slides sli, Principal principal,
 			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
-		if (bindingResult.hasErrors()) {
-			return "Slides-register";
-		} else {
-			sli.setCreateby(principal.getName());
+		
+			
 			sli.setCreateday(new Timestamp(new Date().getTime()));
-			sli.setUpdateby(principal.getName());
+//			sli.setCreateby(principal.getName());
+//			System.out.println("nguoi tao" + principal.getName());
 			sli.setUpdateday(new Timestamp(new Date().getTime()));
+//			sli.setUpdateby(principal.getName());
 			sli.setIsdelete((Integer) 0);
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			sli.setImages(fileName);
@@ -69,7 +72,7 @@ public class SlidesController {
 			String uploadDir = "./slides/" + sli.getId();
 
 			Path uploadPath = Paths.get(uploadDir);
-			System.out.println(uploadPath);
+		
 			if (!Files.exists(uploadPath)) {
 				Files.createDirectories(uploadPath);
 			}
@@ -81,7 +84,7 @@ public class SlidesController {
 				throw new IOException("Could not save uploaded file: " + fileName);
 			}
 			return "redirect:/slides/list";
-		}
+		
 	}
 
 	@GetMapping("/slides-update/{id}")
@@ -96,7 +99,7 @@ public class SlidesController {
 			@RequestPart("fileImages") MultipartFile multipartFile) throws IOException {
 
 		Slides sl = new Slides(id, maslides, tenslides);
-		sl.setUpdateby(principal.getName());
+//		sl.setUpdateby(principal.getName());
 		sl.setUpdateday(new Timestamp(new Date().getTime()));
 		sl.setIsdelete((Integer) 0);
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -111,6 +114,7 @@ public class SlidesController {
 			} else {
 				file.deleteOnExit();
 			}
+			file.delete();
 		}
 
 		this.slidesService.updateSlides(sl);
@@ -118,7 +122,6 @@ public class SlidesController {
 		String uploadDir = "./slides/" + sl.getId();
 
 		Path uploadPath = Paths.get(uploadDir);
-		System.out.println(uploadPath);
 
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);
@@ -130,7 +133,7 @@ public class SlidesController {
 					.println("=>" + ImageIO.read(multipartFile.getInputStream()) == null + " =" + filePath.toString());
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
-			System.out.println(e);
+			
 		}
 		return "redirect:/slides/list";
 	}
@@ -186,14 +189,74 @@ public class SlidesController {
 		return "Slides-view";
 	}
 
+	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
+	public String dateSearch(@RequestParam("tenslides") String tenslides, HttpSession session) {
+		session.setAttribute("TENSLIDES", tenslides);
+
+		if (tenslides == null || tenslides.equals("")) {
+			return "redirect:/slides/list";
+		} else {
+			tenslides = Xuly.xuLySearch(tenslides);
+			session.setAttribute("TENSLIDES", tenslides);
+			return "redirect:/slides/list/search/1";
+		}
+	}
+
+	@RequestMapping(value = "/list/search/{pageNumber}", method = {RequestMethod.GET})
+	public String search(ModelMap model, HttpServletRequest request, @PathVariable int pageNumber,
+			HttpSession session) {
+		String tenslides = (String) session.getAttribute("TENSLIDES");
+		List<Slides> list = this.slidesService.searchTenSlides(tenslides);
+		
+		if (list == null) {
+			return "redirect:/slides/list/";
+		}
+		int sum = list.size();
+		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("slideslist");
+		int pagesize = 5;
+		pages = new PagedListHolder<>(list);
+		pages.setPageSize(pagesize);
+		final int goToPage = pageNumber - 1;
+		if (goToPage <= pages.getPageCount() && goToPage >= 0) {
+			pages.setPage(goToPage);
+		}
+		request.getSession().setAttribute("slideslist", pages);
+
+		int current = pages.getPage() + 1;
+
+		int begin = Math.max(1, current - list.size());
+
+		int end = Math.min(begin + 5, pages.getPageCount());
+
+		int totalPageCount = pages.getPageCount();
+
+		String baseUrl = "/list/page/";
+		
+		model.addAttribute("sum", sum);
+		
+		model.addAttribute("beginIndex", begin);
+
+		model.addAttribute("endIndex", end);
+
+		model.addAttribute("currentIndex", current);
+
+		model.addAttribute("totalPageCount", totalPageCount);
+
+		model.addAttribute("baseUrl", baseUrl);
+
+		model.addAttribute("SLIDESS", pages);
+
+		return "Slides-view";
+	}
+	
 	@GetMapping(value = "/del")
 	public String delete(@RequestParam("lsp[]") List<Long> ids, Principal principal) {
 		for (Long long1 : ids) {
 			Slides sl = this.slidesService.findSlidesById(long1).get();
 			sl.setUpdateday(new Timestamp(new Date().getTime()));
-			sl.setUpdateby(principal.getName());
+//			sl.setUpdateby(principal.getName());
 			sl.setIsdelete((Integer) 1);
-			this.slidesService.updateSlides(sl);
+			this.slidesService.deleteSlides(sl);
 		}
 		return "redirect:/slides/list";
 	}

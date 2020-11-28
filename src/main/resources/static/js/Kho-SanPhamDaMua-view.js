@@ -27,6 +27,13 @@ $(document).ready(function(){
 		});
 
 	});
+		
+		$('#searchtrangthai_select').on('click',function(event){
+			event.preventDefault();
+			var x = document.getElementById("searchtrangthai_select").selectedIndex;
+			var y = document.getElementById("searchtrangthai_select").options;
+			window.location.href ="http://localhost:8090/sanphamdamua/dataSearch?searchtrangthai=" + y[x].value;
+		});
 })
 
 function GetURLParameter(sPageURL, sParam){

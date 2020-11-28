@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/css/StyleViewSizeSanPham.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{/js/SanPhamVaChiTiet-view.js}"></script>
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container">
+			<h4>Danh sách size sản phẩm gần hêt</h4>
+			<hr>
+
+			
+			<th:block th:if="${#lists.isEmpty(SANPHAMCHITIETSGANHET.pageList)}">
+				<h2>Không có size sản phẩm</h2>
+			</th:block>
+
+			<th:block th:unless="${#lists.isEmpty(SANPHAMCHITIETSGANHET.pageList)}">
+
+				<div class="sang">
+					
+
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Id SP</th>
+									<th>Kích thước</th>
+									<th>Số lượng</th>
+									<th>Gía tiền</th>
+									<th>Giảm giá</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="spc, iterStat: ${SANPHAMCHITIETSGANHET.pageList}">
+
+									<td th:text="${iterStat.count}"></td>
+									<td th:text="${spc.sanphams.tensanpham}"></td>
+									<td th:text="${spc.kichthuoc}"></td>
+									<td th:text="${spc.soluong}"></td>
+									<td th:text="${#numbers.formatCurrency(spc.giatien)}"></td>
+									<td th:text="${#numbers.formatCurrency(spc.giamgia)}"></td>
+									
+
+								</tr>
+							</tbody>
+						</table>
+	
+				</div>
+
+				<p class="showcount" th:text="'Record: ' + ${sum}"></p>
+				<p class="showin"
+					th:text="'Show '+ ${pageNumber} + ' in ' + ${totalPageCount}"></p>
+
+				<!-- phan trang-->
+				<ul class="pagination">
+					<li
+						th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+						<a class="page-link" th:href="@{/sanphamchitiet/list}">First</a>
+					</li>
+					<li
+						th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+						<a class="page-link" aria-label="Previous"
+						th:href="@{|/sanphamchitiet${baseUrl}${currentIndex - 1}|}"
+						title='Go to previous page'> <span aria-hidden="true"><<</span>
+							<span class="sr-only">Previous</span></a>
+					</li>
+					<li th:each="item: ${#numbers.sequence(beginIndex, endIndex)}"
+						th:class="${item == currentIndex ? 'page-item active' : 'page-item'}">
+						<a class="page-link"
+						th:href="@{|/sanphamchitiet${baseUrl}${item}|}"> <span
+							th:text='${item}'>1</span>
+					</a>
+					</li>
+					<li
+						th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+						<a class="page-link" aria-label="Next"
+						th:href="@{|/sanphamchitiet${baseUrl}${currentIndex + 1}|}"
+						title='Go to next page'> <span aria-hidden="true">>></span> <span
+							class="sr-only">Next</span></a>
+					</li>
+					<li
+						th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+						<a class="page-link"
+						th:href="@{|/sanphamchitiet${baseUrl}${totalPageCount}|}">Last</a>
+					</li>
+				</ul>
+			</th:block>
+	
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

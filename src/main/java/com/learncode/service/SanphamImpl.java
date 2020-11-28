@@ -26,22 +26,17 @@ public class SanphamImpl implements SanphamService{
 	
 	@Override
 	public void insertSanpham(Sanpham sp) {
-		System.out.println("11");
 		this.sanphamRepository.save(sp);
 	}
 	
 	@Override
-//	@Cacheable(value = "sanpham", key = "#sp.updateby")
 	public void updateSanpham(Sanpham sp) {
-	//	System.out.println("update day");
 		this.sanphamRepository.save(sp);
 	}
 
 
 	@Override
-	@Cacheable(value = "sanpham", key="#id")
 	public Optional<Sanpham> finBySanphamId(Long id) {
-		System.out.println("aaaa");
 		return this.sanphamRepository.finBySanphamId(id);
 	}
 
@@ -69,6 +64,16 @@ public class SanphamImpl implements SanphamService{
 	@Override
 	public List<Sanpham> searchSize(String size) {
 		return sanphamRepository.searchSize(size);
+	}
+
+	@Override
+	public void deleteSanpham(Sanpham sp) {
+		sanphamRepository.deleteSanpham(sp.getUpdateday(), sp.getUpdateby(), sp.getIsdelete(), sp.getId());
+	}
+
+	@Override
+	public List<Sanpham> searchTenSanPham(String tensanpham) {
+		return sanphamRepository.searchTenSanPham(tensanpham);
 	}
 
 

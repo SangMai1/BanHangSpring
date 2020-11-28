@@ -48,12 +48,16 @@ td, th {
 	margin-bottom: 10px;
 	margin-left: 5px;
 }
-#dataSearch {
+#dataSearchdamua {
 	float: right;
-    background-color: #4db6ac;
     width: 40%;
     margin: 0 auto;
-    padding: 10px;
+
+}
+
+#dataSearchdamua label {
+	font-size: 16px;
+	color: black;
 }
 
 .main__menu-search-form-input, .main__menu-search-form-button {
@@ -92,4 +96,22 @@ td, th {
 
 .show{
     display : inline;
+}
+
+.text_capnhat {
+	font-size: 16px;
+	color: black;
+}
+
+.select_kho {
+	width: 250px !important;
+	height: 30px !important;
+	font-size: 14px;
+}
+
+.button_update {
+	position: relative;
+	    margin-left: 398px;
+    margin-top: -70px;
+    z-index: 1000;
 }

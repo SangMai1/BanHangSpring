@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import com.learncode.repository.NguoiDungRepository;
 import com.learncode.repository.NhomNguoiDungRepository;
 import com.learncode.repository.VaiTroRepository;
 
+@Component
 @Service
 public class NguoiDungImpl implements NguoiDungService{
 	
@@ -55,6 +57,7 @@ public class NguoiDungImpl implements NguoiDungService{
 		return this.vaiTroRepository.listVaiTro();
 	}
 
+	
 	@Override
 	public void insertNguoidung(Nguoidung nd) {
 		this.nguoiDungRepository.save(nd);

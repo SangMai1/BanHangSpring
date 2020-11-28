@@ -7,12 +7,14 @@
 <title>SAN PHAM DA MUA</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/css/StyleSanPhamDaMua-view.css">
+<link rel="stylesheet" type="text/css"
+	href="/css/StyleKhoSanPhamDaMua.css">
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" th:src="@{/js/Kho-sanphamdamua-view.js}"></script>
@@ -20,24 +22,43 @@
 <body>
 	<section class="main__content" layout:fragment="content">
 		<div class="container">
-			<h4>Danh sách sản phẩm đã đặt hàng thành công</h4>
+			<h4>Danh sách đơn hàng đang ở kho</h4>
 			<hr>
-			<form th:action="@{/sanphamdamua/dataSearch}" id="dataSearch">
-				<input type="text" class="main__menu-search-form-input1"
-					name="keyword" placeholder="Search...">
-				<button type="submit" class="main__menu-search-form-button1"
-					id="search">Search</button>
-
-			</form>
+				<div class="form-group row" id="dataSearch">
+					<label class="col-sm-2 col-form-label">Search</label>
+					<div class="col-sm-10">
+						<select id="searchtrangthai_select" class="form-control select_kho">
+							<option name="searchtrangthai" value="0">Đã nhận đơn hàng</option>
+							<option name="searchtrangthai" value="1">Đang kiểm tra</option>
+							<option name="searchtrangthai" value="2">Xuất kho</option>
+							
+							
+						</select>
+					</div>
+					
+				</div>
 			<th:block th:if="${#lists.isEmpty(KHOSANPHAMDAMUAS.pageList)}">
-				<h2>Không có sản phẩm đã mua</h2>
+				<h2>Không có đơn hàng đang ở kho</h2>
 			</th:block>
 
 			<th:block th:unless="${#lists.isEmpty(KHOSANPHAMDAMUAS.pageList)}">
 
 				<div class="sang">
-					<form id="formDelete">
+					<form th:action="@{/sanphamdamua/update_kho}" id="formDelete">
+						<div class="form-group row">
 
+							<label class="col-sm-2 col-form-label text_capnhat">Cập nhật</label>
+							<div class="col-sm-10">
+								<select id="parent_edit" name="kho_list" class="form-control select_kho">
+									<option th:value="0">Đã nhận đơn hàng</option>
+									<option th:value="1">Đang kiểm tra</option>
+									<option th:value="2">Xuất kho</option>
+								</select>
+								
+							</div>
+							
+						</div>
+						<button class=" btn btn-primary button_update" type="submit">Update</button>
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -50,21 +71,25 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="sanphamdamua, iterStat: ${KHOSANPHAMDAMUAS.pageList}">
+								<tr
+									th:each="sanphamdamua, iterStat: ${KHOSANPHAMDAMUAS.pageList}">
 
 									<td th:text="${iterStat.count}"></td>
-									
-									<td th:text="${sanphamdamua.billdetails_id.bills.bill_name}"></td>
-									<td th:text="${sanphamdamua.billdetails_id.billdetail_quantity}"></td>
-									<td th:text="${sanphamdamua.billdetails_id.billdetail_price}"></td>
-									<td>
-										<span th:if="${sanphamdamua.trangthai == 0}">Nhận hóa đơn đơn hàng</span>
-										<span th:if="${sanphamdamua.trangthai == 1}">Đang kiểm tra</span>
-										<span th:if="${sanphamdamua.trangthai == 2}">Đã xuất kho</span>
-									</td>
 
-									<td><a class="btn btn-primary edit" th:href="@{/sanphamdamua/kho-sanphamdamua/(id=${sanphamdamua.id})}" data-toggle="modal" data-target="#myEdit"><i class="fas fa-edit"></i></a>
-										<a  th:classappend="${sanphamdamua.trangthai == 2}?'show':'hide'"  class="btn btn-primary" th:href="@{'/sanphamdamua/export/'+${sanphamdamua.id}}">Print</a>
+									<td th:text="${sanphamdamua.billdetails_id.bills.bill_name}"></td>
+									<td
+										th:text="${sanphamdamua.billdetails_id.billdetail_quantity}"></td>
+									<td th:text="${#numbers.formatCurrency(sanphamdamua.billdetails_id.billdetail_price)}"></td>
+									<td><span th:if="${sanphamdamua.trangthai == 0}">Nhận
+											hóa đơn đơn hàng</span> <span th:if="${sanphamdamua.trangthai == 1}">Đang
+											kiểm tra</span> <span th:if="${sanphamdamua.trangthai == 2}">Đã
+											xuất kho</span></td>
+
+									<td> <input type="checkbox"
+										id="allDelete" name="kl" th:value="${sanphamdamua.id}" /> <a
+										th:classappend="${sanphamdamua.trangthai == 2}?'show':'hide'"
+										class="btn btn-primary"
+										th:href="@{'/sanphamdamua/export/'+${sanphamdamua.id}}">Print</a>
 									</td>
 
 								</tr>
@@ -111,40 +136,41 @@
 				</ul>
 
 			</th:block>
-			
+
 			<!-- The Modal Edit -->
-													 <div class="modal" id="myEdit">
-													    <div class="modal-dialog">
-													      <div class="modal-content">
-													      
-													        <!-- Modal Header -->
-													        <div class="modal-header">
-													          <h4>Edit giao hang</h4>
-													          <button type="button" class="close" data-dismiss="modal">&times;</button>
-													        </div>
-													        <div id="edit-body">
-													        	<form th:action="@{/sanphamdamua/updateKhoSanphamdamua}" method="put" id="formEdit">
-																		<input type="hidden" name="id" id="id_edit">
-																	
-																	<div class="form-group row">
-																		<label class="col-sm-2 col-form-label">Trạng thái</label>
-																		<div class="col-sm-10">
-																			<select id="parent_edit" name="trangthai" class="form-control">
-																				<option th:value="0">Nhận hóa đơn đơn hàng</option>
-																				<option th:value="1">Đang kiểm tra</option>
-																				<option th:value="2">Xuất kho</option>
-																			</select>
-																		</div>
-																	</div>
-																	<button type="submit" id="toggler" class="btn btn-primary capnhat" onClick="action()">Cập nhật</button>
-																</form>
-													        </div>
-													        <div class="modal-footer">
-													          
-													        </div>
-														  </div>
-													   </div>
-													</div>
+			<div class="modal" id="myEdit">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4>Edit giao hang</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div id="edit-body">
+							<form th:action="@{/sanphamdamua/updateKhoSanphamdamua}"
+								method="put" id="formEdit">
+								<input type="hidden" name="id" id="id_edit">
+
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">Trạng thái</label>
+									<div class="col-sm-10">
+										<select id="parent_edit" name="trangthai" class="form-control">
+											<option th:value="0">Nhận hóa đơn đơn hàng</option>
+											<option th:value="1">Đang kiểm tra</option>
+											<option th:value="2">Xuất kho</option>
+										</select>
+									</div>
+								</div>
+								<button type="submit" id="toggler"
+									class="btn btn-primary capnhat" onClick="action()">Cập
+									nhật</button>
+							</form>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 </body>

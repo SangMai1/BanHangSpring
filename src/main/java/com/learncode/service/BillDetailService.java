@@ -29,6 +29,8 @@ public interface BillDetailService {
 
 	Integer thongkeNguoiDangKiThang(Integer thang);
 
+	List<BillDetail> listSearchTrangThai(int billdetail_status);
+
 
 
 

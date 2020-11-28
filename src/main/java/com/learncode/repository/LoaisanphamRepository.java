@@ -18,18 +18,22 @@ import com.learncode.models.LoaiSanPham;
 public interface LoaisanphamRepository extends CrudRepository<LoaiSanPham, Long>{
 	
 //	@Modifying
-//	@Transactional
 //	@Query(value = "INSERT INTO public.qtht_loaisanpham(id, maloaisanpham, tenloaisanpham, createday, createby, updateday, updateby, isdelete) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", nativeQuery = true)
 //	void insertLoaisanpham(@Param("id") Long id, @Param("maloaisanpham") String maloaisanpham, @Param("tenloaisanpham") String tenloaisanpham, @Param("createday") Date createday, @Param("createby") String createby, @Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("isdelete") Integer isdelete);
 
-	@Query(value = "SELECT id, maloaisanpham, tenloaisanpham, createday, createby, updateday, updateby, isdelete FROM qtht_loaisanpham WHERE isdelete = 0", nativeQuery = true)
+	@Query(value = "SELECT *\r\n" + 
+			"						FROM qtht_loaisanpham lsp\r\n" + 
+			"						WHERE isdelete = 0 AND lsp.createday < now()  \r\n" + 
+			"						ORDER BY lsp.createday DESC", nativeQuery = true)
 	List<LoaiSanPham> findAllLoaisanpham();
 	
 	@Query(value = "SELECT id, maloaisanpham, tenloaisanpham, createday, createby, updateday, updateby, isdelete FROM qtht_loaisanpham WHERE id = ? AND isdelete = 0", nativeQuery = true)
 	Optional<LoaiSanPham> findLoaisanphamById(@Param("id") Long id);
 	
-//	@Modifying
-//	@Transactional
-//	@Query(value = "UPDATE public.qtht_loaisanpham SET maloaisanpham=?, tenloaisanpham=?, updateday=?, updateby=?, isdelete=? WHERE id = ?;", nativeQuery = true)
-//	void updateLoaisanpham(@Param("maloaisanpham") String maloaisanpham, @Param("tenloaisanpham") String tenloaisanpham, @Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("isdelete") Integer isdelete, @Param("id") Long id);
+	@Modifying
+	@Query(value = "UPDATE public.qtht_loaisanpham SET updateday=?, updateby=?, isdelete=? WHERE id = ?;", nativeQuery = true)
+	void deleteLoaisanpham(@Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("isdelete") Integer isdelete, @Param("id") Long id);
+	
+	@Query(value = "SELECT * FROM qtht_loaisanpham WHERE tenloaisanpham @@ to_tsquery(?) and isdelete = 0", nativeQuery = true)
+	List<LoaiSanPham> searchTenLoaiSanPham(String tenloaisanpham);
 }

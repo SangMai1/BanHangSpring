@@ -39,5 +39,9 @@ public interface SanphamVaChitietService {
 
 	List<SanphamVaChitiet> searchKichThuoc(String kichthuoc);
 
+	int updateSoLuongDaMua(SanphamVaChitiet spct);
+
+	List<SanphamVaChitiet> listSizeSanPhamGanHet();
+
 
 }

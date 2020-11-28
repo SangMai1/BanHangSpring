@@ -23,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,22 +58,21 @@ public class NguoiDungController {
 		return this.nguoiDungService.finAllVaiTro();
 	}
 
-	@RequestMapping("/")
+	@RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
 	public String addOrEdit(ModelMap model) {
 		Nguoidung nd = new Nguoidung();
 		model.addAttribute("NGUOIDUNG", nd);
 		return "Nguoidung-register";
 	}
 
-	@RequestMapping(value = "/saveNguoiDung", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
+	@PostMapping("/saveNguoiDung")
 	@PreAuthorize("hasPermission('', 'tmnd')")
 	public String saveNguoiDung(@Valid @ModelAttribute("NGUOIDUNG") Nguoidung nd, BindingResult bindingResult, Principal principal) {
 		if (bindingResult.hasErrors()) {
 			return "Nguoidung-register";
 		} else {
-			// nd.setId(ThreadLocalRandom.current().nextLong(0, new
-			// Long("9000000000000000")));
-			Xuly.giaiMd5(nd.getPassword());
+			
+			nd.setPassword(Xuly.giaiMd5(nd.getPassword()));
 			nd.setCreateday(new Timestamp(new Date().getTime()));
 			nd.setNguoitao(principal.getName());
 			nd.setUpdateday(new Timestamp(new Date().getTime()));
@@ -110,6 +110,9 @@ public class NguoiDungController {
 
 	@RequestMapping(value = "/doUpdate", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(Nguoidung nd, Principal principal) {
+		Nguoidung nd1 = this.nguoiDungService.findNguoidungById(nd.getId()).get();
+		nd.setCreateday(nd1.getCreateday());
+		nd.setNguoitao(nd1.getNguoitao());
 		nd.setIsdelete((Integer) 0);
 		nd.setUpdateday(new Timestamp(new Date().getTime()));
 		nd.setNguoiupdate(principal.getName());

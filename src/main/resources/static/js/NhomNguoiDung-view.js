@@ -47,11 +47,7 @@
 			$('#myChitiet').modal("hide");	
 		});
 		
-		$('#search').on('click', function(event){
-			event.preventDefault();
-			$('#search').show();
 
-		});
 	});
 	
 	function GetURLParameter(sPageURL, sParam){

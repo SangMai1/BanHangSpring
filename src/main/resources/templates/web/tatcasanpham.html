@@ -64,8 +64,13 @@
 											class="category__image1"
 											th:src="@{${tcsp.sanphams.getLogoImagePath()}}"></a> <a href="#"
 										th:text="${tcsp.sanphams.tensanpham}" class="category__name1"></a>
-										<span class="category__name-price" th:text="${#numbers.formatCurrency(tcsp.giatien)}"></span></li>
-
+										<span class="category__name-price" th:text="${#numbers.formatCurrency(tcsp.giatien - tcsp.giamgia)}"></span>
+										<div class="category__div">
+											<del class="category__name-price-giagoc" th:text="${#numbers.formatCurrency(tcsp.giatien)}"></del>
+											<span class="category__name-price-giamgia" th:text="${#numbers.formatCurrency(tcsp.giamgia)}"></span>
+										</div>
+										</li>
+										
 								</ul>
 							</div>
 

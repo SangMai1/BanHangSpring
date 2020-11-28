@@ -31,15 +31,25 @@ public class LoaisanphamImpl implements LoaisanphamService{
 	}
 
 	@Override
-	@Cacheable(value = "loaisanpham", key = "#id")
+//	@Cacheable(value = "loaisanpham", key = "#id")
 	public Optional<LoaiSanPham> findLoaisanphamById(Long id) {
 		return loaisanphamRepository.findLoaisanphamById(id);
 	}
 
 	@Override
-	@Cacheable(value = "loaisanpham", key = "#lsp.updateby")
+//	@Cacheable(value = "loaisanpham", key = "#lsp.updateby")
 	public void updateLoaisanpham(LoaiSanPham lsp) {
 		this.loaisanphamRepository.save(lsp);
+	}
+
+	@Override
+	public void deleteLoaisanpham(LoaiSanPham lsp) {
+		loaisanphamRepository.deleteLoaisanpham(lsp.getUpdateday(), lsp.getUpdateby(), lsp.getIsdelete(), lsp.getId());
+	}
+
+	@Override
+	public List<LoaiSanPham> searchTenLoaiSanPham(String tenloaisanpham) {
+		return loaisanphamRepository.searchTenLoaiSanPham(tenloaisanpham);
 	}
 	
 	

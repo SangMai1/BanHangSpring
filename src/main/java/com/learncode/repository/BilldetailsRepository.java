@@ -118,4 +118,7 @@ public interface BilldetailsRepository extends CrudRepository<BillDetail, Long> 
 			"			GROUP BY sp.tensanpham\r\n" + 
 			"			ORDER BY sum(bd.billdetail_quantity) DESC limit 1", nativeQuery = true)
 	String sosanh2NamSoLuong(@Param("nam") Integer nam, @Param("thang") Integer thang);
+	
+	@Query(value = "SELECT * FROM ql_billdetails WHERE billdetail_status = ?", nativeQuery = true)
+	List<BillDetail> listSearchTrangThai(@Param("billdetail_status") int billdetail_status);
 }

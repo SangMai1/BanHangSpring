@@ -73,3 +73,11 @@ h3 {
 	background: #fdd835;
 	font-size: 16px;
 }
+
+.xoa {
+	color: blue !important;
+}
+
+.xoa:hover {
+	color: red !important;
+}

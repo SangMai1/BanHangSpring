@@ -33,11 +33,10 @@ public class LoginController {
 		return "Login";
 	}
 
-	@RequestMapping(value = "/success", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String successPage(ModelMap model) {
 		Date date = new Date();
 		List<MyItems> listItem = this.reportService.reportReceiptDoanhThuThang(date, 13);
-		System.out.println(listItem.toString());
 		model.addAttribute("listReceipt", listItem);
 		model.addAttribute("countNguoiDangKi", this.billService.countNguoiDangKi());
 		model.addAttribute("countSanPhamBanRa", this.billDetailService.countSanPhamBanRa());

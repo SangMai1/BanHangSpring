@@ -21,5 +21,7 @@ public interface BillService {
 
 	long countNguoiDangKi();
 
+	List<Bills> searchBillName(String bill_name);
+
 
 }

@@ -22,14 +22,7 @@
 		<div class="container">
 			<h4>Danh sách người mua hàng thành công</h4>
 			<hr>
-			
-			<form th:action="@{/sanphamdamua/dataSearch}" id="dataSearch">
-				<input type="text" class="main__menu-search-form-input1"
-					name="keyword" placeholder="Search...">
-				<button type="submit" class="main__menu-search-form-button1"
-					id="search">Search</button>
-
-			</form>
+	
 			<th:block th:if="${#lists.isEmpty(SANPHAMDAMUATHANHCONGS.pageList)}">
 				<h2>Không có sản phẩm đã mua</h2>
 			</th:block>
@@ -59,7 +52,7 @@
 									<td th:text="${sanphamdamua.bills.bill_name}"></td>
 									<td th:text="${sanphamdamua.billdetail_quantity}"></td>
 									<td th:text="${sanphamdamua.billdetail_date}"></td>
-									<td th:text="${sanphamdamua.billdetail_price}"></td>
+									<td th:text="${#numbers.formatCurrency(sanphamdamua.billdetail_price)}"></td>
 									<td>
 										<span th:if="${sanphamdamua.billdetail_status == 0}">Đang ở kho</span>
 										<span th:if="${sanphamdamua.billdetail_status == 1}">Đang giao hàng</span>

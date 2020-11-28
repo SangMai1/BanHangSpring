@@ -62,5 +62,11 @@ public class BillImpl implements BillService {
 		return billRepository.countNguoiDangKi();
 	}
 
+
+	@Override
+	public List<Bills> searchBillName(String bill_name) {
+		return billRepository.searchBillName(bill_name);
+	}
+
 		
 }

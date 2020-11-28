@@ -38,7 +38,10 @@ public interface NhomNguoiDungRepository extends CrudRepository<NhomNguoiDung, L
 	@Query(value = "SELECT id, manhom, tennhom, createday, nguoitao, updateday, nguoiupdate, isdelete FROM public.qtht_nhomnguoidung where id = ?;", nativeQuery = true)
 	Optional<NhomNguoiDung> findByLongId(Long id);
 	
-	@Query(value = "SELECT id, manhom, tennhom, createday, nguoitao, updateday, nguoiupdate, isdelete FROM public.qtht_nhomnguoidung where isdelete = 0;", nativeQuery = true)
+	@Query(value = "SELECT *\r\n" + 
+			"			FROM qtht_nhomnguoidung nnd\r\n" + 
+			"			WHERE isdelete = 0 AND nnd.createday < now() \r\n" + 
+			"			ORDER BY nnd.createday DESC", nativeQuery = true)
 	List<NhomNguoiDung> findAllNhomNguoiDung();
 	
 	@Query(value = "SELECT * FROM qtht_nhomnguoidung WHERE tennhom @@ to_tsquery(?) and isdelete = 0", nativeQuery = true)

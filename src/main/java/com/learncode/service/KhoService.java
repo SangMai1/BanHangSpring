@@ -15,4 +15,6 @@ public interface KhoService {
 
 	Optional<Kho> findById(Long id);
 
+	List<Kho> listSearchSize(int trangthai);
+
 }

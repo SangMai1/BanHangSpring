@@ -28,4 +28,6 @@ public interface VaiTroService {
 
 	void updateVaitro(VaiTro vt);
 
+	void updateDaXoa(VaiTro vt);
+
 }

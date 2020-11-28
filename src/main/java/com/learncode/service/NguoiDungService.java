@@ -23,7 +23,7 @@ public interface NguoiDungService {
 
 	List<Nguoidung> getAllNguoiDung();
 
-	void insertNguoidung(Nguoidung nd);
+	
 
 	//boolean checkLogin(String username, String password);
 
@@ -51,5 +51,8 @@ public interface NguoiDungService {
 	Nguoidung findUrl(String tennguoidung);
 
 	List<String> findUrlNd(String tennguoidung);
+
+	void insertNguoidung(Nguoidung nd);
+
 
 }

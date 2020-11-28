@@ -1,37 +1,18 @@
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#fileImage').change(function(){
-			showImageThumbnail(this);
-		});
-		
-	});
-	function showImageThumbnail(fileInput){
-		file = fileInput.files[0];
-		
-		reader = new FileReader();
-
-		reader.onload = function(e){
-			$('#thumbnail').attr('src', e.target.result);
-		};
-		
-		reader.readAsDataURL(file);
-	};
-</script>
 
 			<form th:action="@{/slides/doSave}" th:object="${SLIDES}" method="post" enctype="multipart/form-data" id="myModals">
-				<input th:field="*{id}" name="id" type="hidden">
+				<input type="hidden" name="id" th:field="*{id}">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Mã slides</label>
 					<div class="col-sm-10">
-						<input class="form-control" placeholder="Enter mã slides" th:field="*{maslides}" name="maslides" type="text" required="required">
+						<input type="text" class="form-control" placeholder="Enter mã slides" th:field="*{maslides}" name="maslides" required="required">
 						<p th:if="${#fields.hasErrors('maslides')}" th:errors="*{maslides}" class="alert alert-danger"></p>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Tên slides</label>
 					<div class="col-sm-10">	
-						<input class="form-control" placeholder="Enter tên slides" th:field="*{tenslides}" name="tenslides" type="text" required="required">
+						<input type="text" class="form-control" placeholder="Enter tên slides" th:field="*{tenslides}" name="tenslides" required="required">
 						<p th:if="${#fields.hasErrors('tenslides')}" th:errors="*{tenslides}" class="alert alert-danger"></p>
 					</div>
 					
@@ -54,3 +35,24 @@
 				
 			 	
 			</form>
+
+			
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#fileImage').change(function(){
+			showImageThumbnail(this);
+		});
+		
+	});
+	function showImageThumbnail(fileInput){
+		file = fileInput.files[0];
+		
+		reader = new FileReader();
+
+		reader.onload = function(e){
+			$('#thumbnail').attr('src', e.target.result);
+		};
+		
+		reader.readAsDataURL(file);
+	};
+</script>

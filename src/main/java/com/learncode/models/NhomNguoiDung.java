@@ -29,7 +29,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class NhomNguoiDung implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "bigidn")
+	@GeneratedValue(generator = "bigid")
 	@GenericGenerator(name = "bigid", strategy = "com.learncode.config.IDGenerator")
 	private long id;
 

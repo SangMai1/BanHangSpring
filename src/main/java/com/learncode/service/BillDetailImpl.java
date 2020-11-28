@@ -80,6 +80,12 @@ public class BillDetailImpl implements BillDetailService {
 	}
 
 
+	@Override
+	public List<BillDetail> listSearchTrangThai(int billdetail_status) {
+		return billdetailsRepository.listSearchTrangThai(billdetail_status);
+	}
+
+
 	
 	
 	

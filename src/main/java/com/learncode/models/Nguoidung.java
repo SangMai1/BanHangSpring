@@ -1,11 +1,8 @@
 package com.learncode.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,16 +20,18 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Proxy;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Proxy(lazy = false)
 @Table(name = "qtht_nguoidung")
-public class Nguoidung implements Serializable {
+public class Nguoidung {
 
 	@Id
-	@GeneratedValue(generator = "bigid")
-	@GenericGenerator(name = "bigid", strategy = "com.learncode.config.IDGenerator")
+	@GeneratedValue(generator = "bigidn")
+	@GenericGenerator(name = "bigidn", strategy = "com.learncode.config.IDGenerator")
 	private long id;
 
 	@Column(name = "manguoidung")
@@ -45,7 +44,6 @@ public class Nguoidung implements Serializable {
 
 	@Column(name = "password")
 	@NotBlank(message = "không được để trống")
-	@Length(min = 1, max = 8, message = "bạn phải nhập đủ 8 ký tự")
 	private String password;
 
 	@Column(name = "email")
@@ -96,7 +94,7 @@ public class Nguoidung implements Serializable {
 
 	public Nguoidung(long id, @NotBlank(message = "không được để trống") String manguoidung,
 			@NotBlank(message = "không được để trống") String tennguoidung,
-			@NotBlank(message = "không được để trống") @Length(min = 1, max = 8, message = "bạn phải nhập đủ 8 ký tự") String password,
+			@NotBlank(message = "không được để trống") String password,
 			@NotBlank(message = "không được để trống") @Email(message = "vui lòng nhập định dạng email hợp lệ") String email,
 			int gender,
 			@NotBlank(message = "không được để trống") @Length(min = 1, max = 11, message = "bạn phải nhập đủ 11 số") String phone,
@@ -231,15 +229,8 @@ public class Nguoidung implements Serializable {
 		this.vaitro = vaitro;
 	}
 
-	@Override
-	public String toString() {
-		return "Nguoidung [id=" + id + ", manguoidung=" + manguoidung + ", tennguoidung=" + tennguoidung + ", password="
-				+ password + ", email=" + email + ", gender=" + gender + ", phone=" + phone + ", createday=" + createday
-				+ ", nguoitao=" + nguoitao + ", updateday=" + updateday + ", nguoiupdate=" + nguoiupdate + ", isdelete="
-				+ isdelete + "]";
-	}
 
-	
+
 
 	
 }

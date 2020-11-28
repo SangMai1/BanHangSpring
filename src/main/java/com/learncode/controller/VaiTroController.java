@@ -60,7 +60,7 @@ public class VaiTroController {
 		if (bindingResult.hasErrors()) {
 			return "Vaitro-register";
 		} else {
-//		vt.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
+			
 			vt.setCreateday(new Timestamp(new Date().getTime()));
 			vt.setUpdateday(new Timestamp(new Date().getTime()));
 			vt.setNguoitao(principal.getName());
@@ -92,6 +92,9 @@ public class VaiTroController {
 
 	@RequestMapping(value = "/updateVaiTro", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(ModelMap model, VaiTro vt, Principal principal) {
+		VaiTro vt1 = this.vaiTroService.findByVaitroId(vt.getId()).get();
+		vt.setCreateday(vt1.getCreateday());
+		vt.setNguoitao(vt1.getNguoitao());
 		vt.setIsdelete((Integer) 0);
 		vt.setUpdateday(new Timestamp(new Date().getTime()));
 		vt.setNguoiupdate(principal.getName());
@@ -111,7 +114,7 @@ public class VaiTroController {
 		PagedListHolder<?> pages1 = (PagedListHolder<?>) request.getSession().getAttribute("vaitrolist");
 		int pagesize = 5;
 		List<VaiTro> list = (List<VaiTro>) this.vaiTroService.listVaiTro();
-		System.out.println("vaitro11111" + list);
+
 		int sum = list.size();
 		if (pages1 == null) {
 			pages1 = new PagedListHolder<>(list);
@@ -186,15 +189,16 @@ public class VaiTroController {
 		return "Vaitro-view";
 	}
 
-	@RequestMapping("/del")
+	@RequestMapping(value = "/del", method = {RequestMethod.GET, RequestMethod.POST})
 	@PreAuthorize("hasPermission('', 'xvt')")
 	public String delete(ModelMap model, @RequestParam("lvt") List<Long> ids, Principal principal) {
+
 		for (Long long1 : ids) {
 			VaiTro vaiTro = this.vaiTroService.findByVaitroId(long1).get();
 			vaiTro.setUpdateday(new Timestamp(new Date().getTime()));
 			vaiTro.setNguoiupdate(principal.getName());
 			vaiTro.setIsdelete((Integer) 1);
-			this.vaiTroService.updateVaitro(vaiTro);
+			this.vaiTroService.updateDaXoa(vaiTro);
 		}
 		return "redirect:/vaitro/list";
 	}

@@ -36,10 +36,17 @@ public interface VaiTroRepository extends JpaRepository<VaiTro, Long>{
 	@Query(value = "DELETE FROM public.qtht_vaitrovachucnang WHERE idvaitro=?;", nativeQuery = true)
 	int deleteVaitroVaChucnang(@Param("idvaitro") Long idvaitro);
 	
+	@Modifying
+	@Query(value = "UPDATE public.qtht_vaitro SET nguoiupdate=?, updateday=?, isdelete=? WHERE id=?;", nativeQuery = true)
+	void updateDaXoa(@Param("nguoiupdate") String nguoiupdate, @Param("updateday") Date updateday, @Param("isdelete") Integer isdelete, @Param("id") Long id);
+	
 	@Query(value = "SELECT id, mavaitro ,tenvaitro, nguoitao, createday, nguoiupdate, updateday, isdelete FROM qtht_vaitro where id = ?", nativeQuery = true)
 	Optional<VaiTro> findByVaitroId(Long id);
 	
-	@Query(value = "SELECT id, mavaitro, tenvaitro, nguoitao, createday, nguoiupdate, updateday, isdelete FROM qtht_vaitro where isdelete = 0", nativeQuery = true)
+	@Query(value = "SELECT *\r\n" + 
+			"			FROM qtht_vaitro vt \r\n" + 
+			"			WHERE isdelete = 0 AND vt.createday < now() \r\n" + 
+			"			ORDER BY vt.createday DESC", nativeQuery = true)
 	List<VaiTro> listVaiTro();
 	
 	@Query(value="SELECT * FROM qtht_vaitro WHERE tenvaitro @@ to_tsquery(?1) and isdelete = 0", nativeQuery = true)

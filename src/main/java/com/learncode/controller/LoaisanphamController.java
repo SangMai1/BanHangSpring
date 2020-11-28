@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.learncode.comon.Xuly;
 import com.learncode.models.ChucNang1;
 import com.learncode.models.LoaiSanPham;
+import com.learncode.models.Slides;
 import com.learncode.service.LoaisanphamService;
 
 @Controller
@@ -48,7 +51,7 @@ public class LoaisanphamController {
 		if (bindingResult.hasErrors()) {
 			return "Loaisanpham-register";
 		} else {
-//		lsp.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
+
 			lsp.setCreateday(new Timestamp(new Date().getTime()));
 			lsp.setCreateby(principal.getName());
 			lsp.setUpdateday(new Timestamp(new Date().getTime()));
@@ -71,8 +74,11 @@ public class LoaisanphamController {
 		return this.loaisanphamService.findLoaisanphamById(id);
 	}
 
-	@RequestMapping("/updateLoaisanpham")
+	@RequestMapping(value = "/updateLoaisanpham", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 	public String doUpdate(LoaiSanPham lsp, Principal principal) {
+		LoaiSanPham lsp1 = this.loaisanphamService.findLoaisanphamById(lsp.getId()).get();
+		lsp.setCreateby(lsp1.getCreateby());
+		lsp.setCreateday(lsp1.getCreateday());
 		lsp.setUpdateday(new Timestamp(new Date().getTime()));
 		lsp.setUpdateby(principal.getName());
 		lsp.setIsdelete((Integer) 0);
@@ -130,6 +136,66 @@ public class LoaisanphamController {
 		return "Loaisanpham-view";
 	}
 
+	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
+	public String dateSearch(@RequestParam("tenloaisanpham") String tenloaisanpham, HttpSession session) {
+		session.setAttribute("TENLOAISANPHAM", tenloaisanpham);
+
+		if (tenloaisanpham == null || tenloaisanpham.equals("")) {
+			return "redirect:/loaisanpham/list";
+		} else {
+			tenloaisanpham = Xuly.xuLySearch(tenloaisanpham);
+			session.setAttribute("TENLOAISANPHAM", tenloaisanpham);
+			return "redirect:/loaisanpham/list/search/1";
+		}
+	}
+
+	@RequestMapping(value = "/list/search/{pageNumber}", method = {RequestMethod.GET})
+	public String search(ModelMap model, HttpServletRequest request, @PathVariable int pageNumber,
+			HttpSession session) {
+		String tenloaisanpham = (String) session.getAttribute("TENLOAISANPHAM");
+		List<LoaiSanPham> list = this.loaisanphamService.searchTenLoaiSanPham(tenloaisanpham);
+		
+		if (list == null) {
+			return "redirect:/loaisanpham/list/";
+		}
+		int sum = list.size();
+		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("loaisanphamlist");
+		int pagesize = 5;
+		pages = new PagedListHolder<>(list);
+		pages.setPageSize(pagesize);
+		final int goToPage = pageNumber - 1;
+		if (goToPage <= pages.getPageCount() && goToPage >= 0) {
+			pages.setPage(goToPage);
+		}
+		request.getSession().setAttribute("loaisanphamlist", pages);
+
+		int current = pages.getPage() + 1;
+
+		int begin = Math.max(1, current - list.size());
+
+		int end = Math.min(begin + 5, pages.getPageCount());
+
+		int totalPageCount = pages.getPageCount();
+
+		String baseUrl = "/list/page/";
+		
+		model.addAttribute("sum", sum);
+		
+		model.addAttribute("beginIndex", begin);
+
+		model.addAttribute("endIndex", end);
+
+		model.addAttribute("currentIndex", current);
+
+		model.addAttribute("totalPageCount", totalPageCount);
+
+		model.addAttribute("baseUrl", baseUrl);
+
+		model.addAttribute("LIST", pages);
+
+		return "Loaisanpham-view";
+	}
+	
 	@RequestMapping("/del")
 	public String delete(@RequestParam("lsp[]") List<Long> ids, Principal principal) {
 		for (Long long1 : ids) {
@@ -137,7 +203,7 @@ public class LoaisanphamController {
 			lsp.setUpdateday(new Timestamp(new Date().getTime()));
 			lsp.setUpdateby(principal.getName());
 			lsp.setIsdelete((Integer) 1);
-			this.loaisanphamService.updateLoaisanpham(lsp);
+			this.loaisanphamService.deleteLoaisanpham(lsp);
 		}
 		return "redirect:/loaisanpham/list";
 	}

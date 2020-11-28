@@ -34,6 +34,11 @@ public class KhoImpl implements KhoService {
 	public Optional<Kho> findById(Long id) {
 		return this.khoRepository.findById(id);
 	}
+
+	@Override
+	public List<Kho> listSearchSize(int trangthai) {
+		return khoRepository.listSearchSize(trangthai);
+	}
 	
 	
 }

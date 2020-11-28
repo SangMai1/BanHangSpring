@@ -33,12 +33,16 @@ public interface BillRepository extends CrudRepository<Bills, Long> {
 	@Query(value = "SELECT * FROM ql_bill WHERE bill_email = ?", nativeQuery = true)
 	Bills findByEmail(String bill_emal);
 	
-	@Query(value = "SELECT * FROM ql_bill WHERE bill_status = 0", nativeQuery = true)
+	@Query(value = "SELECT *\r\n" + 
+			"						FROM ql_bill b\r\n" + 
+			"						WHERE bill_status = 0 AND b.bill_date < now() \r\n" + 
+			"						ORDER BY b.bill_date DESC", nativeQuery = true)
 	List<Bills> getAllNguoiMuaDaDangKi();
 	
 	@Query(value = "SELECT COUNT(*) FROM ql_bill WHERE bill_status = 0", nativeQuery = true)
 	long countNguoiDangKi();
 	
-
+	@Query(value = "SELECT * FROM ql_bill WHERE bill_name @@ to_tsquery(?) and bill_status = 0", nativeQuery = true)
+	List<Bills> searchBillName(String bill_name);
 	
 }

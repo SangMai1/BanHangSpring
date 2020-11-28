@@ -22,7 +22,7 @@ public class LayoutController {
 	public String home(ModelMap model) {
 		Date date = new Date();
 		List<MyItems> listItem = this.reportService.reportReceiptDoanhThuThang(date, 13);
-		System.out.println(listItem.toString());
+	
 		model.addAttribute("listReceipt", listItem);
 		return "/layout/main-layout";
 	}

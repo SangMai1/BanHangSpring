@@ -54,7 +54,7 @@ public class ChucNangController {
 		if (bindingResult.hasErrors()) {
 			return "Chucnang-register";
 		} else {
-			//cn.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
+
 			cn.setCreateday(new Timestamp(new Date().getTime()));
 			cn.setUpdateday(new Timestamp(new Date().getTime()));
 			cn.setNguoitao(principal.getName());
@@ -81,6 +81,9 @@ public class ChucNangController {
 
 	@RequestMapping(value="/updateChucNang", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 	public String doUpdate(ChucNang1 cn, Principal principal) {
+		ChucNang1 cn1 = this.chucNangService.findByChucNangEditId(cn.getId()).get();
+		cn.setCreateday(cn1.getCreateday());
+		cn.setNguoitao(cn1.getNguoitao());
 		cn.setUpdateday(new Timestamp(new Date().getTime()));
 		cn.setNguoiupdate(principal.getName());
 		this.chucNangService.updateChucNang1(cn);
@@ -142,7 +145,7 @@ public class ChucNangController {
 		return this.chucNangService.maapi();
 	}
 
-	@RequestMapping("/dataSearch")
+	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
 	public String dateSearch(@RequestParam("keyword") String keywork, HttpSession session) {
 		session.setAttribute("KEYWORK", keywork);
 
@@ -155,7 +158,7 @@ public class ChucNangController {
 		}
 	}
 
-	@RequestMapping("/list/search/{pageNumber}")
+	@RequestMapping(value = "/list/search/{pageNumber}", method = {RequestMethod.GET})
 	public String search(ModelMap model, HttpServletRequest request, @PathVariable int pageNumber,
 			HttpSession session) {
 		String tenchucnang = (String) session.getAttribute("KEYWORK");

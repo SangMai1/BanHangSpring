@@ -1,5 +1,6 @@
 package com.learncode.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,7 +22,7 @@ public class SlidesImpl implements SlidesService {
 	public void insertSlides(Slides slides) {
 		this.slidesRepository.save(slides);
 		//slides.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000000")));
-		//return this.slidesRepository.insertSlides(slides.getId(), slides.getMaslides(), slides.getTenslides(), slides.getImages(), slides.getCreateby(), slides.getCreateday(), slides.getUpdateby(), slides.getUpdateday(), slides.getIsdelete());
+		//this.slidesRepository.insertSlides(slides.getId(), slides.getMaslides(), slides.getTenslides(), slides.getImages(), slides.getCreateby(), slides.getCreateday(), slides.getUpdateby(), slides.getUpdateday(), slides.getIsdelete());
 	}
 	
 	
@@ -45,6 +46,24 @@ public class SlidesImpl implements SlidesService {
 	public List<Slides> getAll() {
 		return this.slidesRepository.getAll();
 	}
+
+
+
+	@Override
+	public List<Slides> searchTenSlides(String tenslides) {
+		return slidesRepository.searchTenSlides(tenslides);
+	}
+
+
+
+	@Override
+	public void deleteSlides(Slides sl) {
+		slidesRepository.deleteSlides(sl.getUpdateby(), sl.getUpdateday(), sl.getIsdelete(), sl.getId());
+	}
+
+
+
+
 	
 	
 }

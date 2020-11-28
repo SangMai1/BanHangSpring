@@ -18,17 +18,17 @@ import com.learncode.models.Nguoidung;
 @Transactional
 public interface NguoiDungRepository extends CrudRepository<Nguoidung, Long>{
 	
-	@Modifying
-	@Query(value = "INSERT INTO public.qtht_nguoidung(id, manguoidung, tennguoidung, password, email, gender, phone, createday, nguoitao, updateday, nguoiupdate, isdelete) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", nativeQuery = true)
-	void insertNguoidung(@Param("id") Long id, @Param("manguoidung") String manguoidung, @Param("tennguoidung") String tennguoidung, @Param("password") String password, @Param("email") String email,@Param("gender") Integer gender, @Param("phone") String phone, @Param("createday") Date createday, @Param("nguoitao") String nguoitao, @Param("updateday") Date updateday, @Param("nguoiupdate") String nguoiupdate, @Param("isdelete") Integer isdelete);
-	
-	@Modifying
-	@Query(value = "INSERT INTO public.qtht_nguoidungvanhomnguoidung(idnguoidung, idnhom) VALUES (?, ?);", nativeQuery = true)
-	void insertNguoidungVaNhomnguoidung(@Param("idnguoidung") Long idnguoidung, @Param("idnhom") Long idnhom);
-	
-	@Modifying
-	@Query(value = "INSERT INTO public.qtht_nguoidungvavaitro(idnguoidung, idvaitro) VALUES (?, ?);", nativeQuery = true)
-	void insertNguoidungVaVaitro(@Param("idnguoidung") Long idnguoidung, @Param("idvaitro") Long idvaitro);
+//	@Modifying
+//	@Query(value = "INSERT INTO public.qtht_nguoidung(id, manguoidung, tennguoidung, password, email, gender, phone, createday, nguoitao, updateday, nguoiupdate, isdelete) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", nativeQuery = true)
+//	void insertNguoidung(@Param("id") Long id, @Param("manguoidung") String manguoidung, @Param("tennguoidung") String tennguoidung, @Param("password") String password, @Param("email") String email,@Param("gender") Integer gender, @Param("phone") String phone, @Param("createday") Date createday, @Param("nguoitao") String nguoitao, @Param("updateday") Date updateday, @Param("nguoiupdate") String nguoiupdate, @Param("isdelete") Integer isdelete);
+//	
+//	@Modifying
+//	@Query(value = "INSERT INTO public.qtht_nguoidungvanhomnguoidung(idnguoidung, idnhom) VALUES (?, ?);", nativeQuery = true)
+//	void insertNguoidungVaNhomnguoidung(@Param("idnguoidung") Long idnguoidung, @Param("idnhom") Long idnhom);
+//	
+//	@Modifying
+//	@Query(value = "INSERT INTO public.qtht_nguoidungvavaitro(idnguoidung, idvaitro) VALUES (?, ?);", nativeQuery = true)
+//	void insertNguoidungVaVaitro(@Param("idnguoidung") Long idnguoidung, @Param("idvaitro") Long idvaitro);
 	
 	@Modifying
 	@Query(value = "UPDATE public.qtht_nguoidung SET manguoidung=?, tennguoidung=?, password=?, email=?, gender=?, phone=?, updateday=?, nguoiupdate=?, isdelete=? WHERE id = ?;", nativeQuery = true)
@@ -42,7 +42,10 @@ public interface NguoiDungRepository extends CrudRepository<Nguoidung, Long>{
 	@Query(value = "DELETE FROM public.qtht_nguoidungvavaitro WHERE idnguoidung = ?;", nativeQuery = true)
 	void deleteNguoidungVaVaitro(@Param("idnguoidung") Long idnguoidung);
 	
-	@Query(value = "SELECT id, manguoidung, tennguoidung, password, email, gender, phone, createday, nguoitao, updateday, nguoiupdate, isdelete from qtht_nguoidung where isdelete = 0", nativeQuery = true)
+	@Query(value = "SELECT *\r\n" + 
+			"			FROM qtht_nguoidung nd\r\n" + 
+			"			WHERE isdelete = 0 AND nd.createday < now() \r\n" + 
+			"			ORDER BY nd.createday DESC", nativeQuery = true)
 	List<Nguoidung> getAllNguoiDung();
 	
 	@Query(value = "SELECT id, manguoidung, tennguoidung, password, email, gender, phone, createday, nguoitao, updateday, nguoiupdate, isdelete FROM qtht_nguoidung WHERE isdelete = 0 AND id = ?", nativeQuery = true)

@@ -21,7 +21,7 @@
 								<th>Kích thước</th>
 								<th>Số lượng</th>
 								<th>Giá bán</th>
-								<th>Action</th>
+								<th>Thao tác</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -40,7 +40,7 @@
 									th:text="${#numbers.formatCurrency(item.value.quantity * (item.value.product.giatien - item.value.product.giamgia))}"></td>
 								<td>
 									
-									<a th:href="@{'/web/remove/' + ${item.value.product.id}}">Remove</a>
+									<a class="xoa" th:href="@{'/web/remove/' + ${item.value.product.id}}">Xóa</a>
 								</td>
 							</tr>
 						</tbody>

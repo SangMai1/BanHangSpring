@@ -54,7 +54,7 @@ public class NhomNguoiDungController {
 		if (bindingResult.hasErrors()) {
 			return "NhomNguoiDung-register";
 		} else {
-//		ndd.setId(ThreadLocalRandom.current().nextLong(0, new Long("9000000000000000")));
+
 			ndd.setCreateday(new Timestamp(new Date().getTime()));
 			ndd.setUpdateday(new Timestamp(new Date().getTime()));
 			ndd.setNguoitao(principal.getName());
@@ -88,6 +88,9 @@ public class NhomNguoiDungController {
 
 	@RequestMapping(value = "/doUpdate", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(ModelMap model, NhomNguoiDung nnd, Principal principal) {
+		NhomNguoiDung nnd1 = this.nhomNguoiDungService.findByLongId(nnd.getId()).get();
+		nnd.setCreateday(nnd1.getCreateday());
+		nnd.setNguoitao(nnd1.getNguoitao());
 		nnd.setNguoiupdate(principal.getName());
 		nnd.setUpdateday(new Timestamp(new Date().getTime()));
 		this.nhomNguoiDungService.updateNhomNguoiDung(nnd);
@@ -146,23 +149,24 @@ public class NhomNguoiDungController {
 		return "NhomNguoiDung-view";
 	}
 
-	@RequestMapping("/dataSearch")
-	public String dataSearch(@RequestParam("namn") String tennhom, HttpSession session) {
-		session.setAttribute("NAMN", tennhom);
+	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
+	public String dataSearch(@RequestParam("tennhomnguoidung") String tennhom, HttpSession session) {
+		session.setAttribute("TENNHOMNGUOIDUNG", tennhom);
 		if (tennhom == null || tennhom.equals("")) {
 			return "redirect:/nhom/list";
 		} else {
 			tennhom = Xuly.xuLySearch(tennhom);
-			session.setAttribute("NAMN", tennhom);
+			session.setAttribute("TENNHOMNGUOIDUNG", tennhom);
 			return "redirect:/nhom/list/search/1";
 		}
 	}
 
-	@RequestMapping("/list/search/{pageNumber}")
+	@RequestMapping(value = "/list/search/{pageNumber}", method = {RequestMethod.GET})
 	public String search(ModelMap model, HttpServletRequest request, @PathVariable int pageNumber,
 			HttpSession session) {
-		String tennhom = (String) session.getAttribute("NAMN");
+		String tennhom = (String) session.getAttribute("TENNHOMNGUOIDUNG");
 		List<NhomNguoiDung> list = this.nhomNguoiDungService.findByTennhom(tennhom);
+		
 		if (list == null) {
 			return "redirect:/nhom/list";
 		}
@@ -206,7 +210,7 @@ public class NhomNguoiDungController {
 		return nhomNguoiDungService.findAllChucNang1();
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
 	@PreAuthorize("hasPermission('', 'xn')")
 	public String delete(@RequestParam("ndd") List<Long> ids, Principal principal) {
 		for (Long long1 : ids) {

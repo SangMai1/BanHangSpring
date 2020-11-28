@@ -79,6 +79,11 @@ public class VaiTroImpl implements VaiTroService{
 	public List<Long> findChucnangVaitro(Long idvaitro) {
 		return this.vaiTroRepository.findChucnangVaitro(idvaitro);
 	}
+
+	@Override
+	public void updateDaXoa(VaiTro vt) {
+		vaiTroRepository.updateDaXoa(vt.getNguoiupdate(), vt.getUpdateday() ,vt.getIsdelete(), vt.getId());
+	}
 	
 	
 }

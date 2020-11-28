@@ -24,7 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "qtht_vaitro")
-public class VaiTro implements Serializable {
+public class VaiTro {
 
 	@Id
 	@GeneratedValue(generator = "bigid")
@@ -42,8 +42,8 @@ public class VaiTro implements Serializable {
 	@Column(name = "nguoitao")
 	private String nguoitao;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createday;
 
 	@Column(name = "nguoiupdate")

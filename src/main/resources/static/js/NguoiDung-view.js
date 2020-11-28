@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	var urls = "/nguoidung/";
 	$('#model-body1').html(event).load(urls);
-	$('#btn').click(function(event){
+	$('#btn').on('click', function(event){
 		event.preventDefault();
 		$('#myModal').modal("hide");
 	});

@@ -15,4 +15,10 @@ public interface SlidesService {
 
 	void updateSlides(Slides sl);
 
+	void deleteSlides(Slides sl);
+
+	List<Slides> searchTenSlides(String tenslides);
+
+
+
 }

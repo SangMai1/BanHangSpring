@@ -43,7 +43,6 @@ public class ControllerReportManage {
 			return "ThongKeDoanhThuTungNgayTrongThang";
 		}
 		List<MyItems> listItem = this.reportService.reportReceiptThongKeDoanhThuTungNgayTrongThang(namdoanhthu, thangdoanhthu);
-		System.out.println("Aaa"+listItem.toString());
 		model.addAttribute("ThongKeDoanhThuTungNgayTrongThang", listItem);
 		return "ThongKeDoanhThuTungNgayTrongThang";
 	}
@@ -72,7 +71,6 @@ public class ControllerReportManage {
 			return "ThongKeNguoiDangKiTungThang";
 		}
 		List<MyItems> listItem = this.reportService.reportReceiptThongKeNguoiDangKiTungThang(namdangki, thangdangki);
-		System.out.println("Aaa"+listItem.toString());
 		model.addAttribute("ThongKeNguoiDangKiTungThang", listItem);
 		return "ThongKeNguoiDangKiTungThang";
 	}
@@ -102,7 +100,6 @@ public class ControllerReportManage {
 			return "ThongKeSoLuongSanPhamTungThang";
 		}
 		List<MyItems> listItem = this.reportService.reportReceiptThongKeSoLuongSanPhamTungThang(namdangki, thangdangki);
-		System.out.println("Aaa"+listItem.toString());
 		model.addAttribute("ThongKeSoLuongSanPhamTungThang", listItem);
 		return "ThongKeSoLuongSanPhamTungThang";
 	}
@@ -130,7 +127,7 @@ public class ControllerReportManage {
 			return "ThongKeSoLuongDonHangTungThang";
 		}
 		List<MyItems> listItem = this.reportService.reportReceiptThongKeSoLuongDonHangTungThang(namdonhang, thangdonhang);
-		System.out.println("Aaa"+listItem.toString());
+		
 		model.addAttribute("ThongKeSoLuongDonHangTungThang", listItem);
 		return "ThongKeSoLuongDonHangTungThang";
 	}

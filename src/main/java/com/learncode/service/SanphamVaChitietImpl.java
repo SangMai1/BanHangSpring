@@ -18,7 +18,6 @@ public class SanphamVaChitietImpl implements SanphamVaChitietService{
 	@Override
 	public void insertSanphamVaChitiet(SanphamVaChitiet spvct) {
 		this.sanphamVaChitietRepository.save(spvct);
-		//this.sanphamVaChitietRepository.insertSanphamVaChitiet(spvct.getId(), spvct.getSanphams().getId(), spvct.getKichthuoc(), spvct.getSoluong(), spvct.getGiatien(), spvct.getGiamgia(), spvct.getIsdelete());
 	}
 
 	
@@ -109,6 +108,18 @@ public class SanphamVaChitietImpl implements SanphamVaChitietService{
 	@Override
 	public List<SanphamVaChitiet> searchKichThuoc(String kichthuoc) {
 		return sanphamVaChitietRepository.searchKichThuoc(kichthuoc);
+	}
+
+
+	@Override
+	public int updateSoLuongDaMua(SanphamVaChitiet spct) {
+		return sanphamVaChitietRepository.updateSoLuongDaMua(spct.getSoluong(), spct.getId());
+	}
+
+
+	@Override
+	public List<SanphamVaChitiet> listSizeSanPhamGanHet() {
+		return sanphamVaChitietRepository.listSizeSanPhamGanHet();
 	}
 
 	

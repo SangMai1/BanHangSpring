@@ -53,7 +53,7 @@ public class SanphamVaChitietController {
 		return "redirect:/sanphamchitiet/list";
 	}
 
-	@RequestMapping("/list")
+	@RequestMapping(value = "/list", method = {RequestMethod.GET})
 	public String list(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphamchitietlist", null);
 		return "redirect:/sanphamchitiet/list/page/1";
@@ -104,15 +104,65 @@ public class SanphamVaChitietController {
 		return "SanphamVaChitiet-view";
 	}
 
-	@RequestMapping("/dataSearch")
-	public String dataSearch(@RequestParam("keysize") String keysize, 
+	@RequestMapping(value = "/listGanHet", method = {RequestMethod.GET})
+	public String listGanHet(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
+		request.getSession().setAttribute("sanphamchitietganhetlist", null);
+		return "redirect:/sanphamchitiet/listGanHet/page/1";
+	}
+
+	@RequestMapping(value = "/listGanHet/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST,
+			RequestMethod.PUT })
+	public String showSanphamchitietsGanHetPage(HttpServletRequest request, @PathVariable int pageNumber, ModelMap model) {
+		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("sanphamchitietganhetlist");
+		int pagesize = 5;
+		List<SanphamVaChitiet> list = (List<SanphamVaChitiet>) this.sanphamVaChitietService.listSizeSanPhamGanHet();
+		int sum = list.size();
+		if (pages == null) {
+			pages = new PagedListHolder<>(list);
+			pages.setPageSize(pagesize);
+		} else {
+			final int goToPage = pageNumber - 1;
+			if (goToPage <= pages.getPageCount() && goToPage >= 0) {
+				pages.setPage(goToPage);
+			}
+		}
+		request.getSession().setAttribute("sanphamchitietganhetlist", pages);
+
+		int current = pages.getPage() + 1;
+
+		int begin = Math.max(1, current - list.size());
+
+		int end = Math.min(begin + 5, pages.getPageCount());
+
+		int totalPageCount = pages.getPageCount();
+
+		String baseUrl = "/listGanHet/page/";
+		
+		model.addAttribute("sum", sum);
+		
+		model.addAttribute("beginIndex", begin);
+
+		model.addAttribute("endIndex", end);
+
+		model.addAttribute("currentIndex", current);
+
+		model.addAttribute("totalPageCount", totalPageCount);
+
+		model.addAttribute("baseUrl", baseUrl);
+
+		model.addAttribute("SANPHAMCHITIETSGANHET", pages);
+
+		return "SizeSanPhamGanHet";
+	}
+	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
+	public String dataSearch(@RequestParam("searchsize") String keysize, 
 			HttpSession session) {
-		session.setAttribute("KEYSIZE", keysize);
+		session.setAttribute("KESIZE", keysize);
 		
 		if (keysize == null || keysize.equals("")) {
 			return "redirect:/sanphamchitiet/list";
 		} else {
-			keysize = Xuly.xuLySearch(keysize);
+			
 			session.setAttribute("KEYSIZE", keysize);
 			return "redirect:/sanphamchitiet/list/search/1";
 		}

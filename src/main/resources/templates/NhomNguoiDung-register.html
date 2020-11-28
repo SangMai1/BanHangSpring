@@ -1,5 +1,5 @@
 
-				<form th:action="@{/nhom/saveNhomNguoiDung}" th:object=${NHOM} enctype="multipart/form-data" id="myModals">
+				<form th:action="@{/nhom/saveNhomNguoiDung}" th:object=${NHOM} id="myModals" method="post">
 					<input type="hidden" name="id" th:field="*{id}" >
 				 	<div class="form-group row">
 				 		<label class="col-sm-2 col-form-label">Mã nhóm(*)</label>

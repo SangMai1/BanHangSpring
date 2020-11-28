@@ -44,7 +44,7 @@ td, th {
   border: 0;
   outline: none;
   background-color: transparent;
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-family: "Poppins";
   flex-grow: 1;
   width: 90%;
@@ -80,4 +80,11 @@ td, th {
 
 .capnhat {
 	margin-left: 200px;
+}
+
+.thoat {
+	background: red;
+}
+.thoat:hover {
+	background: red;
 }

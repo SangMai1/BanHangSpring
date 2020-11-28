@@ -40,8 +40,8 @@
 				   </div>
 				 </div>
 			   </div>
-			<form th:action="@{'/loaisanpham/dataSearch'}" id="dataSearch">
-			     <input type="text" class="main__menu-search-form-input1" name="mlsp" th:value="${session.MLSP}" placeholder="Search...">
+			<form th:action="@{/loaisanpham/dataSearch}" id="dataSearch">
+			     <input type="text" class="main__menu-search-form-input1" name="tenloaisanpham" placeholder="Search...">
 	             <button class="main__menu-search-form-button1" id="search">Search</button>
 			</form>
 			<th:block th:if="${#lists.isEmpty(LIST.pageList)}">
@@ -217,13 +217,13 @@
 			          </button>
 			        </div>
 			        <div id="delete-body">
-			        		<h4>Are you sure you want to delete this record?</h4>
+			        		<h4>Bạn có muốn xóa không?</h4>
 							
 			 
 			        </div>
 			        <div class="modal-footer">
-			          <button type="button" id="delRef" class="btn btn-primary ">Yes, delete</button>
-			          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			          <button type="button" id="delRef" class="btn btn-primary ">Xác nhận</button>
+			          <button type="button" class="btn btn-primary thoat" data-dismiss="modal">Thoát</button>
 			        </div>
 				  </div>
 			   </div>

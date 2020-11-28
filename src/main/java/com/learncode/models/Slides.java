@@ -25,11 +25,10 @@ public class Slides {
 	private long id;
 
 	@Column(name = "maslides")
-	@NotBlank(message = "không được để trống")
 	private String maslides;
 
 	@Column(name = "tenslides")
-	@NotBlank(message = "không được để trống")
+	
 	private String tenslides;
 
 	@Column(name = "createby")
@@ -56,16 +55,15 @@ public class Slides {
 		super();
 	}
 
-	public Slides(long id, @NotBlank(message = "không được để trống") String maslides,
-			@NotBlank(message = "không được để trống") String tenslides) {
+	public Slides(long id,String maslides, String tenslides) {
 		super();
 		this.id = id;
 		this.maslides = maslides;
 		this.tenslides = tenslides;
 	}
 
-	public Slides(long id, @NotBlank(message = "không được để trống") String maslides,
-			@NotBlank(message = "không được để trống") String tenslides, String createby, String images, Date createday,
+	public Slides(long id, String maslides,
+			String tenslides, String createby, String images, Date createday,
 			String updateby, Date updateday, Integer isdelete) {
 		super();
 		this.id = id;

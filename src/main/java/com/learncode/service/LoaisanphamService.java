@@ -19,4 +19,8 @@ public interface LoaisanphamService {
 
 	void updateLoaisanpham(LoaiSanPham lsp);
 
+	void deleteLoaisanpham(LoaiSanPham lsp);
+
+	List<LoaiSanPham> searchTenLoaiSanPham(String tenloaisanpham);
+
 }

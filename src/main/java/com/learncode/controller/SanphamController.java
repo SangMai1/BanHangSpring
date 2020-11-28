@@ -18,6 +18,7 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.learncode.comon.Xuly;
 import com.learncode.comon.ZXingHelper;
+import com.learncode.models.ChucNang1;
 import com.learncode.models.LoaiSanPham;
 import com.learncode.models.Sanpham;
 import com.learncode.models.SanphamVaChitiet;
@@ -83,14 +86,14 @@ public class SanphamController {
 			String uploadDir = "./uploads/" + sp.getId();
 	
 			Path uploadPath = Paths.get(uploadDir);
-			System.out.println("uploadPath1111"+uploadPath);
+		
 			if (!Files.exists(uploadPath)) {
 				Files.createDirectories(uploadPath);
 			}
 
 			try (InputStream inputStream = multipartFile.getInputStream()) {
-				Path filePath = uploadPath.resolve(sp.getId()+fileName);
-				System.out.println("filePath"+filePath);
+				Path filePath = uploadPath.resolve(fileName);
+				
 				Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 			} catch (Exception e) {
 				throw new IOException("Could not save uploaded file: " + fileName);
@@ -102,7 +105,7 @@ public class SanphamController {
 	@GetMapping("/sanpham-update/{id}")
 	public String findBySanphamId(@PathVariable Long id, ModelMap model) {
 		model.addAttribute("sp", this.sanphamService.finBySanphamId(id).get());
-		System.out.println("sang day" + this.sanphamService.finBySanphamId(id).get());
+	
 		return "form-san-pham";
 	}
 
@@ -161,7 +164,7 @@ public class SanphamController {
 		String uploadDir = "./uploads/" + sp.getId();
 
 		Path uploadPath = Paths.get(uploadDir);
-		System.out.println("uploadPath" + uploadPath);
+		
 
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);
@@ -176,7 +179,7 @@ public class SanphamController {
 			  
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
-			System.out.println(e);
+			
 		}
 		
 		return "redirect:/sanpham/list";
@@ -238,6 +241,66 @@ public class SanphamController {
 		return "Sanpham-view";
 	}
 
+	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
+	public String dateSearch(@RequestParam("tensanpham") String tensanpham, HttpSession session) {
+		session.setAttribute("TENSANPHAM", tensanpham);
+
+		if (tensanpham == null || tensanpham.equals("")) {
+			return "redirect:/sanpham/list";
+		} else {
+			tensanpham = Xuly.xuLySearch(tensanpham);
+			session.setAttribute("TENSANPHAM", tensanpham);
+			return "redirect:/sanpham/list/search/1";
+		}
+	}
+
+	@RequestMapping(value = "/list/search/{pageNumber}", method = {RequestMethod.GET})
+	public String search(ModelMap model, HttpServletRequest request, @PathVariable int pageNumber,
+			HttpSession session) {
+		String tensanpham = (String) session.getAttribute("TENSANPHAM");
+		List<Sanpham> list = this.sanphamService.searchTenSanPham(tensanpham);
+		
+		if (list == null) {
+			return "redirect:/sanpham/list/";
+		}
+		int sum = list.size();
+		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("sanphamlist");
+		int pagesize = 5;
+		pages = new PagedListHolder<>(list);
+		pages.setPageSize(pagesize);
+		final int goToPage = pageNumber - 1;
+		if (goToPage <= pages.getPageCount() && goToPage >= 0) {
+			pages.setPage(goToPage);
+		}
+		request.getSession().setAttribute("sanphamlist", pages);
+
+		int current = pages.getPage() + 1;
+
+		int begin = Math.max(1, current - list.size());
+
+		int end = Math.min(begin + 5, pages.getPageCount());
+
+		int totalPageCount = pages.getPageCount();
+
+		String baseUrl = "/list/page/";
+		
+		model.addAttribute("sum", sum);
+		
+		model.addAttribute("beginIndex", begin);
+
+		model.addAttribute("endIndex", end);
+
+		model.addAttribute("currentIndex", current);
+
+		model.addAttribute("totalPageCount", totalPageCount);
+
+		model.addAttribute("baseUrl", baseUrl);
+
+		model.addAttribute("SANPHAMS", pages);
+
+		return "Sanpham-view";
+	}
+	
 	@GetMapping(value = "/del")
 	public String delete(@RequestParam("lsp[]") List<Long> ids, Principal principal) {
 		for (Long long1 : ids) {
@@ -245,7 +308,7 @@ public class SanphamController {
 			sp.setUpdateday(new Timestamp(new Date().getTime()));
 			sp.setUpdateby(principal.getName());
 			sp.setIsdelete((Integer) 1);
-			this.sanphamService.updateSanpham(sp);
+			this.sanphamService.deleteSanpham(sp);
 		}
 		return "redirect:/sanpham/list";
 	}

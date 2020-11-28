@@ -27,5 +27,9 @@ public interface SanphamService {
 
 	List<Sanpham> searchSize(String size);
 
+	void deleteSanpham(Sanpham sp);
+
+	List<Sanpham> searchTenSanPham(String tensanpham);
+
 
 }

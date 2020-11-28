@@ -1,0 +1,16 @@
+h2 {
+	text-align: center;
+	font-size: 18px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.gioithieu {
+	text-align: center;
+	font-size: 16px;
+	margin-bottom: 150px;
+}
+
+.gioithieu p {
+	padding-bottom: 5px;
+}

@@ -1,5 +1,7 @@
 package com.learncode.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +21,6 @@ public interface KhoRepository extends JpaRepository<Kho, Long> {
 	@Query(value = "UPDATE public.ql_kho SET trangthai=? WHERE id=?;", nativeQuery = true)
 	void updateKho(@Param("trangthai") int trangthai, @Param("id") long id);
 	
+	@Query(value = "SELECT * FROM ql_kho WHERE trangthai = ?", nativeQuery = true)
+	List<Kho> listSearchSize(@Param("trangthai") int trangthai);
 }

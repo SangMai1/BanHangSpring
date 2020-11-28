@@ -39,7 +39,7 @@ public class ChucNang1Impl implements ChucNang1Service{
 	
 	
 	@Override
-	@Cacheable(value = "chucnang", key = "'ALL'")
+	@Cacheable(value = "chucnang", key = "#id")
 	public Optional<ChucNang1> findByChucNangEditId(Long id){
 		System.out.println("find id");
 		return this.chucNangRepository.findByChucNangEditId(id);
@@ -63,7 +63,7 @@ public class ChucNang1Impl implements ChucNang1Service{
 
 	@Override
 	@Caching(
-			put = @CachePut(value = "chucnang", condition = "#cn.isdelete='0'", key = "'ALL'"),
+			put = @CachePut(value = "chucnang"),
 			evict = @CacheEvict(value = "chucnang", allEntries = true))
 	public void updateChucNang1(ChucNang1 cn) {
 		System.out.println("update day");
