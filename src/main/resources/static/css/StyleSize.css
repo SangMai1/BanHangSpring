@@ -239,3 +239,13 @@
  .hr1 {
 	padding-bottom: 80px;
 } 
+
+.category__name-price {
+	text-align: center;
+	color: red;
+}
+
+.category__div {
+	text-align: center;
+	color: red;
+}

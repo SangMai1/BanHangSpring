@@ -73,10 +73,9 @@ public class NguoiDungController {
 		} else {
 			
 			nd.setPassword(Xuly.giaiMd5(nd.getPassword()));
-			nd.setCreateday(new Timestamp(new Date().getTime()));
 			nd.setNguoitao(principal.getName());
-			nd.setUpdateday(new Timestamp(new Date().getTime()));
 			nd.setNguoiupdate(principal.getName());
+			nd.setIsdelete(0);
 			this.nguoiDungService.insertNguoidung(nd);
 			return "redirect:/nguoidung/list";
 		}
@@ -111,10 +110,8 @@ public class NguoiDungController {
 	@RequestMapping(value = "/doUpdate", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(Nguoidung nd, Principal principal) {
 		Nguoidung nd1 = this.nguoiDungService.findNguoidungById(nd.getId()).get();
-		nd.setCreateday(nd1.getCreateday());
 		nd.setNguoitao(nd1.getNguoitao());
-		nd.setIsdelete((Integer) 0);
-		nd.setUpdateday(new Timestamp(new Date().getTime()));
+		nd.setIsdelete(0);
 		nd.setNguoiupdate(principal.getName());
 		this.nguoiDungService.updateNguoidung(nd);
 		return "redirect:/nguoidung/list";
@@ -222,9 +219,8 @@ public class NguoiDungController {
 	public String delete(ModelMap model, @RequestParam("id[]") List<Long> ids, Principal principal) {
 		for (Long long1 : ids) {
 			Nguoidung nd = this.nguoiDungService.findNguoidungById(long1).get();
-			nd.setUpdateday(new Timestamp(new Date().getTime()));
 			nd.setNguoiupdate(principal.getName());
-			nd.setIsdelete((Integer) 1);
+			nd.setIsdelete(1);
 			this.nguoiDungService.deleteNguoidung(nd);
 		}
 		return "redirect:/nguoidung/list/";

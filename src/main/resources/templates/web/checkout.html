@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{web/trangchu}">
+	layout:decorate="~{web/trangchuwebsite}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -8,7 +8,7 @@
 
 </head>
 <body>
-	<div layout:fragment="content">
+	<main layout:fragment="content">
 		<h3>Vui lòng nhập thông tin</h3>
 		<form th:action="${ACTION}" method="post" th:object="${bills}"
 			id="myModals1" style="padding: 20px;">
@@ -62,7 +62,7 @@
 				style="width: 100%; background-color: #4CAF50; color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; font-size: 14px">Đăng
 				kí</button>
 		</form>
-	</div>
+	</main>
 
 </body>
 </html>

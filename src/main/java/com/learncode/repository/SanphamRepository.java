@@ -24,13 +24,13 @@ public interface SanphamRepository extends CrudRepository<Sanpham, Long> {
 //	void insertSanpham( Long id, @Param("masanpham") String masanpham, @Param("tensanpham") String tensanpham, @Param("image") String image, @Param("createday") Date createday, @Param("createby") String createby, @Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("xuatxu") String xuatxu, @Param("mota") String mota, @Param("isdelete") Integer isdelete, @Param("maloaisanpham") Long maloaisanpham);
 	
 	@Modifying
-	@Query(value = "UPDATE public.qtht_sanpham SET updateday=?, updateby=?, isdelete=? WHERE id = ?;", nativeQuery = true)
-	void deleteSanpham(@Param("updateday") Date updateday, @Param("updateby") String updateby, @Param("isdelete") Integer isdelete, @Param("id") Long id);
+	@Query(value = "UPDATE public.qtht_sanpham SET updateday=?, nguoiupdate=?, isdelete=? WHERE id = ?;", nativeQuery = true)
+	void deleteSanpham(@Param("updateday") Date updateday, @Param("nguoiupdate") String nguoiupdate, @Param("isdelete") Integer isdelete, @Param("id") Long id);
 	
-	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, createby, updateday, updateby, xuatxu, mota, isdelete, maloaisanpham, highlight FROM qtht_sanpham WHERE id = ?", nativeQuery = true)
+	@Query(value = "SELECT id, masanpham, tensanpham, image, createday, nguoitao, updateday, nguoiupdate, xuatxu, mota, isdelete, maloaisanpham, highlight FROM qtht_sanpham WHERE id = ?", nativeQuery = true)
 	Optional<Sanpham> finBySanphamId(@Param("id") Long id);
 	
-	@Query(value ="SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.createday, sp.createby, sp.updateday, sp.updateby, sp.xuatxu, sp.mota, sp.maloaisanpham, sp.isdelete, spct.kichthuoc, spct.giatien\r\n" + 
+	@Query(value ="SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.createday, sp.nguoitao, sp.updateday, sp.nguoiupdate, sp.xuatxu, sp.mota, sp.maloaisanpham, sp.isdelete, spct.kichthuoc, spct.giatien\r\n" + 
 			"FROM qtht_sanpham sp \r\n" + 
 			"INNER JOIN qtht_sanphamvachitiet spct ON spct.idsanpham = sp.id\r\n" + 
 			"WHERE sp.isdelete = 0 and spct.isdelete = 0", nativeQuery = true)
@@ -54,13 +54,13 @@ public interface SanphamRepository extends CrudRepository<Sanpham, Long> {
 			"LIMIT 5", nativeQuery = true)
 	List<Sanpham> getSanphammoi();
 	
-	@Query(value = "SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.maloaisanpham, sp.createby, sp.createday, sp.updateday, sp.updateby, sp.xuatxu, sp.mota, sp.isdelete, sp.highlight FROM qtht_sanpham sp\r\n" + 
+	@Query(value = "SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.maloaisanpham, sp.nguoitao, sp.createday, sp.updateday, sp.nguoiupdate, sp.xuatxu, sp.mota, sp.isdelete, sp.highlight FROM qtht_sanpham sp\r\n" + 
 			"INNER JOIN qtht_sanphamvachitiet spvct ON spvct.idsanpham = sp.id\r\n" + 
 			"WHERE sp.isdelete = 0 AND spvct.isdelete = 0 AND spvct.giatien BETWEEN ? AND ?\r\n" + 
 			"GROUP BY sp.id", nativeQuery = true)
 	List<Sanpham> searchGiatien(@Param("min") float min, @Param("max") float max);
 	
-	@Query(value = "SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.maloaisanpham, sp.createby, sp.createday, sp.updateday, sp.updateby, sp.xuatxu, sp.mota, sp.isdelete, sp.highlight FROM qtht_sanpham sp\r\n" + 
+	@Query(value = "SELECT sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.maloaisanpham, sp.nguoitao, sp.createday, sp.updateday, sp.nguoiupdate, sp.xuatxu, sp.mota, sp.isdelete, sp.highlight FROM qtht_sanpham sp\r\n" + 
 			"			INNER JOIN qtht_sanphamvachitiet spvct ON spvct.idsanpham = sp.id\r\n" + 
 			"			WHERE sp.isdelete = 0 AND spvct.isdelete = 0 AND spvct.kichthuoc = ?\r\n" + 
 			"			GROUP BY sp.id", nativeQuery = true)

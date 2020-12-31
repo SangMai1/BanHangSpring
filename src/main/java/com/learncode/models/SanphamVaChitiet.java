@@ -18,12 +18,7 @@ import org.hibernate.annotations.Proxy;
 @Entity
 @Proxy(lazy = false)
 @Table(name = "qtht_sanphamvachitiet")
-public class SanphamVaChitiet {
-
-	@Id
-	@GeneratedValue(generator = "bigid")
-	@GenericGenerator(name = "bigid", strategy = "com.learncode.config.IDGenerator")
-	private long id;
+public class SanphamVaChitiet extends AbstractDomainClass {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idsanpham")
@@ -41,43 +36,18 @@ public class SanphamVaChitiet {
 	@Column(name = "giamgia")
 	private Integer giamgia;
 
-	@Column(name = "isdelete")
-	private Integer isdelete;
-
 	public SanphamVaChitiet() {
 		super();
 	}
 
-	public SanphamVaChitiet(long id, Sanpham sanphams, String kichthuoc, Integer soluong, Float giatien,
-			Integer giamgia, Integer isdelete) {
-		super();
-		this.id = id;
-		this.sanphams = sanphams;
-		this.kichthuoc = kichthuoc;
-		this.soluong = soluong;
-		this.giatien = giatien;
-		this.giamgia = giamgia;
-		this.isdelete = isdelete;
-	}
-
-	
-	public SanphamVaChitiet(Sanpham sanphams, String kichthuoc, Integer soluong, Float giatien, Integer giamgia,
-			Integer isdelete) {
+	public SanphamVaChitiet(Sanpham sanphams, String kichthuoc, Integer soluong, Float giatien,
+			Integer giamgia) {
 		super();
 		this.sanphams = sanphams;
 		this.kichthuoc = kichthuoc;
 		this.soluong = soluong;
 		this.giatien = giatien;
 		this.giamgia = giamgia;
-		this.isdelete = isdelete;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public Sanpham getSanphams() {
@@ -118,21 +88,6 @@ public class SanphamVaChitiet {
 
 	public void setGiamgia(Integer giamgia) {
 		this.giamgia = giamgia;
-	}
-
-	public Integer getIsdelete() {
-		return isdelete;
-	}
-
-	public void setIsdelete(Integer isdelete) {
-		this.isdelete = isdelete;
-	}
-
-	
-	@Override
-	public String toString() {
-		return "SanphamVaChitiet [id=" + id + ", sanphams=" + sanphams + ", kichthuoc=" + kichthuoc + ", soluong="
-				+ soluong + ", giatien=" + giatien + ", giamgia=" + giamgia + ", isdelete=" + isdelete + "]";
 	}
 
 	

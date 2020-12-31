@@ -54,12 +54,10 @@ public class ChucNangController {
 		if (bindingResult.hasErrors()) {
 			return "Chucnang-register";
 		} else {
-
-			cn.setCreateday(new Timestamp(new Date().getTime()));
-			cn.setUpdateday(new Timestamp(new Date().getTime()));
+			
 			cn.setNguoitao(principal.getName());
 			cn.setNguoiupdate(principal.getName());
-			cn.setIsdelete((Integer) 0);
+			cn.setIsdelete(0);
 			this.chucNangService.insertChucNang1(cn);
 			return "redirect:/chucnang/list";
 		}
@@ -82,10 +80,10 @@ public class ChucNangController {
 	@RequestMapping(value="/updateChucNang", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 	public String doUpdate(ChucNang1 cn, Principal principal) {
 		ChucNang1 cn1 = this.chucNangService.findByChucNangEditId(cn.getId()).get();
-		cn.setCreateday(cn1.getCreateday());
 		cn.setNguoitao(cn1.getNguoitao());
-		cn.setUpdateday(new Timestamp(new Date().getTime()));
+		cn1.updateTimeTamps();
 		cn.setNguoiupdate(principal.getName());
+		cn.setIsdelete(cn1.getIsdelete());
 		this.chucNangService.updateChucNang1(cn);
 		return "redirect:/chucnang/list";
 	}

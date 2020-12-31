@@ -57,7 +57,12 @@ public class ChucNang1Impl implements ChucNang1Service{
 	}
 
 	@Override
+	@Caching(
+			put = @CachePut(value = "chucnang"),
+			evict = @CacheEvict(value = "chucnang", allEntries = true )
+			)
 	public void insertChucNang1(ChucNang1 cn) {
+		System.out.println("save 1");
 		this.chucNangRepository.save(cn);
 	}
 

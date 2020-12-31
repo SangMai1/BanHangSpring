@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.learncode.comon.Xuly;
 import com.learncode.models.ChucNang1;
 import com.learncode.models.LoaiSanPham;
-import com.learncode.models.Slides;
+
 import com.learncode.service.LoaisanphamService;
 
 @Controller
@@ -51,12 +51,9 @@ public class LoaisanphamController {
 		if (bindingResult.hasErrors()) {
 			return "Loaisanpham-register";
 		} else {
-
-			lsp.setCreateday(new Timestamp(new Date().getTime()));
-			lsp.setCreateby(principal.getName());
-			lsp.setUpdateday(new Timestamp(new Date().getTime()));
-			lsp.setUpdateby(principal.getName());
-			lsp.setIsdelete((Integer) 0);
+			lsp.setNguoitao(principal.getName());
+			lsp.setNguoiupdate(principal.getName());
+			lsp.setIsdelete(0);
 			this.loaisanphamService.insertLoaisanpham(lsp);
 			return "redirect:/loaisanpham/list";
 		}
@@ -77,11 +74,9 @@ public class LoaisanphamController {
 	@RequestMapping(value = "/updateLoaisanpham", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 	public String doUpdate(LoaiSanPham lsp, Principal principal) {
 		LoaiSanPham lsp1 = this.loaisanphamService.findLoaisanphamById(lsp.getId()).get();
-		lsp.setCreateby(lsp1.getCreateby());
-		lsp.setCreateday(lsp1.getCreateday());
-		lsp.setUpdateday(new Timestamp(new Date().getTime()));
-		lsp.setUpdateby(principal.getName());
-		lsp.setIsdelete((Integer) 0);
+		lsp.setNguoitao(lsp1.getNguoitao());
+		lsp.setNguoiupdate(principal.getName());
+		lsp.setIsdelete(0);
 		this.loaisanphamService.updateLoaisanpham(lsp);
 		return "redirect:/loaisanpham/list";
 	}
@@ -200,9 +195,8 @@ public class LoaisanphamController {
 	public String delete(@RequestParam("lsp[]") List<Long> ids, Principal principal) {
 		for (Long long1 : ids) {
 			LoaiSanPham lsp = this.loaisanphamService.findLoaisanphamById(long1).get();
-			lsp.setUpdateday(new Timestamp(new Date().getTime()));
-			lsp.setUpdateby(principal.getName());
-			lsp.setIsdelete((Integer) 1);
+			lsp.setNguoiupdate(principal.getName());
+			lsp.setIsdelete(1);
 			this.loaisanphamService.deleteLoaisanpham(lsp);
 		}
 		return "redirect:/loaisanpham/list";

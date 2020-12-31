@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{web/trangchu}">
+	layout:decorate="~{web/trangchuwebsite}">
 <head>
 <meta charset="UTF-8">
 <title>Thong tin co ban</title>
@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<div layout:fragment="content">
+	<main layout:fragment="content">
 		<h3>THÔNG TIN TÀI KHOẢN</h3>
 		<form th:action="@{/web/updateCheckout1}" method="put">
 			<input type="hidden" th:value="${thongtin1.bill_id}"
@@ -52,7 +52,7 @@
 			</div>
 			<button type="submit" class="btn">Cập nhật</button>
 		</form>
-	</div>
+	</main>
 
 </body>
 </html>

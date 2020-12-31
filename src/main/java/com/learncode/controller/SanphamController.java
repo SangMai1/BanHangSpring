@@ -74,11 +74,9 @@ public class SanphamController {
 		if (bindingResult.hasErrors()) {
 			return "Sanpham-register";
 		} else {
-			sp.setCreateday(new Timestamp(new Date().getTime()));
-			sp.setCreateby(principal.getName());
-			sp.setUpdateday(new Timestamp(new Date().getTime()));
-			sp.setUpdateby(principal.getName());
-			sp.setIsdelete((Integer) 0);
+			sp.setNguoitao(principal.getName());
+			sp.setNguoiupdate(principal.getName());
+			sp.setIsdelete(0);
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			sp.setImage(fileName);
 			this.sanphamService.insertSanpham(sp);
@@ -127,12 +125,10 @@ public class SanphamController {
 			@RequestParam("xuatxu") String xuatxu, @RequestParam("mota") String mota, Principal principal,
 			@RequestPart("fileImages") MultipartFile multipartFile, @RequestParam("highlight") Integer highlight) throws IOException {
 
-		Sanpham sp = new Sanpham(id, masanpham, tensanpham, loaisanpham, xuatxu, mota, highlight);
-		sp.setCreateby(sp.getCreateby());
-		sp.setCreateday(sp.getCreateday());
-		sp.setUpdateday(new Timestamp(new Date().getTime()));
-		sp.setUpdateby(principal.getName());
-		sp.setIsdelete((Integer) 0);
+		Sanpham sp = new Sanpham(masanpham, tensanpham, loaisanpham, xuatxu, mota, highlight);
+		sp.setNguoitao(sp.getNguoitao());
+		sp.setNguoiupdate(principal.getName());
+		sp.setIsdelete(0);
 	
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		sp.setImage(fileName);
@@ -305,9 +301,8 @@ public class SanphamController {
 	public String delete(@RequestParam("lsp[]") List<Long> ids, Principal principal) {
 		for (Long long1 : ids) {
 			Sanpham sp = this.sanphamService.finBySanphamId(long1).get();
-			sp.setUpdateday(new Timestamp(new Date().getTime()));
-			sp.setUpdateby(principal.getName());
-			sp.setIsdelete((Integer) 1);
+			sp.setNguoiupdate(principal.getName());
+			sp.setIsdelete(1);
 			this.sanphamService.deleteSanpham(sp);
 		}
 		return "redirect:/sanpham/list";
@@ -317,7 +312,7 @@ public class SanphamController {
 	public String add(@RequestParam("idsanpham") Sanpham idsanpham, @RequestParam("kichthuoc") String kichthuoc,
 			@RequestParam("soluong") Integer soluong, @RequestParam("giatien") Float giatien,
 			@RequestParam("giamgia") Integer giamgia) {
-		SanphamVaChitiet spct = new SanphamVaChitiet(idsanpham, kichthuoc, soluong, giatien, giamgia, 0);
+		SanphamVaChitiet spct = new SanphamVaChitiet(idsanpham, kichthuoc, soluong, giatien, giamgia);
 		
 		this.sanphamVaChitietService.insertSanphamVaChitiet(spct);
 		return "redirect:/sanpham/list";

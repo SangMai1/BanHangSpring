@@ -24,12 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "qtht_vaitro")
-public class VaiTro {
-
-	@Id
-	@GeneratedValue(generator = "bigid")
-	@GenericGenerator(name = "bigid", strategy = "com.learncode.config.IDGenerator")
-	private long id;
+public class VaiTro extends AbstractDomainClass {
 
 	@Column(name = "mavaitro")
 	@NotBlank(message = "không được để trống")
@@ -38,23 +33,6 @@ public class VaiTro {
 	@Column(name = "tenvaitro")
 	@NotBlank(message = "không được để trống")
 	private String tenvaitro;
-
-	@Column(name = "nguoitao")
-	private String nguoitao;
-
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createday;
-
-	@Column(name = "nguoiupdate")
-	private String nguoiupdate;
-
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date updateday;
-
-	@Column(name = "isdelete")
-	private int isdelete;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinTable(name = "qtht_vaitrovachucnang", joinColumns = {
@@ -66,27 +44,13 @@ public class VaiTro {
 		super();
 	}
 
-	public VaiTro(long id, @NotBlank(message = "không được để trống") String mavaitro,
-			@NotBlank(message = "không được để trống") String tenvaitro, String nguoitao, Date createday,
-			String nguoiupdate, Date updateday, int isdelete, List<ChucNang1> chucnang) {
+	public VaiTro(@NotBlank(message = "không được để trống") String mavaitro,
+			@NotBlank(message = "không được để trống") String tenvaitro, List<ChucNang1> chucnang) {
 		super();
-		this.id = id;
+		
 		this.mavaitro = mavaitro;
 		this.tenvaitro = tenvaitro;
-		this.nguoitao = nguoitao;
-		this.createday = createday;
-		this.nguoiupdate = nguoiupdate;
-		this.updateday = updateday;
-		this.isdelete = isdelete;
 		this.chucnang = chucnang;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getMavaitro() {
@@ -105,46 +69,6 @@ public class VaiTro {
 		this.tenvaitro = tenvaitro;
 	}
 
-	public String getNguoitao() {
-		return nguoitao;
-	}
-
-	public void setNguoitao(String nguoitao) {
-		this.nguoitao = nguoitao;
-	}
-
-	public Date getCreateday() {
-		return createday;
-	}
-
-	public void setCreateday(Date createday) {
-		this.createday = createday;
-	}
-
-	public String getNguoiupdate() {
-		return nguoiupdate;
-	}
-
-	public void setNguoiupdate(String nguoiupdate) {
-		this.nguoiupdate = nguoiupdate;
-	}
-
-	public Date getUpdateday() {
-		return updateday;
-	}
-
-	public void setUpdateday(Date updateday) {
-		this.updateday = updateday;
-	}
-
-	public int getIsdelete() {
-		return isdelete;
-	}
-
-	public void setIsdelete(int isdelete) {
-		this.isdelete = isdelete;
-	}
-
 	public List<ChucNang1> getChucnang() {
 		return chucnang;
 	}
@@ -152,14 +76,5 @@ public class VaiTro {
 	public void setChucnang(List<ChucNang1> chucnang) {
 		this.chucnang = chucnang;
 	}
-
-	@Override
-	public String toString() {
-		return "VaiTro [id=" + id + ", mavaitro=" + mavaitro + ", tenvaitro=" + tenvaitro + ", nguoitao=" + nguoitao
-				+ ", createday=" + createday + ", nguoiupdate=" + nguoiupdate + ", updateday=" + updateday
-				+ ", isdelete=" + isdelete + ", chucnang=" + chucnang + "]";
-	}
-
-	
 
 }

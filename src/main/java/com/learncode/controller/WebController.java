@@ -34,14 +34,14 @@ import com.learncode.models.ChucNang1;
 import com.learncode.models.Kho;
 import com.learncode.models.Sanpham;
 import com.learncode.models.SanphamVaChitiet;
-import com.learncode.models.Slides;
+
 import com.learncode.repository.BillRepository;
 import com.learncode.service.BillDetailService;
 import com.learncode.service.BillService;
 import com.learncode.service.KhoService;
 import com.learncode.service.SanphamService;
 import com.learncode.service.SanphamVaChitietService;
-import com.learncode.service.SlidesService;
+
 
 @Controller
 @RequestMapping("/web")
@@ -53,8 +53,6 @@ public class WebController {
 	@Autowired
 	SanphamVaChitietService sanphamvachitietService;
 
-	@Autowired
-	SlidesService slidesService;
 
 	@Autowired
 	BillService billService;
@@ -70,8 +68,13 @@ public class WebController {
 
 	@RequestMapping("/")
 	public String home() {
-		return "/web/trangchu";
+		return "/web/trangchuwebsite";
 	}
+	
+//	@RequestMapping("/1")
+//	public String home1() {
+//		return "/web/trangchu";
+//	}
 
 	@RequestMapping("/tatcasanpham")
 	public String tatcasanpham() {
@@ -464,10 +467,7 @@ public class WebController {
 		return this.sanphamvachitietService.getSanphamnoibat();
 	}
 	
-	@ModelAttribute(name = "SLIDESSHOW")
-	public List<Slides> getAllSlides() {
-		return this.slidesService.getAll();
-	}
+
 
 	@GetMapping("/sanpham-chitiet1/{id}")
 	public String sanphamchitiet(@PathVariable("id") Long id, ModelMap model) {

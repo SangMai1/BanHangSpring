@@ -54,11 +54,9 @@ public class NhomNguoiDungController {
 		if (bindingResult.hasErrors()) {
 			return "NhomNguoiDung-register";
 		} else {
-
-			ndd.setCreateday(new Timestamp(new Date().getTime()));
-			ndd.setUpdateday(new Timestamp(new Date().getTime()));
 			ndd.setNguoitao(principal.getName());
 			ndd.setNguoiupdate(principal.getName());
+			ndd.setIsdelete(0);
 			this.nhomNguoiDungService.insertNhomNguoiDung(ndd);
 			return "redirect:/nhom/list";
 		}
@@ -89,10 +87,10 @@ public class NhomNguoiDungController {
 	@RequestMapping(value = "/doUpdate", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(ModelMap model, NhomNguoiDung nnd, Principal principal) {
 		NhomNguoiDung nnd1 = this.nhomNguoiDungService.findByLongId(nnd.getId()).get();
-		nnd.setCreateday(nnd1.getCreateday());
+		
 		nnd.setNguoitao(nnd1.getNguoitao());
 		nnd.setNguoiupdate(principal.getName());
-		nnd.setUpdateday(new Timestamp(new Date().getTime()));
+		
 		this.nhomNguoiDungService.updateNhomNguoiDung(nnd);
 		model.addAttribute("NHOMS", this.nhomNguoiDungService.findAllNhomNguoiDung());
 		return "redirect:/nhom/list";
@@ -215,7 +213,7 @@ public class NhomNguoiDungController {
 	public String delete(@RequestParam("ndd") List<Long> ids, Principal principal) {
 		for (Long long1 : ids) {
 			NhomNguoiDung nhomNguoiDung = this.nhomNguoiDungService.findByLongId(long1).get();
-			nhomNguoiDung.setIsdelete((Integer) 1);
+			nhomNguoiDung.setIsdelete(1);
 			nhomNguoiDung.setNguoiupdate(principal.getName());
 			this.nhomNguoiDungService.deleteNhomNguoiDung(nhomNguoiDung);
 		}

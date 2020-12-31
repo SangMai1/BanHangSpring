@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-
+import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +36,10 @@ public class NhomNguoiDungImpl implements NhomNguoiDungService{
 	
 	
 	@Override
+	@Caching(
+			put = @CachePut(value = "nhom"),
+			evict = @CacheEvict(value = "nhom", allEntries = true)
+			)
 	public void insertNhomNguoiDung(NhomNguoiDung nnd) {
 		this.nhomNguoiDungRepository.save(nnd);
 //		this.nhomNguoiDungRepository.insertNhomNguoiDung(nnd.getId(), nnd.getManhom(), nnd.getTennhom(), nnd.getCreateday(), nnd.getNguoitao(), nnd.getUpdateday(), nnd.getNguoiupdate(), 0);
@@ -44,7 +51,10 @@ public class NhomNguoiDungImpl implements NhomNguoiDungService{
 	}
 
 	@Override
-	@Cacheable(value = "nhom", key = "#ndd.nguoiupdate")
+	@Caching(
+			put = @CachePut(value = "nhom"),
+			evict = @CacheEvict(value = "nhom", allEntries = true)
+			)
 	public void updateNhomNguoiDung(NhomNguoiDung ndd) {
 		this.nhomNguoiDungRepository.save(ndd);
 //		this.nhomNguoiDungRepository.updateNhomNguoiDung(ndd.getManhom(), ndd.getTennhom(), ndd.getUpdateday(), ndd.getNguoiupdate(), ndd.getId());
@@ -64,7 +74,6 @@ public class NhomNguoiDungImpl implements NhomNguoiDungService{
 
 	@Override
 	public void deleteNhomNguoiDung(NhomNguoiDung ndd) {
-		ndd.setUpdateday(new Timestamp(new Date().getTime()));
 		this.nhomNguoiDungRepository.updateNhomNguoiDung(ndd.getManhom(), ndd.getTennhom(), ndd.getUpdateday(), ndd.getNguoiupdate(), ndd.getId());
 	}
 

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Glidejs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css" />
+
+  <link rel="stylesheet" href="/css/StyleTrangChuWebsite.css">
+
+  <!-- Glidejs -->
+<!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
+
+  <script src="/js/index.js"></script>
+  <script src="/js/slide.js"></script> -->
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/trangchu.js}"></script>
+  <title>Ecommer</title>
+</head>
+
+<body>
+
+<!-- 
+        ========================
+        Header
+        ========================
+     -->
+<header id="header" class="header">
+  <!-- Navigation -->
+  <div class="navigation">
+    <div class="container">
+      <nav class="nav__center">
+        <div class="nav__header">
+          <div class="nav__logo">
+            <h1>SHOPI<span>Q</span></h1>
+          </div>
+
+          <div class="nav__hamburger">
+            <span>
+              <svg>
+                <use xlink:href="/img/sprite.svg#icon-menu"></use>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="nav__menu">
+          <div class="menu__top">
+            <h1 class="nav__category">SHOPI<span>Q</span></h1>
+            <div class="close__toggle">
+              <svg>
+                <use xlink:href="/img/sprite.svg#icon-cross"></use>
+              </svg>
+            </div>
+          </div>
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="#header" class="nav__link scroll-link">Trang chủ</a>
+            </li>
+
+            <li class="nav__item dropdown1">
+              <a href="#featured" class="nav__link scroll-link dropbtn1">Sản phẩm</a>
+              <div class="dropdown-content1">
+						<a class="dropdown_item-1" href="/web/noibatlist">Sản phẩm nổi bật</a>
+						<a class="dropdown_item-2" href="/web/moilist">Sản phẩm mới</a>
+						<a class="dropdown_item-3" href="/web/banchaylist">Sản phẩm bán chạy</a>
+			  </div>
+            </li>
+
+            <li class="nav__item">
+              <a href="/web/salelist" class="nav__link scroll-link">Sale</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="/web/lienhe" class="nav__link scroll-link">Liên hệ</a>
+            </li>
+
+			<li class="nav__item">
+              <a href="/web/gioithieu" class="nav__link scroll-link">Giới thiệu</a>
+            </li>
+          </ul>
+
+          <ul class="nav__icons">
+            <li>
+              	<a href="#" class="icon__item">
+	              <svg>
+	                <use xlink:href="/img/sprite.svg#icon-search"></use>
+	              </svg>
+            	</a>
+				
+            </li>
+			<li class="dropdown">
+				<a href="#" class="icon__item">
+	              <svg>
+	                <use xlink:href="/img/sprite.svg#icon-user"></use>
+	              </svg>
+            	</a>
+            	<div th:unless="${session.EMAIL_WEB} or ${session.INFO}" class="dropdown-content">
+					<div class="dropdown-content-li"><a class="dropdown-content-li-a" th:href="@{/web/login1}">Đăng nhập</a></div>
+					<div class="dropdown-content-li"><a class="dropdown-content-li-a1" th:href="@{/web/checkout}">Tạo tài khoản</a></div>
+								
+				</div>
+				<div th:if="${session.EMAIL_WEB}" class="dropdown-content2">
+					<div class="dropdown-content-li2"><a th:href="@{/web/thongtincoban}" class="dropdown-content-li-a2" th:text="${session.EMAIL_WEB.bill_name}"></a></div>
+					<div class="dropdown-content-li2"><a th:href="@{/web/lichsumuahang}" class="dropdown-content-li-a12">Lịch sử mua hàng</a></div>
+					<div class="dropdown-content-li2"><a th:href="@{/web/xoanguoimuahang}" class="dropdown-content-li-a12">Logout</a></div>
+				</div>
+				<div th:if="${session.INFO}" class="dropdown-content3">
+					<div class="dropdown-content-li3"><a th:href="@{/web/thongtincoban1}" class="dropdown-content-li-a3" th:text="${session.INFO.bill_name}"></a></div>
+					<div class="dropdown-content-li3"><a th:href="@{/web/lichsumuahang}" class="dropdown-content-li-a13">Lịch sử mua hàng</a></div>
+					<div class="dropdown-content-li3"><a th:href="@{/web/xoanguoimuahang}" class="dropdown-content-li-a13">Logout</a></div>
+				</div>
+			</li>						
+
+			<li>
+				<a href="/web/cart" class="icon__item">
+              		<svg>
+                		<use xlink:href="/img/sprite.svg#icon-shopping-basket"></use>
+              		</svg>
+              		<span th:text="${session.quantity}"></span>
+            	</a>	
+			</li>
+
+          </ul>
+        </div>
+        <!-- The Modal Login-->
+			  <div class="modal" id="myModal">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			      
+			        <!-- Modal Header -->
+			        <div class="modal-header">
+			          <h4>LOGIN</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+			        <div id="model-body"></div>
+			        <div class="modal-footer">
+			          
+			        </div>
+				   </div>
+				 </div>
+			   </div>
+			   
+			   				<!-- The Modal Tao tai khoan-->
+			  <div class="modal" id="myModal1">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			      
+			        <!-- Modal Header -->
+			        <div class="modal-header">
+			          <h4>TAO TAI KHOAN</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+			        <div id="model-body1"></div>
+			        <div class="modal-footer">
+			          
+			        </div>
+				   </div>
+				 </div>
+			   </div>
+      </nav>
+      
+       
+			   
+    </div>
+  </div>
+  
+    <!-- Hero -->
+  <div class="hero">
+    <div class="hero__content container">
+      <h1>
+        <span>Get <span class="color">50%</span> off your first shopping
+          with</span>
+        <span>SHOPI<span class="color">Q</span> online shop</span>
+      </h1>
+      <a href="#" class="btn btn-hero">shop now</a>
+    </div>
+
+    <a href="#new__arrival" class="goto__next scroll-link">
+      <span>
+        <svg>
+          <use xlink:href="/img/sprite.svg#icon-angle-down"></use>
+        </svg>
+      </span>
+    </a>
+  </div>
+</header>
+
+<!-- Main -->
+<main layout:fragment="content">
+
+
+
+
+  <!-- New Arrival -->
+  <section class="section new__arrival" id="new__arrival">
+    <div class="arrivals container">
+      <div class="title">
+        <h1 class="primary__title">Sản phẩm mới</h1>
+      </div>
+
+      <div class="arrival__center">
+        <div th:each="spm : ${SANPHAMMOI}" class="product">
+          <div class="img__container">
+            <img th:src="@{${spm.sanphams.getLogoImagePath()}}" alt="" />
+          </div>
+          <div class="product__bottom">
+            <div class="rating">
+              <span th:text="${#numbers.formatCurrency(spm.giatien - spm.giamgia)}"></span> 
+            </div>
+            <h3 th:text="${spm.sanphams.tensanpham}"></h3>
+            <a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}">XEM</a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Slide -->
+  <section class="cart__slide">
+    <div class="arrival__slide container">
+      <div class="glide" id="glide1">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides">
+            <li th:each="spm : ${SANPHAMNOIBAT}" class="glide__slide">
+              <div class="arrival">
+                <div class="cart__like">
+                  <div class="image__holder">
+                    <img th:src="@{${spm.sanphams.getLogoImagePath()}}" alt="" />
+                  </div>
+                  <div class="cart__details">
+                    <h1 th:text="${spm.sanphams.tensanpham}"></h1>
+                    <p th:text="${spm.sanphams.mota}"></p>
+                    
+                    <div class="btn__group">
+                      <a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}">XEM</a>
+                      <button th:text="${#numbers.formatCurrency(spm.giatien - spm.giamgia)}"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            
+          </ul>
+        </div>
+
+        <!-- Arrows -->
+        <div class="glide__arrows" data-glide-el="controls">
+          <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+            Trước 
+          </button>
+          <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+            Sau
+          </button>
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="glide__bullets" data-glide-el="controls[nav]">
+          <button th:each="spm : ${SANPHAMNOIBAT}" class="glide__bullet" data-glide-dir=">">
+            <div class="thumbnail">
+              <img th:src="@{${spm.sanphams.getLogoImagePath()}}" alt="" />
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Offer Banner -->
+  <section class="section special__offer">
+    <div class="offer__container">
+      <h1>GIẢM GIÁ ĐẶC BIỆT</h1>
+      <p>Giảm giá đặc biệt trong tuần này</p>
+      <a href="#">MUA NGAY</a>
+    </div>
+  </section>
+
+  <!-- Featured Section -->
+  <section class="section featured" id="featured">
+    <div class="featured__container container">
+      <div class="title">
+        <h1 class="primary__title">Sản phẩm nổi bật</h1>
+      </div>
+
+      <div class="featured__center">
+        <div th:each="spm : ${SANPHAMNOIBAT}" class="product">
+          <div class="img__container">
+            <img th:src="@{${spm.sanphams.getLogoImagePath()}}" alt="" />
+          </div>
+          <div class="product__bottom">
+            <div class="rating">
+              <span th:text="${#numbers.formatCurrency(spm.giatien - spm.giamgia)}"></span>
+            </div>
+            <h3 th:text="${spm.sanphams.tensanpham}"></h3>
+            <a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}">XEM</a>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section class="section blog" id="blog">
+    <div class="blog__container container">
+      <div class="title">
+        <h1 class="primary__title">Tin mới nhất</h1>
+      </div>
+
+      <div class="blog__center">
+        <div class="blog__box">
+          <div class="img__cover">
+            <img src="/img/blog1.jpg" alt="" />
+          </div>
+          <div class="box__content">
+            <h2>Đây là xu hướng sắp tới</h2>
+            <a href="#">Đọc ngay</a>
+          </div>
+        </div>
+
+        <div class="blog__box">
+          <div class="img__cover">
+            <img src="/img/blog2.jpg" alt="" />
+          </div>
+          <div class="box__content">
+            <h2>Đây là xu hướng sắp tới</h2>
+            <a href="#">Đọc ngay</a>
+          </div>
+        </div>
+
+        <div class="blog__box">
+          <div class="img__cover">
+            <img src="/img/blog3.jpg" alt="" />
+          </div>
+          <div class="box__content">
+            <h2>Đây là xu hướng sắp tới</h2>
+            <a href="#">Đọc ngay</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="section newsletter" id="newsletter">
+    <div class="newsletter__container container">
+      <div class="title">
+        <h1 class="primary__title">Bản tin</h1>
+      </div>
+
+      <div class="newsletter__center">
+        <div class="newsletter__box">
+          <h2>Bản tin</h2>
+          <p>
+            Đăng ký nhận bản tin của chúng tôi và được giảm giá 20% khi mua hàng đầu tiên
+          </p>
+        </div>
+
+        <div class="newsletter__box">
+          <form action="#">
+            <input type="email" placeholder="Your email" />
+            <button>SUBSCRIBE</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+  <!-- Footer -->
+  <footer id="footer" class="section footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer-top__box">
+          <h3>EXTRAS</h3>
+          <a href="#">Brands</a>
+          <a href="#">Gift Certificates</a>
+          <a href="#">Affiliate</a>
+          <a href="#">Specials</a>
+          <a href="#">Site Map</a>
+        </div>
+        <div class="footer-top__box">
+          <h3>INFORMATION</h3>
+          <a href="#">About Us</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Site Map</a>
+        </div>
+        <div class="footer-top__box">
+          <h3>MY ACCOUNT</h3>
+          <a href="#">My Account</a>
+          <a href="#">Order History</a>
+          <a href="#">Wish List</a>
+          <a href="#">Newsletter</a>
+          <a href="#">Returns</a>
+        </div>
+        <div class="footer-top__box">
+          <h3>CONTACT US</h3>
+          <div>
+            <span>
+              <svg>
+                <use xlink:href="/img/sprite.svg#icon-location"></use>
+              </svg>
+            </span>
+            43 Dream House, Dreammy street, 7131 Dreamville, USA
+          </div>
+          <div>
+            <span>
+              <svg>
+                <use xlink:href="/img/sprite.svg#icon-envelop"></use>
+              </svg>
+            </span>
+            company@gmail.com
+          </div>
+          <div>
+            <span>
+              <svg>
+                <use xlink:href="/img/sprite.svg#icon-phone"></use>
+              </svg>
+            </span>
+            456-456-4512
+          </div>
+          <div>
+            <span>
+              <svg>
+                <use xlink:href="/img/sprite.svg#icon-paperplane"></use>
+              </svg>
+            </span>
+            Dream City, USA
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </footer>
+  <!-- End Footer -->
+
+
+
+
+</body>
+
+</html>

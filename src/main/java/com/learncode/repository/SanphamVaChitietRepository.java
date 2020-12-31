@@ -39,14 +39,14 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 	@Query(value = "SELECT * FROM qtht_sanphamvachitiet WHERE idsanpham=? and isdelete = 0", nativeQuery = true)
 	List<SanphamVaChitiet> findBySizeSanpham(Long idsanpham);
 	
-	@Query(value = "SELECT spvct.id, spvct.idsanpham,sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.mota, spvct.kichthuoc, spvct.soluong, spvct.giatien, spvct.giamgia, sp.isdelete  \r\n" + 
+	@Query(value = "SELECT spvct.id, spvct.idsanpham,sp.id, sp.masanpham, sp.tensanpham, sp.image, sp.mota, spvct.kichthuoc, spvct.soluong, spvct.giatien, spvct.giamgia, spvct.createday, spvct.nguoitao, spvct.updateday, spvct.nguoiupdate, sp.isdelete  \r\n" + 
 			"						FROM qtht_sanphamvachitiet spvct \r\n" + 
 			"						LEFT JOIN qtht_sanpham sp ON sp.id = spvct.idsanpham \r\n" + 
 			"						WHERE spvct.id = ? AND sp.isdelete = 0 AND spvct.isdelete = 0", nativeQuery = true)
 	Optional<SanphamVaChitiet> findBySanphamId(Long id);
 	
 
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia,max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
 			"												LEFT JOIN\r\n" + 
 			"												(SELECT sp.* FROM qtht_sanpham sp \r\n" + 
 			"												GROUP BY sp.id) pssum \r\n" + 
@@ -55,10 +55,10 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												ON pssum.id = ps.idsanpham \r\n" + 
 			"												WHERE pssum.highlight= 0\r\n" + 
 			"												GROUP BY spct.idsanpham\r\n" + 
-			"												LIMIT 5", nativeQuery = true)
+			"												LIMIT 4", nativeQuery = true)
 	List<SanphamVaChitiet> getSanphammoi();
 	
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
 			"												LEFT JOIN\r\n" + 
 			"												(SELECT sp.* FROM qtht_sanpham sp \r\n" + 
 			"												GROUP BY sp.id) pssum \r\n" + 
@@ -67,10 +67,10 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												ON pssum.id = ps.idsanpham \r\n" + 
 			"												WHERE pssum.highlight= 1\r\n" + 
 			"												GROUP BY spct.idsanpham\r\n" + 
-			"												LIMIT 5", nativeQuery = true)
+			"												LIMIT 4", nativeQuery = true)
 	List<SanphamVaChitiet> getSanphamnoibat();
 	
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
 			"									LEFT JOIN \r\n" + 
 			"									(SELECT sp.id FROM qtht_sanpham sp\r\n" + 
 			"									GROUP BY sp.id) pssum \r\n" + 
@@ -80,7 +80,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"									GROUP BY spct.idsanpham", nativeQuery = true)
 	List<SanphamVaChitiet> getTatcasanpham();
 	
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
 			"												LEFT JOIN\r\n" + 
 			"												(SELECT sp.* FROM qtht_sanpham sp \r\n" + 
 			"												GROUP BY sp.id) pssum \r\n" + 
@@ -91,7 +91,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												GROUP BY spct.idsanpham", nativeQuery = true)
 	List<SanphamVaChitiet> getAllSanphammoi();
 	
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
 			"												LEFT JOIN\r\n" + 
 			"												(SELECT sp.* FROM qtht_sanpham sp \r\n" + 
 			"												GROUP BY sp.id) pssum \r\n" + 
@@ -102,7 +102,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												GROUP BY spct.idsanpham", nativeQuery = true)
 	List<SanphamVaChitiet> getAllSanphamnoibat();
 	
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
 			"												LEFT JOIN\r\n" + 
 			"												(SELECT sp.* FROM qtht_sanpham sp \r\n" + 
 			"												GROUP BY sp.id) pssum \r\n" + 
@@ -113,7 +113,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												GROUP BY spct.idsanpham", nativeQuery = true)
 	List<SanphamVaChitiet> getAllSanphamsale();
 	
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
 			"												LEFT JOIN\r\n" + 
 			"												(SELECT sp.* FROM qtht_sanpham sp \r\n" + 
 			"												GROUP BY sp.id) pssum \r\n" + 
@@ -124,7 +124,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												GROUP BY spct.idsanpham", nativeQuery = true)
 	List<SanphamVaChitiet> getAllSanphambanchay();
 	
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
 			"												LEFT JOIN\r\n" + 
 			"												(SELECT sp.* FROM qtht_sanpham sp \r\n" + 
 			"												GROUP BY sp.id) pssum \r\n" + 
@@ -135,7 +135,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"												GROUP BY spct.idsanpham", nativeQuery = true)
 	List<SanphamVaChitiet> getSearchSize(@Param("size") String size);
 	
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct \r\n" + 
 			"												LEFT JOIN\r\n" + 
 			"												(SELECT sp.* FROM qtht_sanpham sp \r\n" + 
 			"												GROUP BY sp.id) pssum \r\n" + 
@@ -151,7 +151,7 @@ public interface SanphamVaChitietRepository extends JpaRepository<SanphamVaChiti
 			"WHERE kichthuoc = ? AND isdelete = 0", nativeQuery = true)
 	List<SanphamVaChitiet> searchKichThuoc(@Param("kichthuoc") String kichthuoc);
 	
-	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct\r\n" + 
+	@Query(value = "SELECT max(spct.id) id, spct.idsanpham, max(spct.kichthuoc) kichthuoc, max(spct.soluong) soluong, min(spct.giatien) giatien, max(spct.giamgia) giamgia, max(spct.createday) createday, max(spct.nguoitao) nguoitao, max(spct.updateday) updateday, max(spct.nguoiupdate) nguoiupdate, max(spct.isdelete) isdelete FROM qtht_sanphamvachitiet spct\r\n" + 
 			"												LEFT JOIN\r\n" + 
 			"												(SELECT sp.id FROM qtht_sanpham sp\r\n" + 
 			"												GROUP BY sp.id) pssum \r\n" + 

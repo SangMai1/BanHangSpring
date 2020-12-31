@@ -26,12 +26,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "qtht_nhomnguoidung")
-public class NhomNguoiDung implements Serializable {
+public class NhomNguoiDung extends AbstractDomainClass {
 
-	@Id
-	@GeneratedValue(generator = "bigid")
-	@GenericGenerator(name = "bigid", strategy = "com.learncode.config.IDGenerator")
-	private long id;
 
 	@Column(name = "manhom")
 	@NotBlank(message = "không được để trống")
@@ -40,23 +36,6 @@ public class NhomNguoiDung implements Serializable {
 	@Column(name = "tennhom")
 	@NotBlank(message = "không được để trống")
 	private String tennhom;
-
-	@Column(name = "nguoitao")
-	private String nguoitao;
-
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date createday;
-
-	@Column(name = "nguoiupdate")
-	private String nguoiupdate;
-
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date updateday;
-
-	@Column(name = "isdelete")
-	private int isdelete = 0;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinTable(name = "qtht_nhomnguoidungchucnang", joinColumns = {
@@ -68,27 +47,12 @@ public class NhomNguoiDung implements Serializable {
 		super();
 	}
 
-	public NhomNguoiDung(long id, @NotBlank(message = "không được để trống") String manhom,
-			@NotBlank(message = "không được để trống") String tennhom, String nguoitao, Date createday,
-			String nguoiupdate, Date updateday, int isdelete, Set<ChucNang1> chucnang) {
+	public NhomNguoiDung(@NotBlank(message = "không được để trống") String manhom,
+			@NotBlank(message = "không được để trống") String tennhom, String nguoitao, Set<ChucNang1> chucnang) {
 		super();
-		this.id = id;
 		this.manhom = manhom;
 		this.tennhom = tennhom;
-		this.nguoitao = nguoitao;
-		this.createday = createday;
-		this.nguoiupdate = nguoiupdate;
-		this.updateday = updateday;
-		this.isdelete = isdelete;
 		this.chucnang = chucnang;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getManhom() {
@@ -105,46 +69,6 @@ public class NhomNguoiDung implements Serializable {
 
 	public void setTennhom(String tennhom) {
 		this.tennhom = tennhom;
-	}
-
-	public String getNguoitao() {
-		return nguoitao;
-	}
-
-	public void setNguoitao(String nguoitao) {
-		this.nguoitao = nguoitao;
-	}
-
-	public Date getCreateday() {
-		return createday;
-	}
-
-	public void setCreateday(Date createday) {
-		this.createday = createday;
-	}
-
-	public String getNguoiupdate() {
-		return nguoiupdate;
-	}
-
-	public void setNguoiupdate(String nguoiupdate) {
-		this.nguoiupdate = nguoiupdate;
-	}
-
-	public Date getUpdateday() {
-		return updateday;
-	}
-
-	public void setUpdateday(Date updateday) {
-		this.updateday = updateday;
-	}
-
-	public int getIsdelete() {
-		return isdelete;
-	}
-
-	public void setIsdelete(int isdelete) {
-		this.isdelete = isdelete;
 	}
 
 	public Set<ChucNang1> getChucnang() {

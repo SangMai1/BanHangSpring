@@ -7,7 +7,10 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.learncode.models.ChucNang1;
@@ -31,6 +34,10 @@ public class VaiTroImpl implements VaiTroService{
 	}
 	
 	@Override
+	@Caching(
+			put = @CachePut(value = "vaitro"),
+			evict = @CacheEvict(value = "vaitro", allEntries = true)
+			)
 	public void insertVaitro(VaiTro vt) {
 		this.vaiTroRepository.save(vt);
 //		this.vaiTroRepository.insertVaitro(vt.getId(), vt.getMavaitro(), vt.getTenvaitro(), vt.getNguoitao(), vt.getCreateday(), vt.getNguoiupdate(), vt.getUpdateday(), 0);
@@ -47,7 +54,10 @@ public class VaiTroImpl implements VaiTroService{
 	}
 
 	@Override
-	@Cacheable(value = "vaitro", key = "#vt.nguoiupdate")
+	@Caching(
+			put = @CachePut(value = "vaitro"),
+			evict = @CacheEvict(value = "vaitro", allEntries = true)
+			)
 	public void updateVaitro(VaiTro vt) {
 		this.vaiTroRepository.save(vt);
 //		this.vaiTroRepository.updateVaitro(vt.getMavaitro(), vt.getTenvaitro(), vt.getNguoiupdate(), vt.getUpdateday(), vt.getIsdelete(), vt.getId());
@@ -81,6 +91,10 @@ public class VaiTroImpl implements VaiTroService{
 	}
 
 	@Override
+	@Caching(
+			put = @CachePut(value = "vaitro"),
+			evict = @CacheEvict(value = "vaitro", allEntries = true)
+			)
 	public void updateDaXoa(VaiTro vt) {
 		vaiTroRepository.updateDaXoa(vt.getNguoiupdate(), vt.getUpdateday() ,vt.getIsdelete(), vt.getId());
 	}

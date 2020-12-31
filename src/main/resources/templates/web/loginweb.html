@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{web/trangchu}">
+	layout:decorate="~{web/trangchuwebsite}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<div layout:fragment="content">
+	<main layout:fragment="content">
 		<form th:action="@{/web/checkLogin}" method="post" id="myModals">
 			<img src="/slides/anh-avatar-dep.jpg" alt="Avatar" class="avatar"
 				style="width: 30% !important; border-radius: 50% !important; margin-left: 180px !important;">
@@ -25,6 +25,6 @@
 					style="background-color: #4CAF50 !important; color: white !important; padding: 14px 20px !important; margin: 8px 0 !important; border: none !important; cursor: pointer !important; width: 100% !important; font-size: 16px !important" />
 			</div>
 		</form>
-	</div>
+	</main>
 </body>
 </html>

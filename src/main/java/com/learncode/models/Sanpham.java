@@ -25,12 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Proxy(lazy = false)
 @Table(name = "qtht_sanpham")
-public class Sanpham {
-	
-	@Id
-    @GeneratedValue(generator = "bigid")
-    @GenericGenerator(name = "bigid",strategy = "com.learncode.config.IDGenerator")
-    private long id;
+public class Sanpham extends AbstractDomainClass{
 	
 	@Column(name = "masanpham")
 	@NotBlank(message = "không được để trống")
@@ -47,20 +42,6 @@ public class Sanpham {
 	@JoinColumn(name = "maloaisanpham")
 	private LoaiSanPham loaisanpham;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date createday;
-	
-	@Column(name = "createby")
-	private String createby;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date updateday;
-	
-	@Column(name = "updateby")
-	private String updateby;
-	
 	@Column(name = "xuatxu")
 	@NotBlank(message = "không được để trống")
 	private String xuatxu;
@@ -68,9 +49,6 @@ public class Sanpham {
 	@Column(name = "mota")
 	@NotBlank(message = "không được để trống")
 	private String mota;
-	
-	@Column(name = "isdelete")
-	private Integer isdelete;
 
 	@Column(name = "highlight")
 	private Integer highlight;
@@ -81,12 +59,11 @@ public class Sanpham {
 
 
 	
-	public Sanpham(long id, @NotBlank(message = "không được để trống") String masanpham,
+	public Sanpham(@NotBlank(message = "không được để trống") String masanpham,
 			@NotBlank(message = "không được để trống") String tensanpham, LoaiSanPham loaisanpham,
 			@NotBlank(message = "không được để trống") String xuatxu,
 			@NotBlank(message = "không được để trống") String mota, Integer highlight) {
 		super();
-		this.id = id;
 		this.masanpham = masanpham;
 		this.tensanpham = tensanpham;
 		this.loaisanpham = loaisanpham;
@@ -97,35 +74,20 @@ public class Sanpham {
 
 
 
-	public Sanpham(long id, @NotBlank(message = "không được để trống") String masanpham,
+	public Sanpham(@NotBlank(message = "không được để trống") String masanpham,
 			@NotBlank(message = "không được để trống") String tensanpham, String image, LoaiSanPham loaisanpham,
-			Date createday, String createby, Date updateday, String updateby,
 			@NotBlank(message = "không được để trống") String xuatxu,
 			@NotBlank(message = "không được để trống") String mota, Integer isdelete, Integer highlight) {
 		super();
-		this.id = id;
 		this.masanpham = masanpham;
 		this.tensanpham = tensanpham;
 		this.image = image;
 		this.loaisanpham = loaisanpham;
-		this.createday = createday;
-		this.createby = createby;
-		this.updateday = updateday;
-		this.updateby = updateby;
 		this.xuatxu = xuatxu;
 		this.mota = mota;
-		this.isdelete = isdelete;
 		this.highlight = highlight;
 	}
 
-	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getMasanpham() {
 		return masanpham;
@@ -159,38 +121,6 @@ public class Sanpham {
 		this.loaisanpham = loaisanpham;
 	}
 
-	public Date getCreateday() {
-		return createday;
-	}
-
-	public void setCreateday(Date createday) {
-		this.createday = createday;
-	}
-
-	public String getCreateby() {
-		return createby;
-	}
-
-	public void setCreateby(String createby) {
-		this.createby = createby;
-	}
-
-	public Date getUpdateday() {
-		return updateday;
-	}
-
-	public void setUpdateday(Date updateday) {
-		this.updateday = updateday;
-	}
-
-	public String getUpdateby() {
-		return updateby;
-	}
-
-	public void setUpdateby(String updateby) {
-		this.updateby = updateby;
-	}
-
 	public String getXuatxu() {
 		return xuatxu;
 	}
@@ -207,14 +137,6 @@ public class Sanpham {
 		this.mota = mota;
 	}
 
-	public Integer getIsdelete() {
-		return isdelete;
-	}
-
-	public void setIsdelete(Integer isdelete) {
-		this.isdelete = isdelete;
-	}
-
 	public Integer getHighlight() {
 		return highlight;
 	}
@@ -228,16 +150,9 @@ public class Sanpham {
 		if (image == null) {
 			return null;
 		}
-		return "/uploads/" + id + "/" + image;
+		return "/uploads/" + getId() + "/" + image;
 	}
 
-	@Override
-	public String toString() {
-		return "Sanpham [id=" + id + ", masanpham=" + masanpham + ", tensanpham=" + tensanpham + ", image=" + image
-				+ ", loaisanpham=" + loaisanpham + ", createday=" + createday + ", createby=" + createby
-				+ ", updateday=" + updateday + ", updateby=" + updateby + ", xuatxu=" + xuatxu + ", mota=" + mota
-				+ ", isdelete=" + isdelete + ", highlight=" + highlight + "]";
-	}
 
 	
 }

@@ -27,12 +27,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Proxy(lazy = false)
 @Table(name = "qtht_nguoidung")
-public class Nguoidung {
+public class Nguoidung extends AbstractDomainClass {
 
-	@Id
-	@GeneratedValue(generator = "bigidn")
-	@GenericGenerator(name = "bigidn", strategy = "com.learncode.config.IDGenerator")
-	private long id;
 
 	@Column(name = "manguoidung")
 	@NotBlank(message = "không được để trống")
@@ -59,23 +55,6 @@ public class Nguoidung {
 	@Length(min = 1, max = 11, message = "bạn phải nhập đủ 11 số")
 	private String phone;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date createday;
-
-	@Column(name = "nguoitao")
-	private String nguoitao;
-
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date updateday;
-
-	@Column(name = "nguoiupdate")
-	private String nguoiupdate;
-
-	@Column(name = "isdelete")
-	private int isdelete;
-
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	@JoinTable(name = "qtht_nguoidungvanhomnguoidung", joinColumns = {
 			@JoinColumn(name = "idnguoidung", referencedColumnName = "id") }, inverseJoinColumns = {
@@ -92,38 +71,24 @@ public class Nguoidung {
 		super();
 	}
 
-	public Nguoidung(long id, @NotBlank(message = "không được để trống") String manguoidung,
+	public Nguoidung(@NotBlank(message = "không được để trống") String manguoidung,
 			@NotBlank(message = "không được để trống") String tennguoidung,
 			@NotBlank(message = "không được để trống") String password,
 			@NotBlank(message = "không được để trống") @Email(message = "vui lòng nhập định dạng email hợp lệ") String email,
 			int gender,
 			@NotBlank(message = "không được để trống") @Length(min = 1, max = 11, message = "bạn phải nhập đủ 11 số") String phone,
-			Date createday, String nguoitao, Date updateday, String nguoiupdate, int isdelete,
 			List<NhomNguoiDung> nhomnguoidung, List<VaiTro> vaitro) {
 		super();
-		this.id = id;
 		this.manguoidung = manguoidung;
 		this.tennguoidung = tennguoidung;
 		this.password = password;
 		this.email = email;
 		this.gender = gender;
 		this.phone = phone;
-		this.createday = createday;
-		this.nguoitao = nguoitao;
-		this.updateday = updateday;
-		this.nguoiupdate = nguoiupdate;
-		this.isdelete = isdelete;
 		this.nhomnguoidung = nhomnguoidung;
 		this.vaitro = vaitro;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getManguoidung() {
 		return manguoidung;
@@ -171,46 +136,6 @@ public class Nguoidung {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public Date getCreateday() {
-		return createday;
-	}
-
-	public void setCreateday(Date createday) {
-		this.createday = createday;
-	}
-
-	public String getNguoitao() {
-		return nguoitao;
-	}
-
-	public void setNguoitao(String nguoitao) {
-		this.nguoitao = nguoitao;
-	}
-
-	public Date getUpdateday() {
-		return updateday;
-	}
-
-	public void setUpdateday(Date updateday) {
-		this.updateday = updateday;
-	}
-
-	public String getNguoiupdate() {
-		return nguoiupdate;
-	}
-
-	public void setNguoiupdate(String nguoiupdate) {
-		this.nguoiupdate = nguoiupdate;
-	}
-
-	public int getIsdelete() {
-		return isdelete;
-	}
-
-	public void setIsdelete(int isdelete) {
-		this.isdelete = isdelete;
 	}
 
 	public List<NhomNguoiDung> getNhomnguoidung() {

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{web/trangchu}">
+	layout:decorate="~{web/trangchuwebsite}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <link rel="stylesheet" type="text/css" href="/css/StyleSize.css">
+<link rel="stylesheet" href="/css/StyleTrangChuWebsite.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -54,13 +56,10 @@
 </script>
 </head>
 <body>
-	<div layout:fragment="content">
+	<main layout:fragment="content">
 	
 		<section class="path__chitiet">
-			<div class="wrapper1 sanpham">
-				<p>Sản phẩm</p>
-				
-			</div>
+			
 		</section>
 		
 		<section class="feature1">
@@ -107,9 +106,7 @@
 				</div>
 			</section>
 			<section class="selling_products">
-				<div class="selling_products-title">
-					<a href="#">Sản phẩm liên quan</a>
-				</div>
+				
 			</section>
 			
 			<section class="category">
@@ -130,7 +127,7 @@
 			</section>
 			
 			<hr class="hr1">
-	</div>
+	</main>
 
 </body>
 </html>

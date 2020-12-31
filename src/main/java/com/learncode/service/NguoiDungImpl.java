@@ -8,7 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +62,10 @@ public class NguoiDungImpl implements NguoiDungService{
 
 	
 	@Override
+	@Caching(
+			put = @CachePut(value = "nguoidung"),
+			evict = @CacheEvict(value = "nguoidung", allEntries = true)
+			)	
 	public void insertNguoidung(Nguoidung nd) {
 		this.nguoiDungRepository.save(nd);
 //	   this.nguoiDungRepository.insertNguoidung(nd.getId(), nd.getManguoidung(), nd.getTennguoidung(), Xuly.giaiMd5(nd.getPassword()), nd.getEmail(), nd.getGender(), nd.getPhone(), nd.getCreateday(), nd.getNguoitao(), nd.getUpdateday(), nd.getNguoiupdate(), nd.getIsdelete());
@@ -78,7 +85,10 @@ public class NguoiDungImpl implements NguoiDungService{
 	}
 
 	@Override
-	@Cacheable(value = "nguoidung", key = "#nd.nguoiupdate")
+	@Caching(
+			put = @CachePut(value = "nguoidung"),
+			evict = @CacheEvict(value = "nguoidung", allEntries = true)
+			)
 	public void updateNguoidung(Nguoidung nd) {
 		this.nguoiDungRepository.save(nd);
 //		this.nguoiDungRepository.updateNguoidung(nd.getManguoidung(), nd.getTennguoidung(), nd.getPassword(), nd.getEmail(), nd.getGender(), nd.getPhone(), nd.getUpdateday(), nd.getNguoiupdate(), nd.getIsdelete(), nd.getId());
@@ -105,6 +115,10 @@ public class NguoiDungImpl implements NguoiDungService{
 	}
 
 	@Override
+	@Caching(
+			put = @CachePut(value = "nguoidung"),
+			evict = @CacheEvict(value = "nguoidung", allEntries = true)
+			)
 	public void deleteNguoidung(Nguoidung nd) {
 		this.nguoiDungRepository.updateNguoidung(nd.getManguoidung(), nd.getTennguoidung(), nd.getPassword(), nd.getEmail(), nd.getGender(), nd.getPhone(), nd.getUpdateday(), nd.getNguoiupdate(), nd.getIsdelete(), nd.getId());
 	}
@@ -130,7 +144,6 @@ public class NguoiDungImpl implements NguoiDungService{
 	@Override
 	public Nguoidung findUrlChucNang(String tennguoidung){
 		Nguoidung nd = this.findByTen(tennguoidung);
-		
 		return nd;
 	}
 	

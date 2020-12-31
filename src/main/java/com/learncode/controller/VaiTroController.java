@@ -60,11 +60,10 @@ public class VaiTroController {
 		if (bindingResult.hasErrors()) {
 			return "Vaitro-register";
 		} else {
-			
-			vt.setCreateday(new Timestamp(new Date().getTime()));
-			vt.setUpdateday(new Timestamp(new Date().getTime()));
+		
 			vt.setNguoitao(principal.getName());
 			vt.setNguoiupdate(principal.getName());
+			vt.setIsdelete(0);
 			this.vaiTroService.insertVaitro(vt);
 			return "redirect:/vaitro/list";
 		}
@@ -93,10 +92,8 @@ public class VaiTroController {
 	@RequestMapping(value = "/updateVaiTro", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(ModelMap model, VaiTro vt, Principal principal) {
 		VaiTro vt1 = this.vaiTroService.findByVaitroId(vt.getId()).get();
-		vt.setCreateday(vt1.getCreateday());
 		vt.setNguoitao(vt1.getNguoitao());
-		vt.setIsdelete((Integer) 0);
-		vt.setUpdateday(new Timestamp(new Date().getTime()));
+		vt.setIsdelete(0);
 		vt.setNguoiupdate(principal.getName());
 		this.vaiTroService.updateVaitro(vt);
 		return "redirect:/vaitro/list";
@@ -195,9 +192,8 @@ public class VaiTroController {
 
 		for (Long long1 : ids) {
 			VaiTro vaiTro = this.vaiTroService.findByVaitroId(long1).get();
-			vaiTro.setUpdateday(new Timestamp(new Date().getTime()));
 			vaiTro.setNguoiupdate(principal.getName());
-			vaiTro.setIsdelete((Integer) 1);
+			vaiTro.setIsdelete(1);
 			this.vaiTroService.updateDaXoa(vaiTro);
 		}
 		return "redirect:/vaitro/list";

@@ -160,8 +160,12 @@
   background-color: #f1f1f1;
   cursor: pointer;
   font-size: 14px;
+  
 }
 
+.btn a {
+  color: black;
+}
 /* Style the active class, and buttons on mouse-over */
 .active, .btn:hover {
   background-color: #666;
@@ -223,3 +227,27 @@
  .hr1 {
 	padding-bottom: 80px;
 } 
+
+.category__name-price {
+	text-align: center;
+	color: red;
+}
+
+.category__div {
+	text-align: center;
+	color: red;
+}
+
+
+.category__div {
+	text-align: center;
+	color: red;
+}
+
+.dropdown-content {
+	margin-right: -190px;
+    margin-top: -30px;
+	}
+.nav__item a {
+	text-decoration: none !important;
+}

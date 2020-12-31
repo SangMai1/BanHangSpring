@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{web/trangchu}">
+	layout:decorate="~{web/trangchuwebsite}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	  <!-- Glidejs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css" />
+
+<link rel="stylesheet" type="text/css" href="/css/StyleTatcasanpham.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/css/StyleTatcasanpham.css">
-<link rel="stylesheet" type="text/css" href="/css/StyleChitiet.css">
+  <link rel="stylesheet" href="/css/StyleTrangChuWebsite.css">
+
 </head>
 <body>
-	<div layout:fragment="content">
+	<main layout:fragment="content">
 		<section class="path__chitiet">
-			<div class="wrapper1">
-				<p>Trang chủ / Sản phẩm</p>
-			</div>
+		
 		</section>
 
 		<section class="feature2">
@@ -116,6 +119,6 @@
 				</div>
 			</div>
 		</section>
-	</div>
+	</main>
 </body>
 </html>

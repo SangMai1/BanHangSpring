@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -25,17 +26,26 @@ public class SanphamImpl implements SanphamService{
 	SanphamRepository sanphamRepository;
 	
 	@Override
+	@Caching(
+			put = @CachePut(value = "sanpham"),
+			evict = @CacheEvict(value = "sanpham", allEntries = true)
+			)
 	public void insertSanpham(Sanpham sp) {
 		this.sanphamRepository.save(sp);
 	}
 	
 	@Override
+	@Caching(
+			put = @CachePut(value = "sanpham"),
+			evict = @CacheEvict(value = "sanpham", allEntries = true)
+			)
 	public void updateSanpham(Sanpham sp) {
 		this.sanphamRepository.save(sp);
 	}
 
 
 	@Override
+	@Cacheable(value = "sanpham", key = "#id")
 	public Optional<Sanpham> finBySanphamId(Long id) {
 		return this.sanphamRepository.finBySanphamId(id);
 	}
@@ -67,8 +77,12 @@ public class SanphamImpl implements SanphamService{
 	}
 
 	@Override
+	@Caching(
+			put = @CachePut(value = "sanpham"),
+			evict = @CacheEvict(value = "sanpham", allEntries = true)
+			)
 	public void deleteSanpham(Sanpham sp) {
-		sanphamRepository.deleteSanpham(sp.getUpdateday(), sp.getUpdateby(), sp.getIsdelete(), sp.getId());
+		sanphamRepository.deleteSanpham(sp.getUpdateday(), sp.getNguoiupdate(), sp.getIsdelete(), sp.getId());
 	}
 
 	@Override
