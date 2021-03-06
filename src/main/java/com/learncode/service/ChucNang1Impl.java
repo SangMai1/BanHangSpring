@@ -15,26 +15,29 @@ import org.springframework.transaction.annotation.Transactional;
 import com.learncode.models.ChucNang1;
 import com.learncode.repository.ChucNang1Repository;
 
-@Component
 @Service
 public class ChucNang1Impl implements ChucNang1Service{
 	
+	private final ChucNang1Repository chucNang1Repository;
+	
 	@Autowired
-	ChucNang1Repository chucNangRepository;
+	public ChucNang1Impl(ChucNang1Repository chucNang1Repository) {
+		this.chucNang1Repository = chucNang1Repository;
+	}
 	
 	@Override
 	public List<ChucNang1> findAllChucNang1() {
-		return chucNangRepository.findAllChucNang1();
+		return chucNang1Repository.findAllChucNang1();
 	}
 
 	@Override
 	public List<ChucNang1> getAllChucNang1() {
-		return chucNangRepository.getAllChucNang1();
+		return chucNang1Repository.getAllChucNang1();
 	}
 	
 	@Override
 	public List<ChucNang1> getAllChucNang1Parent(){
-		return chucNangRepository.getAllChucNang1Parent();
+		return chucNang1Repository.getAllChucNang1Parent();
 	}
 	
 	
@@ -42,18 +45,18 @@ public class ChucNang1Impl implements ChucNang1Service{
 	@Cacheable(value = "chucnang", key = "#id")
 	public Optional<ChucNang1> findByChucNangEditId(Long id){
 		System.out.println("find id");
-		return this.chucNangRepository.findByChucNangEditId(id);
+		return this.chucNang1Repository.findByChucNangEditId(id);
 	}
 
 
 	@Override
 	public Optional<ChucNang1> findById(Long id) {
-		return chucNangRepository.findById(id);
+		return chucNang1Repository.findById(id);
 	}
 
 	@Override
 	public List<ChucNang1> findByTenchucnang(String tenchucnang) {
-		return chucNangRepository.findByTenchucnang(tenchucnang);
+		return chucNang1Repository.findByTenchucnang(tenchucnang);
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class ChucNang1Impl implements ChucNang1Service{
 			)
 	public void insertChucNang1(ChucNang1 cn) {
 		System.out.println("save 1");
-		this.chucNangRepository.save(cn);
+		this.chucNang1Repository.save(cn);
 	}
 
 	@Override
@@ -72,27 +75,27 @@ public class ChucNang1Impl implements ChucNang1Service{
 			evict = @CacheEvict(value = "chucnang", allEntries = true))
 	public void updateChucNang1(ChucNang1 cn) {
 		System.out.println("update day");
-		this.chucNangRepository.save(cn);
+		this.chucNang1Repository.save(cn);
 	}
 
 	@Override
 	public long count(Long id) {
-		return chucNangRepository.count(id);
+		return chucNang1Repository.count(id);
 	}
 
 	@Override
 	public List<ChucNang1> findByMachucnang(String machucnang) {
-		return chucNangRepository.findByMachucnang(machucnang);
+		return chucNang1Repository.findByMachucnang(machucnang);
 	}
 
 	@Override
 	public List<ChucNang1> findChucnangByTennguoidung(String tennguoidung) {
-		return chucNangRepository.findChucnangByTennguoidung(tennguoidung, tennguoidung);
+		return chucNang1Repository.findChucnangByTennguoidung(tennguoidung, tennguoidung);
 	}
 
 	@Override
 	public List<String> maapi() {
-		return chucNangRepository.maapi();
+		return chucNang1Repository.maapi();
 	}
 	
 	

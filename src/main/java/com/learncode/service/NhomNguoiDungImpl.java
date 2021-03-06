@@ -1,6 +1,4 @@
 package com.learncode.service;
-
-
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +31,6 @@ public class NhomNguoiDungImpl implements NhomNguoiDungService{
 	
 	@Autowired
 	VaiTroRepository vaiTroRepository;
-	
 	
 	@Override
 	@Caching(

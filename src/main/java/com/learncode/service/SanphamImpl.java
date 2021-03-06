@@ -18,13 +18,15 @@ import com.learncode.repository.SanphamRepository;
 
 import groovyjarjarpicocli.CommandLine.Command;
 
-@Component
 @Service
 public class SanphamImpl implements SanphamService{
 	
-	@Autowired
-	SanphamRepository sanphamRepository;
+	private final SanphamRepository sanphamRepository;
 	
+	@Autowired
+	public SanphamImpl(SanphamRepository sanphamRepository) {
+		this.sanphamRepository = sanphamRepository;
+	}
 	@Override
 	@Caching(
 			put = @CachePut(value = "sanpham"),

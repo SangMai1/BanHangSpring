@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,6 +42,8 @@ public class NhomNguoiDungController {
 	@Autowired
 	NhomNguoiDungService nhomNguoiDungService;
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@RequestMapping("/")
 	public String addOrEdit(ModelMap model) {
 		NhomNguoiDung nnd = new NhomNguoiDung();
@@ -51,6 +55,7 @@ public class NhomNguoiDungController {
 	@PreAuthorize("hasPermission('', 'tmn')")
 	public String doSave(@Valid @ModelAttribute("NHOM") NhomNguoiDung ndd, BindingResult bindingResult,
 			Principal principal) {
+		logger.debug("Đây là thêm mới nhóm");
 		if (bindingResult.hasErrors()) {
 			return "NhomNguoiDung-register";
 		} else {
@@ -86,6 +91,7 @@ public class NhomNguoiDungController {
 
 	@RequestMapping(value = "/doUpdate", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(ModelMap model, NhomNguoiDung nnd, Principal principal) {
+		logger.debug("Đây là cập nhật nhóm");
 		NhomNguoiDung nnd1 = this.nhomNguoiDungService.findByLongId(nnd.getId()).get();
 		
 		nnd.setNguoitao(nnd1.getNguoitao());
@@ -98,6 +104,7 @@ public class NhomNguoiDungController {
 
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
+		logger.debug("Đây là danh sách nhóm");
 		request.getSession().setAttribute("nhomlist", null);
 		return "redirect:/nhom/list/page/1";
 	}
@@ -149,6 +156,7 @@ public class NhomNguoiDungController {
 
 	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
 	public String dataSearch(@RequestParam("tennhomnguoidung") String tennhom, HttpSession session) {
+		logger.debug("Đây là tìm kiếm nhóm");
 		session.setAttribute("TENNHOMNGUOIDUNG", tennhom);
 		if (tennhom == null || tennhom.equals("")) {
 			return "redirect:/nhom/list";
@@ -211,6 +219,7 @@ public class NhomNguoiDungController {
 	@RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
 	@PreAuthorize("hasPermission('', 'xn')")
 	public String delete(@RequestParam("ndd") List<Long> ids, Principal principal) {
+		logger.debug("Đây là xóa nhóm");
 		for (Long long1 : ids) {
 			NhomNguoiDung nhomNguoiDung = this.nhomNguoiDungService.findByLongId(long1).get();
 			nhomNguoiDung.setIsdelete(1);

@@ -26,7 +26,6 @@ import com.learncode.repository.NguoiDungRepository;
 import com.learncode.repository.NhomNguoiDungRepository;
 import com.learncode.repository.VaiTroRepository;
 
-@Component
 @Service
 public class NguoiDungImpl implements NguoiDungService{
 	

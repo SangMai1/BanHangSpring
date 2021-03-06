@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 
@@ -38,6 +40,8 @@ public class LoaisanphamController {
 	@Autowired
 	LoaisanphamService loaisanphamService;
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@RequestMapping("/")
 	public String home(ModelMap model) {
 		LoaiSanPham lsp = new LoaiSanPham();
@@ -48,6 +52,7 @@ public class LoaisanphamController {
 	@RequestMapping(value = "/saveLoaisanpham", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doSave(ModelMap modal, @Valid @ModelAttribute("LOAISANPHAM") LoaiSanPham lsp,
 			BindingResult bindingResult, Principal principal) {
+		logger.debug("Đây là thêm mới loại sản phẩm");
 		if (bindingResult.hasErrors()) {
 			return "Loaisanpham-register";
 		} else {
@@ -73,6 +78,7 @@ public class LoaisanphamController {
 
 	@RequestMapping(value = "/updateLoaisanpham", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 	public String doUpdate(LoaiSanPham lsp, Principal principal) {
+		logger.debug("Đây là cập nhật loại sản phẩm");
 		LoaiSanPham lsp1 = this.loaisanphamService.findLoaisanphamById(lsp.getId()).get();
 		lsp.setNguoitao(lsp1.getNguoitao());
 		lsp.setNguoiupdate(principal.getName());
@@ -83,6 +89,7 @@ public class LoaisanphamController {
 
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String list(ModelMap model, HttpServletRequest request) {
+		logger.debug("Đây là danh sách loại sản phẩm");
 		request.getSession().setAttribute("loaisanphamlist", null);
 		return "redirect:/loaisanpham/list/page/1";
 	}
@@ -133,6 +140,7 @@ public class LoaisanphamController {
 
 	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
 	public String dateSearch(@RequestParam("tenloaisanpham") String tenloaisanpham, HttpSession session) {
+		logger.debug("Đây là tìm kiếm loại sản phẩm");
 		session.setAttribute("TENLOAISANPHAM", tenloaisanpham);
 
 		if (tenloaisanpham == null || tenloaisanpham.equals("")) {
@@ -193,6 +201,7 @@ public class LoaisanphamController {
 	
 	@RequestMapping("/del")
 	public String delete(@RequestParam("lsp[]") List<Long> ids, Principal principal) {
+		logger.debug("Đây là xóa loại sản phẩm");
 		for (Long long1 : ids) {
 			LoaiSanPham lsp = this.loaisanphamService.findLoaisanphamById(long1).get();
 			lsp.setNguoiupdate(principal.getName());

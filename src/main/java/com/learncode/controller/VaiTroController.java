@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -40,6 +42,8 @@ public class VaiTroController {
 
 	@Autowired
 	VaiTroService vaiTroService;
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@ModelAttribute("CHUCNANGS")
 	public List<ChucNang1> getAllChucNang() {
@@ -57,6 +61,7 @@ public class VaiTroController {
 	@PreAuthorize("hasPermission('', 'tmvt')")
 	public String saveVaiTro(ModelMap model, @Valid @ModelAttribute("VAITRO") VaiTro vt, BindingResult bindingResult,
 			Principal principal) {
+		logger.info("Đây là thêm mới vai trò");
 		if (bindingResult.hasErrors()) {
 			return "Vaitro-register";
 		} else {
@@ -91,6 +96,7 @@ public class VaiTroController {
 
 	@RequestMapping(value = "/updateVaiTro", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(ModelMap model, VaiTro vt, Principal principal) {
+		logger.debug("Đây là cập nhật vai trò");
 		VaiTro vt1 = this.vaiTroService.findByVaitroId(vt.getId()).get();
 		vt.setNguoitao(vt1.getNguoitao());
 		vt.setIsdelete(0);
@@ -101,6 +107,7 @@ public class VaiTroController {
 
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list(ModelMap model, HttpServletRequest request) {
+		logger.debug("Đây là danh sách vai trò");
 		request.getSession().setAttribute("vaitrolist", null);
 		return "redirect:/vaitro/list/page/1";
 	}
@@ -141,6 +148,7 @@ public class VaiTroController {
 	@RequestMapping("/dataSearch")
 	public String dataSearch(@RequestParam("keyvt") String tenvaitro, 
 			HttpSession session) {
+		logger.debug("Đây là tìm kiếm vai trò");
 		session.setAttribute("NAMEVT", tenvaitro);
 		
 		if (tenvaitro == null || tenvaitro.equals("")) {
@@ -189,7 +197,7 @@ public class VaiTroController {
 	@RequestMapping(value = "/del", method = {RequestMethod.GET, RequestMethod.POST})
 	@PreAuthorize("hasPermission('', 'xvt')")
 	public String delete(ModelMap model, @RequestParam("lvt") List<Long> ids, Principal principal) {
-
+		logger.debug("Đây là xóa vai trò");
 		for (Long long1 : ids) {
 			VaiTro vaiTro = this.vaiTroService.findByVaitroId(long1).get();
 			vaiTro.setNguoiupdate(principal.getName());

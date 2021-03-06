@@ -14,9 +14,13 @@ import com.learncode.repository.BilldetailsRepository;
 @Service
 public class BillDetailImpl implements BillDetailService {
 
-	@Autowired
+	
 	BilldetailsRepository billdetailsRepository;
 
+	@Autowired
+	public BillDetailImpl(BilldetailsRepository billdetailsRepository) {
+		this.billdetailsRepository = billdetailsRepository;
+	}
 	
 	@Override
 	public List<BillDetail> getSanPhamDatHang() {

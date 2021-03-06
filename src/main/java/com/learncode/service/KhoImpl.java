@@ -12,8 +12,12 @@ import com.learncode.repository.KhoRepository;
 @Service
 public class KhoImpl implements KhoService {
 
+	private final KhoRepository khoRepository;
+
 	@Autowired
-	KhoRepository khoRepository;
+	public KhoImpl(KhoRepository khoRepository) {
+		this.khoRepository = khoRepository;
+	}
 
 	@Override
 	public void save(Kho k) {

@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
@@ -61,6 +63,8 @@ public class SanphamController {
 	@Autowired
 	SanphamVaChitietService sanphamVaChitietService;
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String home(ModelMap model) {
 		Sanpham sp = new Sanpham();
@@ -71,6 +75,7 @@ public class SanphamController {
 	@RequestMapping(value = "/doSave", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doSave(@Valid @ModelAttribute("SANPHAM") Sanpham sp, BindingResult bindingResult, Principal principal,
 			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+		logger.debug("Đây là thêm mới sản phẩm");
 		if (bindingResult.hasErrors()) {
 			return "Sanpham-register";
 		} else {
@@ -125,6 +130,7 @@ public class SanphamController {
 			@RequestParam("xuatxu") String xuatxu, @RequestParam("mota") String mota, Principal principal,
 			@RequestPart("fileImages") MultipartFile multipartFile, @RequestParam("highlight") Integer highlight) throws IOException {
 
+		logger.debug("Đây là cập nhật sản phẩm");
 		Sanpham sp = new Sanpham(masanpham, tensanpham, loaisanpham, xuatxu, mota, highlight);
 		sp.setNguoitao(sp.getNguoitao());
 		sp.setNguoiupdate(principal.getName());
@@ -188,6 +194,7 @@ public class SanphamController {
 
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String list(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
+		logger.debug("Đây là danh sách sản phẩm");
 		request.getSession().setAttribute("sanphamlist", null);
 		return "redirect:/sanpham/list/page/1";
 	}
@@ -239,6 +246,7 @@ public class SanphamController {
 
 	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
 	public String dateSearch(@RequestParam("tensanpham") String tensanpham, HttpSession session) {
+		logger.debug("Đây là tìm kiếm sản phẩm");
 		session.setAttribute("TENSANPHAM", tensanpham);
 
 		if (tensanpham == null || tensanpham.equals("")) {
@@ -299,6 +307,7 @@ public class SanphamController {
 	
 	@GetMapping(value = "/del")
 	public String delete(@RequestParam("lsp[]") List<Long> ids, Principal principal) {
+		logger.debug("Đây là xóa sản phẩm");
 		for (Long long1 : ids) {
 			Sanpham sp = this.sanphamService.finBySanphamId(long1).get();
 			sp.setNguoiupdate(principal.getName());

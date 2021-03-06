@@ -99,6 +99,8 @@ public interface ChucNang1Repository extends JpaRepository<ChucNang1, Long>{
 	
 	@Query(value = "SELECT tenchucnang FROM qtht_chucnang", nativeQuery = true)
 	List<String> maapi();
+
+
 	
 	
 }

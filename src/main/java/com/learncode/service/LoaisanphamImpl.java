@@ -15,12 +15,15 @@ import org.springframework.stereotype.Service;
 import com.learncode.models.LoaiSanPham;
 import com.learncode.repository.LoaisanphamRepository;
 
-@Component
 @Service
 public class LoaisanphamImpl implements LoaisanphamService {
 
+	private final LoaisanphamRepository loaisanphamRepository;
+
 	@Autowired
-	LoaisanphamRepository loaisanphamRepository;
+	public LoaisanphamImpl(LoaisanphamRepository loaisanphamRepository) {
+		this.loaisanphamRepository = loaisanphamRepository;
+	}
 
 	@Override
 //	@Caching(put = @CachePut(value = "loaisanpham"), evict = @CacheEvict(value = "loaisanpham", allEntries = true))

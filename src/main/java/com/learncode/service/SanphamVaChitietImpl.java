@@ -12,9 +12,13 @@ import com.learncode.repository.SanphamVaChitietRepository;
 @Service
 public class SanphamVaChitietImpl implements SanphamVaChitietService{
 	
-	@Autowired
-	SanphamVaChitietRepository sanphamVaChitietRepository;
+	private final SanphamVaChitietRepository sanphamVaChitietRepository;
 
+	@Autowired
+	public SanphamVaChitietImpl(SanphamVaChitietRepository sanphamVaChitietRepository) {
+		this.sanphamVaChitietRepository = sanphamVaChitietRepository;
+	}
+	
 	@Override
 	public void insertSanphamVaChitiet(SanphamVaChitiet spvct) {
 		this.sanphamVaChitietRepository.save(spvct);

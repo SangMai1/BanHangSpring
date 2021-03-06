@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +41,8 @@ public class ChucNangController {
 
 	@Autowired
 	NguoiDungService nguoiDungService;
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/", method = { RequestMethod.PUT, RequestMethod.GET, RequestMethod.POST })
 	public String addOrEdit(ModelMap model) {
@@ -51,6 +55,7 @@ public class ChucNangController {
 	@PreAuthorize("hasPermission('', 'tmcn')")
 	public String doSave(@Valid @ModelAttribute("CHUCNANG") ChucNang1 cn, BindingResult bindingResult, Principal principal
 			) {
+		logger.info("Đây là thêm mới chức năng");
 		if (bindingResult.hasErrors()) {
 			return "Chucnang-register";
 		} else {
@@ -79,6 +84,7 @@ public class ChucNangController {
 
 	@RequestMapping(value="/updateChucNang", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 	public String doUpdate(ChucNang1 cn, Principal principal) {
+		logger.info("Đây là cập nhật chức năng");
 		ChucNang1 cn1 = this.chucNangService.findByChucNangEditId(cn.getId()).get();
 		cn.setNguoitao(cn1.getNguoitao());
 		cn1.updateTimeTamps();
@@ -90,6 +96,7 @@ public class ChucNangController {
 
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
+		logger.info("Đây là danh sách chức năng");
 		request.getSession().setAttribute("chucnanglist", null);
 		return "redirect:/chucnang/list/page/1";
 	}
@@ -145,6 +152,7 @@ public class ChucNangController {
 
 	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET})
 	public String dateSearch(@RequestParam("keyword") String keywork, HttpSession session) {
+		logger.info("Đây là tìm kiếm chức năng");
 		session.setAttribute("KEYWORK", keywork);
 
 		if (keywork == null || keywork.equals("")) {
@@ -206,6 +214,7 @@ public class ChucNangController {
 	@RequestMapping("/del")
 	@PreAuthorize("hasPermission('', 'xcn')")
 	public String delete(ModelMap model, @RequestParam("lcn") List<Long> id, Principal principal) {
+		logger.info("Đây là xóa chức năng");
 		for (Long lg : id) {
 			ChucNang1 chucNang1 = this.chucNangService.findById(lg).get();
 			if (chucNang1.getParentid() < 0) {

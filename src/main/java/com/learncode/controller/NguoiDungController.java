@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -43,6 +45,7 @@ public class NguoiDungController {
 	@Autowired
 	NguoiDungService nguoiDungService;
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@ModelAttribute("NHOMS")
 	public List<NhomNguoiDung> getAllNhom() {
 		return this.nguoiDungService.findAllNhom();
@@ -68,6 +71,7 @@ public class NguoiDungController {
 	@PostMapping("/saveNguoiDung")
 	@PreAuthorize("hasPermission('', 'tmnd')")
 	public String saveNguoiDung(@Valid @ModelAttribute("NGUOIDUNG") Nguoidung nd, BindingResult bindingResult, Principal principal) {
+		logger.debug("Đây là thêm mới người dùng");
 		if (bindingResult.hasErrors()) {
 			return "Nguoidung-register";
 		} else {
@@ -85,6 +89,7 @@ public class NguoiDungController {
 	@ResponseBody
 	@PreAuthorize("hasPermission('', 'cnnd')")
 	public Map<String, String> update(Long id, ModelMap model) {
+		
 		Nguoidung nd = this.nguoiDungService.findById1(id);
 		List<Long> lsn = this.nguoiDungService.findByIdnhom(id);
 		List<Long> lsvt = this.nguoiDungService.findByIdvaitro(id);
@@ -109,6 +114,7 @@ public class NguoiDungController {
 
 	@RequestMapping(value = "/doUpdate", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(Nguoidung nd, Principal principal) {
+		logger.debug("Đây là cập nhật người dùng");
 		Nguoidung nd1 = this.nguoiDungService.findNguoidungById(nd.getId()).get();
 		nd.setNguoitao(nd1.getNguoitao());
 		nd.setIsdelete(0);
@@ -120,6 +126,7 @@ public class NguoiDungController {
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	@PreAuthorize("hasPermission('', 'xdsnd')")
 	public String list(ModelMap model, HttpSession session, HttpServletRequest request) {
+		logger.debug("Đây là danh sách người dùng");
 		request.getSession().setAttribute("nguoidunglist", null);
 		return "redirect:/nguoidung/list/page/1";
 	}
@@ -173,6 +180,7 @@ public class NguoiDungController {
 	@RequestMapping("/list/search/{pageNumber}")
 	public String search(ModelMap model, HttpServletRequest request, @RequestParam("keyword") String tennguoidung,
 			@PathVariable int pageNumber) {
+		logger.debug("Đây là tìm kiếm người dùng");
 		if (tennguoidung.equals("") || tennguoidung == null) {
 			return "redirect:/nguoidung/list";
 		}
@@ -217,6 +225,7 @@ public class NguoiDungController {
 	@RequestMapping("/delete")
 	@PreAuthorize("hasPermission('', 'xnd')")
 	public String delete(ModelMap model, @RequestParam("id[]") List<Long> ids, Principal principal) {
+		logger.debug("Đây là xóa người dùng");
 		for (Long long1 : ids) {
 			Nguoidung nd = this.nguoiDungService.findNguoidungById(long1).get();
 			nd.setNguoiupdate(principal.getName());
