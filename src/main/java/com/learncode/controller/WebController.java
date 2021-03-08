@@ -76,14 +76,14 @@ public class WebController {
 
 	@RequestMapping("/tatcasanpham")
 	public String tatcasanpham() {
-		return "/web/tatcasanpham";
+		return "web/tatcasanpham";
 	}
 
 	
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("tatcasanphamlist", null);
-		return "redirect:/web/list/page/1";
+		return "redirect:web/list/page/1";
 	}
 
 	@RequestMapping(value = "/list/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -126,13 +126,13 @@ public class WebController {
 
 		model.addAttribute("TATCASANPHAMS", pages);
 
-		return "/web/tatcasanpham";
+		return "web/tatcasanpham";
 	}
 	
 	@RequestMapping(value = "/moilist", method = { RequestMethod.GET, RequestMethod.POST })
 	public String SanphammoiList(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphammoilist", null);
-		return "redirect:/web/moilist/page/1";
+		return "redirect:web/moilist/page/1";
 	}
 
 	@RequestMapping(value = "/moilist/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -174,13 +174,13 @@ public class WebController {
 
 		model.addAttribute("SANPHAMSALELIST", pages);
 
-		return "/web/sanphamsale";
+		return "web/sanphamsale";
 	}
 	
 	@RequestMapping(value = "/noibatlist", method = { RequestMethod.GET, RequestMethod.POST })
 	public String SanphamnoibatList(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphamnoibatlist", null);
-		return "redirect:/web/noibatlist/page/1";
+		return "redirect:web/noibatlist/page/1";
 	}
 
 	@RequestMapping(value = "/noibatlist/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -222,13 +222,13 @@ public class WebController {
 
 		model.addAttribute("SANPHAMSALELIST", pages);
 
-		return "/web/sanphamsale";
+		return "web/sanphamsale";
 	}
 	
 	@RequestMapping(value = "/salelist", method = { RequestMethod.GET, RequestMethod.POST })
 	public String SanphamsaleList(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphamsalelist", null);
-		return "redirect:/web/salelist/page/1";
+		return "redirect:web/salelist/page/1";
 	}
 
 	@RequestMapping(value = "/salelist/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -269,13 +269,13 @@ public class WebController {
 
 		model.addAttribute("SANPHAMSALELIST", pages);
 
-		return "/web/sanphamsale";
+		return "web/sanphamsale";
 	}
 	
 	@RequestMapping(value = "/banchaylist", method = { RequestMethod.GET, RequestMethod.POST })
 	public String SanphambanchayList(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphambanchaylist", null);
-		return "redirect:/web/banchaylist/page/1";
+		return "redirect:web/banchaylist/page/1";
 	}
 
 	@RequestMapping(value = "/banchaylist/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -316,18 +316,18 @@ public class WebController {
 
 		model.addAttribute("SANPHAMSALELIST", pages);
 
-		return "/web/sanphamsale";
+		return "web/sanphamsale";
 	}
 	
 	@RequestMapping(value = "/dataSearch", method = {RequestMethod.GET, RequestMethod.POST})
 	public String datasearch(@RequestParam("min") String min, @RequestParam("max") String max, HttpSession session) {
 		
 		if (min == null && max == null || min.equals("") && max.equals("")) {
-			return "redirect:/web/list";
+			return "redirect:web/list";
 		} else {
 			session.setAttribute("MIN", min);
 			session.setAttribute("MAX", max);
-			return "redirect:/web/list/search/1";
+			return "redirect:web/list/search/1";
 		}
 	}
 	
@@ -337,7 +337,7 @@ public class WebController {
 		String max =(String) session.getAttribute("MAX");
 		List<SanphamVaChitiet> list = (List<SanphamVaChitiet>) this.sanphamvachitietService.searchGiatien(Float.parseFloat(min), Float.parseFloat(max));
 		if (list == null) {
-			return "redirect:/web/list";
+			return "redirect:web/list";
 		}
 		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("tatcasanphamlist");
 		int pagesize = 20;
@@ -371,7 +371,7 @@ public class WebController {
 
 		model.addAttribute("TATCASANPHAMS", pages);
 
-		return "/web/tatcasanpham";
+		return "web/tatcasanpham";
 	}
 	
 	@RequestMapping(value = "/dataSize", method = {RequestMethod.GET})
@@ -424,22 +424,22 @@ public class WebController {
 
 		model.addAttribute("TATCASANPHAMS", pages);
 
-		return "/web/tatcasanpham";
+		return "web/tatcasanpham";
 	}
 	
 	@GetMapping("/login1")
 	public String login() {
-		return "/web/loginweb";
+		return "web/loginweb";
 	}
 	@RequestMapping(value = "/checkLogin", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 	public String checkLogin(HttpSession session,@RequestParam("email") String email, @RequestParam("password") String password) {
 		if (this.billService.checkLogin(email, password)) {
 			session.setAttribute("EMAIL_WEB", this.billRepository.findByEmail(email));
 			
-			return "redirect:/web/";
+			return "redirect:web/";
 		} else {
 			
-			return "redirect:/web/";
+			return "redirect:web/";
 		}
 		
 	}
@@ -453,7 +453,7 @@ public class WebController {
 		session.removeAttribute("myCartNum");
 		session.removeAttribute("myCartTotal");
 		session.removeAttribute("myCartItems");
-		return "redirect:/web/";
+		return "redirect:web/";
 	}
 	@ModelAttribute(name = "SANPHAMMOI")
 	public List<SanphamVaChitiet> getSanphammoi() {
@@ -471,14 +471,14 @@ public class WebController {
 	public String sanphamchitiet(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("spm", this.sanphamService.finBySanphamId(id).get());
 		model.addAttribute("sizesp", this.sanphamvachitietService.findBySizeSanpham(id));
-		return "/web/chitiet";
+		return "web/chitiet";
 	}
 
 	@GetMapping("/sanpham-size")
 	public String sanphamsize(@RequestParam("id") Long id, ModelMap model) {
 		SanphamVaChitiet sizeSanPham = this.sanphamvachitietService.findBySanphamId(id).get();
 		model.addAttribute("sizes", sizeSanPham);
-		return "/web/size";
+		return "web/size";
 	}
 
 	@GetMapping(value = "/sp-chitiet", produces = "application/json")
@@ -512,7 +512,7 @@ public class WebController {
 		session.setAttribute("myCartTotal", totalPrice(cartItems));
 		session.setAttribute("myCartNum", cartItems.size());
 		session.setAttribute("quantity", totalQuantity(cartItems));
-		return "/web/giohang";
+		return "web/giohang";
 	}
 	
 	@RequestMapping(value = "/update", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
@@ -538,12 +538,12 @@ public class WebController {
 		session.setAttribute("myCartTotal", totalPrice(cartItems));
 		session.setAttribute("myCartNum", cartItems.size());
 		session.setAttribute("quantity", totalQuantity(cartItems));
-		return "redirect:/web/cart";
+		return "redirect:web/cart";
 	}
 	
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String cart() {
-		return "/web/giohang";
+		return "web/giohang";
 	}
 
 	public double totalPrice(HashMap<Long, CartDTO> cartItems) {
@@ -576,7 +576,7 @@ public class WebController {
 		session.setAttribute("myCartTotal", totalPrice(cartItems));
 		session.setAttribute("myCartNum", cartItems.size());
 		session.setAttribute("quantity", totalQuantity(cartItems));
-		return "/web/giohang";
+		return "web/giohang";
 	}
 
 	@RequestMapping(value = "/checkout", method = { RequestMethod.GET })
@@ -588,7 +588,7 @@ public class WebController {
 			model.addAttribute("bills", bills);
 			return "/web/checkout";
 		}
-		return "/web/thanhtoan";
+		return "web/thanhtoan";
 	}
 
 	@PostMapping("/saveCheckout")
@@ -600,16 +600,16 @@ public class WebController {
 		billService.insertBill(bills);
 		Integer q = (Integer) session.getAttribute("quantity");
 		if(q == null) {
-			return "redirect:/web/";
+			return "redirect:web/";
 		}
-		return "/web/thanhtoan";
+		return "web/thanhtoan";
 	}
 	
 	@RequestMapping(value="/updateCheckout1", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 	public String doUpdate11(Bills b) {
 		b.setBill_status((Integer) 0);
 		this.billService.updateBill1(b);
-		return "redirect:/web/";
+		return "redirect:web/";
 	}
 	
 	@PostMapping("/savePay")
@@ -650,7 +650,7 @@ public class WebController {
 		session.setAttribute("myCartTotal", 0);
 		session.setAttribute("myCartNum", 0);
 		session.setAttribute("quantity", 0);
-		return "redirect:/web/damua";
+		return "redirect:web/damua";
 	}
 	
 	@GetMapping("/thongtincoban")
@@ -658,7 +658,7 @@ public class WebController {
 		Bills b =(Bills) session.getAttribute("EMAIL_WEB");
 		String email = b.getBill_email();
 		model.addAttribute("thongtin", this.billRepository.findByEmail(email));
-		return "/web/thongtincoban";
+		return "web/thongtincoban";
 	}
 
 	@GetMapping("/thongtincoban1")
@@ -666,7 +666,7 @@ public class WebController {
 		Bills b =(Bills) session.getAttribute("INFO");
 		String email = b.getBill_email();
 		model.addAttribute("thongtin1", this.billRepository.findByEmail(email));
-		return "/web/thongtincoban1";
+		return "web/thongtincoban1";
 	}
 	
 	@GetMapping("/lichsumuahang")
@@ -674,25 +674,25 @@ public class WebController {
 		Bills email =(Bills) session.getAttribute("EMAIL_WEB");
 		List<BillDetail> list = (List<BillDetail>) this.billDetailService.getLichSuMuaHang(email);
 		if (list == null) {
-			return "redirect:/web/";
+			return "redirect:web/";
 		}
 		
 		model.addAttribute("LICHSUMUAHANG", list);
-		return "/web/lichsumuahang";
+		return "web/lichsumuahang";
 	}
 	
 	@GetMapping("/damua")
 	public String damua() {
-		return "/web/damua";
+		return "web/damua";
 	}
 	
 	@GetMapping("/lienhe") 
 	public String lienhe() {
-		return "/web/lienhe";
+		return "web/lienhe";
 	}
 	
 	@GetMapping("/gioithieu") 
 	public String gioithieu() {
-		return "/web/gioithieu";
+		return "web/gioithieu";
 	}
 }
