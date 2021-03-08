@@ -42,7 +42,6 @@ import com.learncode.service.KhoService;
 import com.learncode.service.SanphamService;
 import com.learncode.service.SanphamVaChitietService;
 
-
 @Controller
 @RequestMapping("/web")
 public class WebController {
@@ -52,7 +51,6 @@ public class WebController {
 
 	@Autowired
 	SanphamVaChitietService sanphamvachitietService;
-
 
 	@Autowired
 	BillService billService;
@@ -67,7 +65,7 @@ public class WebController {
 	BillDetailService billDetailService;
 
 	@GetMapping("/")
-	public String home() {
+	public String home11() {
 		return "/web/trangchuwebsite";
 	}
 	
