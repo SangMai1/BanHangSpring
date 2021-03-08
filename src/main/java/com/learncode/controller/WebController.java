@@ -66,7 +66,7 @@ public class WebController {
 
 	@GetMapping("/")
 	public String home11() {
-		return "/web/trangchuwebsite";
+		return "web/trangchuwebsite";
 	}
 	
 //	@RequestMapping("/1")
