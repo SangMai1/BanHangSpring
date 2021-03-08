@@ -66,7 +66,7 @@ public class WebController {
 	@Autowired
 	BillDetailService billDetailService;
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String home() {
 		return "/web/trangchuwebsite";
 	}
