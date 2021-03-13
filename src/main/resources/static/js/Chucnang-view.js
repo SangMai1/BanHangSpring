@@ -17,6 +17,7 @@ $(document).ready(function() {
 
 	$('.edit').on('click', function(event) {
 		event.preventDefault();
+		$('#myEdit').modal("hide");
 		var href = $(this).attr('href');
 		$.get(href, function(cn, st) {
 			$('#id_edit').val(cn.id);

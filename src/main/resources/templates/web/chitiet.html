@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{web/trangchuwebsite}">
+	layout:decorate="~{web/trangchu-admin}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/css/StyleChitiet.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/StyleTrangChuWebsite.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/StyleChitiet.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -53,64 +51,48 @@
 			
 		</section>
 		
-		<section class="feature1">
-				<div class="wrapper1">
-					<div class="feature__item1">
-					
-						<div class="feature__image1">
-							<img class="feature__img1" th:src="@{${spm.getLogoImagePath()}}">
-			
-						</div>
-						<div class="feature__info1">
-							<div class="feature__info1-product-title">
-								
-								<h5 th:text="${spm.tensanpham}"></h5>
-								<p>SKU: <span th:text="${spm.masanpham}"></span></p>
-							</div>
-							<hr>
-							
-							
-							<div class="feature__info1-product-size" id="myDIV">
-								<div th:each="size : ${sizesp}" class="btn">
-									<a th:href="@{/web/sanpham-size/(id=${size.id})}" th:value="${size.id}" th:text=${size.kichthuoc}></a>
+			<section class="feature1">	
+				<div class="card" style="max-width: 100%;">
+	                <div class="row no-gutters">
+	                    <div class="col-sm-5" style="background: #868e96;">
+	                        <img th:src="@{${spm.getLogoImagePath()}}" class="card-img-top h-100" alt="...">
+	                    </div>
+	                    <div class="col-sm-7">
+	                        <div class="card-body">
+	                            <h5 th:text="${spm.tensanpham}" class="card-title"></h5>
+	                            <p>SKU: <span th:text="${spm.masanpham}"></span></p>
+	                            <div class="feature__info1-product-size" id="myDIV">
+									<div th:each="size : ${sizesp}" class="btn">
+										<a th:href="@{/web/sanpham-size/(id=${size.id})}" th:value="${size.id}" th:text=${size.kichthuoc}></a>
+									</div>
 								</div>
-
-							</div>
-							<hr>
-							<div class="feature__info1-product-cart">
-								
-							
-								<div class="feature__info1-product-description">
-									<h5>Mô tả</h5>
-									<p th:text="${spm.mota}"></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+	                            <p th:text="${spm.mota}" class="card-text"></p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
 			</section>
 			<section class="selling_products">
 				
 			</section>
 			
 			<section class="category">
-				<div class="container">
-					<ul class="category__list">
-						<li th:each="spm : ${SANPHAMMOI}" class="category__item">
-							<a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}"><img class="category__image" th:src="@{${spm.sanphams.getLogoImagePath()}}"></a>
-							<a href="#" th:text="${spm.sanphams.tensanpham}" class="category__name"></a>
-							<span class="category__name-price" th:text="${#numbers.formatCurrency(spm.giatien - spm.giamgia)}"></span>
-							<div class="category__div">
-								<del class="category__name-price-giagoc" th:text="${#numbers.formatCurrency(spm.giatien)}"></del>
-								<span class="category__name-price-giamgia" th:text="${#numbers.formatCurrency(spm.giamgia)}"></span>
-							</div>
-						</li>
-						
-					</ul>
-				</div>
-				
+				<div class="container-fluid">
+		          <div class="row">
+		            <div class="card-deck" style="width: 1445px !important;">
+		              <div th:each="spm : ${SANPHAMMOI}" class="card">
+		                <img th:src="@{${spm.sanphams.getLogoImagePath()}}" class="card-img-top" alt="...">
+		                <div class="card-body">
+		                  <a th:href="${'/web/sanpham-chitiet1/' + spm.sanphams.id}">
+		                    <h5 th:text="${spm.sanphams.tensanpham}" class="card-title"></h5>
+		                  </a>
+		                  <p th:text="${#numbers.formatCurrency(spm.giatien - spm.giamgia)}" class="card-text"></p>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+		        </div>		
 			</section>
-			<hr class="hr1">
 	</main>
 
 </body>

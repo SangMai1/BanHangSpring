@@ -1,8 +1,3 @@
-.wrapper1 {
-	width: 90%;
-	margin: 0 auto;	
-}
-
 .path__chitiet {
 	width: 100%;
 	height: 42px;
@@ -153,7 +148,7 @@
 }
 
 /* Style the buttons */
-.btn {
+#myDIV .btn {
   border: none;
   outline: none;
   padding: 10px 16px;
@@ -163,11 +158,11 @@
   
 }
 
-.btn a {
+#myDIV .btn a {
   color: black;
 }
 /* Style the active class, and buttons on mouse-over */
-.active, .btn:hover {
+#myDIV .btn:hover {
   background-color: #666;
   color: white;
 }

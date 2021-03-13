@@ -1,5 +1,8 @@
+body {
+  background-color: #b3bab5;
+}
+
 h4 {
-	padding-top: 30px;
 	color: black;
 	font-size: 18px;
 	font-weight: 600;
@@ -28,11 +31,13 @@ td, th {
 }
 
 #btn, .buttonDelete{
-	margin: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
 }
+
 #dataSearch {
 	float: right;
-	background-color: #4db6ac;
+	background-color: #838b8a;
     width: 40%;
     margin: 0 auto;
     padding: 10px;
@@ -74,8 +79,10 @@ td, th {
 	font-size: 12px;
 }
 .pagination {
-	 justify-content: center !important;
 	 font-size: 16px;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
 }
 
 .capnhat {

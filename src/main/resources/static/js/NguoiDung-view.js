@@ -18,9 +18,9 @@ $(document).ready(function(){
 	
 	$('.edit-record').on('click', function(event){
 		event.preventDefault();
+		$('#myEdit').modal('hide');
 			$('input[name="nhomnguoidung"]').prop("checked", false);
 			$('input[name="vaitro"]').prop("checked", false);
-//			var url = $('#formEdit').attr('action');
 		var uu = $(this).attr('href');
 		console.log(uu);
 		var id = GetURLParameter(uu, 'id');

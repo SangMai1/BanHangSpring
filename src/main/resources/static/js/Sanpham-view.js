@@ -60,6 +60,7 @@ $(document).ready(function(){
 		
 		$('.new').on('click', function(event){
 			event.preventDefault();
+			$('#myNew').modal("show");
 			var href = $(this).attr('href');
 			$.get(href, function(act, st){
 				$('#idsanpham').val(act.id);

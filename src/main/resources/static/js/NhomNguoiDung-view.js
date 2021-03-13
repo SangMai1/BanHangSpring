@@ -17,6 +17,7 @@
 
 		$('.edit').on('click', function(event){
 			event.preventDefault();
+			$('#myEdit').modal('show');
 			$('input[name="chucnang"]').prop("checked", false);
 			var uu = $(this).attr('href');
 			var id = GetURLParameter(uu, 'id');

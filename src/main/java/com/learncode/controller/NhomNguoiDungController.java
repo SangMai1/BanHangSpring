@@ -91,7 +91,7 @@ public class NhomNguoiDungController {
 
 	@RequestMapping(value = "/doUpdate", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public String doUpdate(ModelMap model, NhomNguoiDung nnd, Principal principal) {
-		logger.debug("Đây là cập nhật nhóm");
+		logger.info("Đây là cập nhật nhóm");
 		NhomNguoiDung nnd1 = this.nhomNguoiDungService.findByLongId(nnd.getId()).get();
 		
 		nnd.setNguoitao(nnd1.getNguoitao());

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{web/trangchuwebsite}">
+	layout:decorate="~{web/trangchu-admin}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -11,39 +11,37 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css" />
 
-<link rel="stylesheet" type="text/css" href="/css/StyleTatcasanpham.css">
+
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/StyleTrangChuWebsite.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/StyleTatcasanpham.css">
 </head>
 <body>
 	<main layout:fragment="content">
 		<section class="path__chitiet">
-			<!-- <div class="wrapper1">
-				<p>Trang chủ / Sản phẩm</p>
-			</div> -->
+
 		</section>
 
-		<section class="feature2">
-			<div class="wrapper1">
-				<div class="feature__item2">
-					<div class="feature__image2">
+		<section>
+		
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-3">
 						<div class="feature__image2-small">
 							<h4>Khoảng Giá</h4>
 							<form th:action="@{/web/dataSearch}" id="dataSearch">
 							<div class="feature__iamge2-amout">
-
+	
 								<input type="text" maxlength="13" class="fillter_input"
 									placeholder="đ TỪ" name="min">
 								<div class="fillter_line"></div>
 								<input type="text" maxlength="13" class="fillter_input"
 									placeholder="đ ĐẾN" name="max">
-
+	
 							</div>
 							<button type="submit" class="button-solid button-solid_primary">Áp
 								dụng</button>
-							</form>
-							
+							</form>	
 						</div>
 						<hr>
 						<div class="feature__info1-product-size">
@@ -56,75 +54,71 @@
 							
 						</div>
 					</div>
-					<div class="feature__info2">
+					
+					<div class="col-lg-9">
 						<th:block th:if="${#lists.isEmpty(SANPHAMSALELIST.pageList)}">
-							<h2>Không có sản phẩm sale</h2>
-						</th:block>
-						<th:block th:unless="${#lists.isEmpty(SANPHAMSALELIST.pageList)}">
-
-							<div class="container">
-								<ul class="category__list1">
-									<li th:each="tcsp : ${SANPHAMSALELIST.pageList}"
-										class="category__item1"><a
-										th:href="${'/web/sanpham-chitiet1/' + tcsp.sanphams.id}"><img
-											class="category__image1"
-											th:src="@{${tcsp.sanphams.getLogoImagePath()}}"></a> <a href="#"
-										th:text="${tcsp.sanphams.tensanpham}" class="category__name1"></a>
-										<span class="category__name-price" th:text="${#numbers.formatCurrency(tcsp.giatien)}"></span>
-										<div class="category__div">
-											<del class="category__name-price-giagoc" th:text="${#numbers.formatCurrency(tcsp.giatien)}"></del>
-											<span class="category__name-price-giamgia" th:text="${#numbers.formatCurrency(tcsp.giamgia)}"></span>
-										</div>
-										</li>
-
+								<h2>Không có sản phẩm sale</h2>
+							</th:block>
+							<th:block th:unless="${#lists.isEmpty(SANPHAMSALELIST.pageList)}">
+	
+	
+								
+						            <div class="card-columns" >
+						              <div th:each="tcsp : ${SANPHAMSALELIST.pageList}" class="card">
+						                <img th:src="@{${tcsp.sanphams.getLogoImagePath()}}" class="card-img-top" alt="...">
+						                <div class="card-body">
+						                  <a th:href="${'/web/sanpham-chitiet1/' + tcsp.sanphams.id}">
+						                    <h5 th:text="${tcsp.sanphams.tensanpham}" class="card-title"></h5>
+						                  </a>
+						                  <p th:text="${#numbers.formatCurrency(tcsp.giatien - tcsp.giamgia)}" class="card-text"></p>
+						                  <div class="category__div">
+												<del class="category__name-price-giagoc" th:text="${#numbers.formatCurrency(tcsp.giatien)}"></del>
+												<span class="category__name-price-giamgia" th:text="${#numbers.formatCurrency(tcsp.giamgia)}"></span>
+											</div>
+						                </div>
+						              </div>
+						            </div>
+								<!-- phan trang-->
+								<ul class="pagination">
+									<li
+										th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+										<a class="page-link" th:href="@{/web/list}">First</a>
+									</li>
+									<li
+										th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+										<a class="page-link" aria-label="Previous"
+										th:href="@{|/web${baseUrl}${currentIndex - 1}|}"
+										title='Go to previous page'> <span aria-hidden="true"><<</span>
+											<span class="sr-only">Previous</span></a>
+									</li>
+									<li th:each="item: ${#numbers.sequence(beginIndex, endIndex)}"
+										th:class="${item == currentIndex ? 'page-item active' : 'page-item'}">
+										<a class="page-link"
+										th:href="@{|/web${baseUrl}${item}|}"> <span
+											th:text='${item}'>1</span>
+									</a>
+									</li>
+									<li
+										th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+										<a class="page-link" aria-label="Next"
+										th:href="@{|/web${baseUrl}${currentIndex + 1}|}"
+										title='Go to next page'> <span aria-hidden="true">>></span>
+											<span class="sr-only">Next</span></a>
+									</li>
+									<li
+										th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+										<a class="page-link"
+										th:href="@{|/web${baseUrl}${totalPageCount}|}">Last</a>
+									</li>
 								</ul>
-							</div>
-
-
-
-							<!-- phan trang-->
-							<ul class="pagination">
-								<li
-									th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
-									<a class="page-link" th:href="@{/web/list}">First</a>
-								</li>
-								<li
-									th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
-									<a class="page-link" aria-label="Previous"
-									th:href="@{|/web${baseUrl}${currentIndex - 1}|}"
-									title='Go to previous page'> <span aria-hidden="true"><<</span>
-										<span class="sr-only">Previous</span></a>
-								</li>
-								<li th:each="item: ${#numbers.sequence(beginIndex, endIndex)}"
-									th:class="${item == currentIndex ? 'page-item active' : 'page-item'}">
-									<a class="page-link"
-									th:href="@{|/web${baseUrl}${item}|}"> <span
-										th:text='${item}'>1</span>
-								</a>
-								</li>
-								<li
-									th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
-									<a class="page-link" aria-label="Next"
-									th:href="@{|/web${baseUrl}${currentIndex + 1}|}"
-									title='Go to next page'> <span aria-hidden="true">>></span>
-										<span class="sr-only">Next</span></a>
-								</li>
-								<li
-									th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
-									<a class="page-link"
-									th:href="@{|/web${baseUrl}${totalPageCount}|}">Last</a>
-								</li>
-							</ul>
-
-						</th:block>
-
+	
+							</th:block>
 					</div>
-
-					
-					
 					
 				</div>
-			</div>
+		</div>
+		
+		
 		</section>
 	</main>
 </body>

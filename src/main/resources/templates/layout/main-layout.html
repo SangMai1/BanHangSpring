@@ -3,230 +3,242 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link
-	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/css/reset.css" />
-<link rel="stylesheet" type="text/css" href="/css/StyleLayout.css" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/Style-trangchu-admin.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <title>ADMIN</title>
 </head>
 <body>
-	<div class="wrapper">
-		<header class="header">
-			<div class="header__left">
-				<a th:href="@{/admin}" class="logo">ADMIN</a>
+	<aside class="side-nav" id="show-side-navigation1">
+		<i class="fa fa-bars close-aside hidden-sm hidden-md hidden-lg" data-close="show-side-navigation1"></i>
+		<div class="heading">
+			<img src="https://uniim1.shutterfly.com/ng/services/mediarender/THISLIFE/021036514417/media/23148907008/medium/1501685726/enhance" alt=""/>
+			<div class="info">
+				<h3><a href="#" sec:authentication="name">Username</a></h3>
+				<p>Lorem ipsum dolor sit amet consectetur.</p>
 			</div>
-			<div class="header__right">
-				<div class="header__right-box">
-					<div class="header__right-box-image">
-						<i class="fas fa-user-circle"></i>
-					</div>
-					<div class="header__right-box-name">
-						<b><span class="header__right-box-name-text"
-							sec:authentication="name">Username</span></b>
-					</div>
+		</div>
+		<div class="search">
+			<input type="text" placeholder="Type here"><i class="fa fa-search"></i>
+		</div>
+		<ul class="categories">
+			<li>
+				<i class="fa fa-home fa-fw" aria-hidden="true"></i>
+				<a href="#"> Quản trị hệ thống</a>
+				<ul class="side-nav-dropdown">
+					<li><a href="/nguoidung/list">Người dùng</a></li>
+					<li><a href="/chucnang/list">Chức năng</a></li>
+					<li><a href="/vaitro/list">Vai trò</a></li>
+					<li><a href="/nhom/list">Nhóm</a></li>
+				</ul>
+			</li>
+			
+			<li>
+				<i class="fa fa-support fa-fw" aria-hidden="true"></i>
+				<a href="#"> Quản lý website</a>
+				<ul class="side-nav-dropdown">
+					<li><a href="/sanpham/list">Sản phẩm</a></li>
+					<li><a href="/loaisanpham/list">Loại sản phẩm</a></li>
+				</ul>
+			</li>
+			
+			<li>
+				<i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+				<a href="#"> Quản lý khách hàng</a>
+				<ul class="side-nav-dropdown">
+					<li><a href="/nguoimuahang/list">Người mua</a></li>
+					<li><a href="/sanphamdamua/listMuaThanhCong">Sản phẩm đã mua</a></li>
+				</ul>
+			</li>
+			
+			<li>
+				<i class="fa fa-users fa-fw" aria-hidden="true"></i>
+				<a href="#"> Quản lý kho</a>
+				<ul class="side-nav-dropdown">
+					<li><a href="/sanphamdamua/listKho">Đã mua chưa xuất kho</a></li>
+				</ul>
+			</li>
+			
+			<li>
+				<i class="fa fa-bolt fa-fw" aria-hidden="true"></i>
+				<a href="#"> Quản lý đơn hàng</a>
+				<ul class="side-nav-dropdown">
+					<li><a href="/sanphamdamua/list">Đơn hàng</a></li>
+				</ul>
+			</li>
+			
+			<li>
+				<i class="fa fa-wrench fa-fw"></i>
+				<a href="#"> Thống kê</a>
+				<ul class="side-nav-dropdown">
+					<li><a th:href="@{/thongke/thongkenguoidangki}">Người đăng kí</a></li>
+					<li><a th:href="@{/thongke/thongkesoluongsanpham}">Sản phẩm</a></li>
+					<li><a th:href="@{/thongke/thongkesoluongdonhang}">Đơn hàng</a></li>
+					<li><a th:href="@{/thongke/thongkedoanhthutungngay}">Doanh thu</a></li>
+				</ul>
+			</li>
+			
+			<li>
+				<a th:href="@{/logout}"> Logout</a>
+			</li>
+		</ul>
+	</aside>
+	
+	<section id="contents">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+			
+				<div class="navbar-header">
+					<button type="button" 
+							class="navbar-toggle collapsed" 
+							data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1"
+							aria-expanded="false">
+						<i class="fa fa-align-right"></i>
+					</button>
+					<a class="navbar-brand" th:href="@{/admin}">my<span class="main-color">Dasboard</span></a>
 				</div>
-			</div>
-		</header>
-
-		<div class="main">
-			<section class="main__menu">
-				<div class="main__menu-search">
-					<div class="main__menu-search-form">
-						<input type="text" class="main__menu-search-form-input"
-							placeholder="Search...">
-						<button class="main__menu-search-form-button">Search</button>
-					</div>
-				</div>
-				<div class="main__menu-navigation">
-					<p class="main__menu-navigation-text">MAIN NAVIGATION</p>
-				</div>
-				<div class="main__menu-function">
-					<div class="main__menu-function-sidenav">
-						<a href="#">Home</a>
-						<button class="main__menu-function-dropdown-btn">
-							Quản trị hệ thống <i class="fas fa-caret-down"></i>
-						</button>
-						<div class="dropdown-container">
-							<a href="/nguoidung/list">Người dùng</a> <a href="/chucnang/list">Chức
-								năng</a> <a href="/vaitro/list">Vai trò</a> <a href="/nhom/list">Nhóm</a>
-						</div>
-						<button class="main__menu-function-dropdown-btn">
-							Quản lý website <i class="fas fa-caret-down"></i>
-						</button>
-						<div class="dropdown-container">
-							<a href="/slides/list">Slide</a> <a href="/loaisanpham/list">Loại sản
-								phẩm</a> <a href="/sanpham/list">Sản phẩm</a>
-						</div>
-						<button class="main__menu-function-dropdown-btn">
-							Quản lý khách hàng <i class="fas fa-caret-down"></i>
-						</button>
-						<div class="dropdown-container">
-
-							<a href="/nguoimuahang/list">Người mua</a> <a
-								href="/sanphamdamua/listMuaThanhCong">Sản phẩm đã mua</a>
-						</div>
-						<button class="main__menu-function-dropdown-btn">
-							Quản lý kho <i class="fas fa-caret-down"></i>
-						</button>
-						<div class="dropdown-container">
-							<a href="/sanphamdamua/listKho">Đã mua chưa xuất kho</a>
-						</div>
-						<button class="main__menu-function-dropdown-btn">
-							Quản lý đơn hàng <i class="fas fa-caret-down"></i>
-						</button>
-						<div class="dropdown-container">
-							<a href="/sanphamdamua/list">Đơn hàng</a>
-						</div>
-						<button class="main__menu-function-dropdown-btn">
-							Thống kê <i class="fas fa-caret-down"></i>
-						</button>
-						<div class="dropdown-container">
-							<a th:href="@{/thongke/thongkenguoidangki}">Người đăng kí</a> <a
-								th:href="@{/thongke/thongkesoluongsanpham}">Sản phẩm</a> <a
-								th:href="@{/thongke/thongkesoluongdonhang}">Đơn hàng</a> <a
-								th:href="@{/thongke/thongkedoanhthutungngay}">Doanh thu</a>
-						</div>
-						<a th:href="@{/logout}">Logout</a>
-					</div>
-				</div>
-			</section>
-
-			<section class="main__content" layout:fragment="content">
-
-				<div class="container">
-							
-					<ul class="category__list">
-						<li class="category__item">
-							<a th:href="@{/thongke/thongkenguoidangki}">
-								<span class="category__item-title">Tổng số người đăng kí mới</span>
-								<span class="category__item-soluong" th:text="${countNguoiDangKi}"></span>
+				
+				<div class="collapse navbar-collapse navbar-right" 
+					 id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="#">
+								<i data-show="show-side-navigation1"
+									class="fa fa-bars show-side-btn"></i>
 							</a>
-							
-						</li>
-						<li class="category__item">
-							<a th:href="@{/thongke/thongkesoluongsanpham}">
-								<span class="category__item-title">Tổng sản phẩm bán ra</span><br>
-								<span class="category__item-soluong" th:text="${countSanPhamBanRa}"></span>
-							</a>
-							
-							
-						</li>
-						<li class="category__item">
-							<a th:href="@{/thongke/thongkesoluongdonhang}">
-								<span class="category__item-title">Tổng số lượng đơn hàng</span><br>
-								<span class="category__item-soluong" th:text="${countSoLuongDonHang}"></span>
-							</a>
-							
-						</li>
-						<li class="category__item">
-							<a th:href="@{/thongke/thongkedoanhthutungngay}">
-								<span class="category__item-title">Tổng doanh thu</span>
-								<span class="category__item-soluong" th:text="${#numbers.formatCurrency(countTongDoanhThu)}"></span>
-							</a>
-							
 						</li>
 					</ul>
 				</div>
-				<div class="inner-block">
-					<div class="chit-chat-layer1">
-
-						<div class="col-md-6 chit-chat-layer1-rit">
-							<div class="glocy-chart">
-								<div class="span-2c">
-
-									<canvas id="bar" height="600" width="800"
-										style="width: 800px; height: 600px; text-align: center"></canvas>
-									<script th:inline="javascript">
-										var barChartData = {
-											labels : [
-
-											/*<![CDATA[*/
-
-											/*[# th:each="item : ${listReceipt}"]*/
-
-											/*[[${item.time}]]*/,
-
-											/*[/]*/
-
-											/*]]>*/
-
-											],
-											datasets : [ {
-												fillColor : "#FC8213",
-												data : [
-
-												/*<![CDATA[*/
-
-												/*[# th:each="item : ${listReceipt}"]*/
-
-												/*[[${item.value}]]*/,
-
-												/*[/]*/
-
-												/*]]>*/
-
-												]
-											} ]
-
-										};
-										new Chart(
-												document.getElementById("bar")
-														.getContext("2d"),
-												{
-
-													options : {
-														title : {
-															display : true,
-															text : 'Thống kê doanh thu năm'
-														},
-														legend : {
-															display : true
-														}
-													},
-													type : "bar",
-													data : barChartData
-
-												});
-									</script>
+			</div>
+		</nav>
+	
+		<section layout:fragment="content">
+			<section class="statistics">
+				<div class="container-fluid">
+					<div class="row">
+	
+						<div class="col-md-3">
+							<div class="box">
+								<i class="fa fa-envelope fa-fw bg-primary"></i>
+								<div class="info">
+									
+										<h3 th:text="${countNguoiDangKi}"></h3>
+										<p>Người đăng kí mới</p>
+									
 								</div>
 							</div>
 						</div>
-						<div class="clearfix"></div>
+	
+						<div class="col-md-3">
+							<div class="box">
+								<i class="fa fa-file fa-fw danger"></i>
+								<div class="info">
+									<h3 th:text="${countSanPhamBanRa}"></h3>
+									<p>Sản phẩm bán ra</p>
+								</div>
+							</div>
+						</div>
+	
+						<div class="col-md-3">
+							<div class="box">
+								<i class="fa fa-users fa-fw success"></i>
+								<div class="info">
+									<h3 th:text="${countSoLuongDonHang}"></h3>
+									<p>Đơn hàng</p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-md-3">
+							<div class="box">
+								<i class="fa fa-users fa-fw success"></i>
+								<div class="info">
+									<h3 th:text="${#numbers.formatCurrency(countTongDoanhThu)}"></h3>
+									<p>Doanh thu</p>
+								</div>
+							</div>
+						</div>
 					</div>
-
 				</div>
 			</section>
-		</div>
-		<div class="clear"></div>
-		<footer class="footer">
-			<p class="footer-text">Mai Văn Sang</p>
-		</footer>
-	</div>
-	<script>
-		/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-		var dropdown = document
-				.getElementsByClassName("main__menu-function-dropdown-btn");
-		var i;
-
-		for (i = 0; i < dropdown.length; i++) {
-			dropdown[i].addEventListener("click", function() {
-				this.classList.toggle("active");
-				var dropdownContent = this.nextElementSibling;
-				if (dropdownContent.style.display === "block") {
-					dropdownContent.style.display = "none";
-				} else {
-					dropdownContent.style.display = "block";
-				}
-			});
-		}
-	</script>
+	
+			<div class="inner-block">
+				<div class="chit-chat-layer1">
+	
+					<div class="col-md-6 chit-chat-layer1-rit">
+						<div class="glocy-chart">
+							<div class="span-2c">
+	
+								<canvas id="bar" height="600" width="800"
+									style="width: 800px; height: 600px; text-align: center"></canvas>
+								<script th:inline="javascript">
+									var barChartData = {
+										labels : [
+	
+										/*<![CDATA[*/
+	
+										/*[# th:each="item : ${listReceipt}"]*/
+	
+										/*[[${item.time}]]*/,
+	
+										/*[/]*/
+	
+										/*]]>*/
+	
+										],
+										datasets : [ {
+											fillColor : "#FC8213",
+											data : [
+	
+											/*<![CDATA[*/
+	
+											/*[# th:each="item : ${listReceipt}"]*/
+	
+											/*[[${item.value}]]*/,
+	
+											/*[/]*/
+	
+											/*]]>*/
+	
+											]
+										} ]
+	
+									};
+									new Chart(
+											document.getElementById("bar")
+													.getContext("2d"),
+											{
+	
+												options : {
+													title : {
+														display : true,
+														text : 'Thống kê doanh thu năm'
+													},
+													legend : {
+														display : true
+													}
+												},
+												type : "bar",
+												data : barChartData
+	
+											});
+								</script>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+	
+			</div>
+		</section>
+		
+		
+	</section>
+	<script src='http://code.jquery.com/jquery-latest.js'></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{/js/trang-chu-admin.js}"></script>
 </body>
 </html>

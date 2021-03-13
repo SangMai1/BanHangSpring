@@ -6,7 +6,7 @@
 <meta charset="UTF-8" />
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/css/StyleViewVaiTro.css">
 <link rel="stylesheet" type="text/css"
 	href="/css/StyleRegisterVaitro.css">
@@ -34,14 +34,14 @@
 				<i class="fas fa-trash-alt"></i>
 			</button>
 			<!-- The Modal Add New-->
-			<div class="modal" id="myModal">
+			<div class="modal fade" id="myModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
 
 						<!-- Modal Header -->
 						<div class="modal-header">
-							<h4>Thêm mới vai trò</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4>Thêm mới vai trò</h4>
 						</div>
 						<div id="model-body"></div>
 						<div class="modal-footer"></div>
@@ -83,16 +83,18 @@
 										data-target="#myChitiet"
 										th:attrappend="data-target=${items.id}"><i
 											class="fas fa-eye"></i></a> <input type="checkbox" id="allDelete"
-										name="lvt" th:value="${items.id}" /> <!-- The Modal Chi tiet -->
-										<div class="modal" id="myChitiet"
+										name="lvt" th:value="${items.id}" /> 
+										
+										<!-- The Modal Chi tiet -->
+										<div class="modal fade" id="myChitiet"
 											th:attrappend="id=${items.id}">
 											<div class="modal-dialog">
-												<div class="modal-content chitiet">
+												<div class="modal-content">
 
 													<!-- Modal Header -->
 													<div class="modal-header">
-														<h4>Chi tiet</h4>
 														<button type="button" class="close" data-dismiss="modal">&times;</button>
+														<h4>Chi tiet</h4>
 													</div>
 													<div id="chitiet-body">
 														<table class="table table-bordered">
@@ -182,7 +184,7 @@
 					</li>
 				</ul>
 			</th:block>
-			<div class="modal" tabindex="-1" role="dialog" id="myDelete">
+			<div class="modal fade" tabindex="-1" role="dialog" id="myDelete">
 				<div class="modal-dialog">
 					<div class="modal-content">
 
@@ -209,14 +211,14 @@
 			</div>
 
 			<!-- The Modal Edit -->
-			<div class="modal" id="myEdit">
+			<div class="modal fade" id="myEdit">
 				<div class="modal-dialog">
 					<div class="modal-content">
 
 						<!-- Modal Header -->
 						<div class="modal-header">
-							<h4>Edit vai trò</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4>Edit vai trò</h4>
 						</div>
 						<div id="edit-body">
 							<form th:action="@{/vaitro/updateVaiTro}" method="put"

@@ -9,40 +9,6 @@ h2 {
 	font-size: 20px;
 }
 
-.main-giohang {
-	display: flex;
-	padding-bottom: 100px;
-}
-
-table, td, th {
-  border: 1px solid black;
-  font-size: 18px;
-  text-align: center;
-}
-
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th {
-  height: 20px;
-}
-.main-giohang-left {
-	background-color: white;
-	width: 50%;
-	margin-left: 20px;
-	height: 300px;
-}
-
-.main-giohang-right {
-	background-color: white;
-	width: 40%;
-	text-align: center;
-	margin-left: 5%;
-}
-
 h3 {
 	padding-bottom: 30px;
 	font-size: 18px;
@@ -63,21 +29,7 @@ h3 {
 	padding-bottom: 10px;
 }
 
-.div_tieptucmuahang {
-	padding-top: 20px;
+.container-fluid {
+	margin-bottom: 82px;
 }
 
-.tieptucmuahang {
-	margin-left: 280px;
-	padding: 10px 20px;
-	background: #fdd835;
-	font-size: 16px;
-}
-
-.xoa {
-	color: blue !important;
-}
-
-.xoa:hover {
-	color: red !important;
-}

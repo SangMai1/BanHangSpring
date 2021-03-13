@@ -193,7 +193,16 @@
 .category__name-price {
 	padding-bottom: 5px;
 }
+
+.col-lg-3 {
+	background-color: ##f5f5f5;
+}
+
+.col-lg-9 {
+	background-color: #fff;
+}
 .pagination {
+	margin-top: 20px !important;
 	 justify-content: center !important;
 	 font-size: 16px;
 }
@@ -352,25 +361,7 @@
 	font-size: 14px;
 }
 
-/* Style the buttons */
-.btn {
-  border: none;
-  outline: none;
-  padding: 10px 16px;
-  background-color: #f1f1f1;
-  cursor: pointer;
-  font-size: 14px;
-  
-}
 
-.btn a {
-  color: black;
-}
-/* Style the active class, and buttons on mouse-over */
-.active, .btn:hover {
-  background-color: #666;
-  color: white;
-}
 
 #myDIV {
 	display: inline-block;

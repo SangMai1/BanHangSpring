@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/css/StyleViewSanpham.css">
 <link rel="stylesheet" type="text/css" href="/css/StyleSanpham.css">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
@@ -14,8 +14,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" th:src="@{/js/Sanpham-view.js}"></script>
 </head>
 <body>
@@ -33,14 +32,14 @@
 			</button>
 
 			<!-- The Modal Add New-->
-			<div class="modal" id="myModal">
+			<div class="modal fade" id="myModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
 
 						<!-- Modal Header -->
 						<div class="modal-header">
-							<h4>Thêm mới chức năng</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4>Thêm mới chức năng</h4>
 						</div>
 						<div id="model-body"></div>
 						<div class="modal-footer"></div>
@@ -91,15 +90,16 @@
 											class="fas fa-edit"></i></a> <a class="btn btn-primary chi"
 										th:href="@{/sanpham/sanpham-chitiet/}" data-toggle="modal"
 										data-target="#myChitiet" th:attrappend="data-target=${sp.id}"><i
-											class="fas fa-eye"></i></a> <!-- The Modal Chi tiet -->
-										<div class="modal" id="myChitiet" th:attrappend="id=${sp.id}">
+											class="fas fa-eye"></i></a> 
+										<!-- The Modal Chi tiet -->
+										<div class="modal fade" id="myChitiet" th:attrappend="id=${sp.id}">
 											<div class="modal-dialog">
-												<div class="modal-content chitiet">
+												<div class="modal-content">
 
 													<!-- Modal Header -->
 													<div class="modal-header">
-														<h4>Chi tiet</h4>
 														<button type="button" class="close" data-dismiss="modal">&times;</button>
+														<h4>Chi tiet</h4>
 													</div>
 													<div id="chitiet-body">
 														<table class="table table-bordered">
@@ -208,14 +208,14 @@
 			</th:block>
 
 			<!-- The Modal Edit -->
-			<div class="modal" tabindex="-1" role="dialog" id="myEdit">
+			<div class="modal fade" tabindex="-1" role="dialog" id="myEdit">
 				<div class="modal-dialog">
 					<div class="modal-content">
 
 						<!-- Modal Header -->
 						<div class="modal-header">
-							<h4>Edit sản phẩm</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4>Edit sản phẩm</h4>
 						</div>
 						<div id="edit-body"></div>
 						<div class="modal-footer"></div>
@@ -224,14 +224,14 @@
 			</div>
 
 			<!-- The Modal New -->
-			<div class="modal" tabindex="-1" role="dialog" id="myNew">
+			<div class="modal fade" id="myNew">
 				<div class="modal-dialog">
 					<div class="modal-content">
 
 						<!-- Modal Header -->
 						<div class="modal-header">
-							<h4>Add chi tiết</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4>Add chi tiết</h4>
 						</div>
 						<div id="new-body">
 							<form th:action="@{/sanpham/add}" method="post" id="formNew">

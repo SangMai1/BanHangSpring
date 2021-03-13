@@ -66,7 +66,7 @@ public class WebController {
 
 	@GetMapping("/")
 	public String home11() {
-		return "web/trangchuwebsite";
+		return "web/trangchu-admin";
 	}
 	
 //	@RequestMapping("/1")
@@ -74,19 +74,14 @@ public class WebController {
 //		return "/web/trangchu";
 //	}
 
-	@RequestMapping("/tatcasanpham")
-	public String tatcasanpham() {
-		return "web/tatcasanpham";
-	}
-
 	
-	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/listTatCa", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("tatcasanphamlist", null);
-		return "redirect:web/list/page/1";
+		return "redirect:/web/listTatCa/page/1";
 	}
 
-	@RequestMapping(value = "/list/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/listTatCa/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String showTatcasanphamsPage(HttpServletRequest request, @PathVariable int pageNumber, ModelMap model) {
 		PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("tatcasanphamlist");
 		int pagesize = 20;
@@ -132,7 +127,7 @@ public class WebController {
 	@RequestMapping(value = "/moilist", method = { RequestMethod.GET, RequestMethod.POST })
 	public String SanphammoiList(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphammoilist", null);
-		return "redirect:web/moilist/page/1";
+		return "redirect:/web/moilist/page/1";
 	}
 
 	@RequestMapping(value = "/moilist/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -180,7 +175,7 @@ public class WebController {
 	@RequestMapping(value = "/noibatlist", method = { RequestMethod.GET, RequestMethod.POST })
 	public String SanphamnoibatList(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphamnoibatlist", null);
-		return "redirect:web/noibatlist/page/1";
+		return "redirect:/web/noibatlist/page/1";
 	}
 
 	@RequestMapping(value = "/noibatlist/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -228,7 +223,7 @@ public class WebController {
 	@RequestMapping(value = "/salelist", method = { RequestMethod.GET, RequestMethod.POST })
 	public String SanphamsaleList(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphamsalelist", null);
-		return "redirect:web/salelist/page/1";
+		return "redirect:/web/salelist/page/1";
 	}
 
 	@RequestMapping(value = "/salelist/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -269,13 +264,13 @@ public class WebController {
 
 		model.addAttribute("SANPHAMSALELIST", pages);
 
-		return "web/sanphamsale";
+		return "/web/sanphamsale";
 	}
 	
 	@RequestMapping(value = "/banchaylist", method = { RequestMethod.GET, RequestMethod.POST })
 	public String SanphambanchayList(ModelMap model, HttpServletRequest request, RedirectAttributes redirect) {
 		request.getSession().setAttribute("sanphambanchaylist", null);
-		return "redirect:web/banchaylist/page/1";
+		return "redirect:/web/banchaylist/page/1";
 	}
 
 	@RequestMapping(value = "/banchaylist/page/{pageNumber}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -436,10 +431,10 @@ public class WebController {
 		if (this.billService.checkLogin(email, password)) {
 			session.setAttribute("EMAIL_WEB", this.billRepository.findByEmail(email));
 			
-			return "redirect:web/";
+			return "redirect:/web/";
 		} else {
 			
-			return "redirect:web/";
+			return "redirect:/web/";
 		}
 		
 	}
@@ -453,7 +448,7 @@ public class WebController {
 		session.removeAttribute("myCartNum");
 		session.removeAttribute("myCartTotal");
 		session.removeAttribute("myCartItems");
-		return "redirect:web/";
+		return "redirect:/web/";
 	}
 	@ModelAttribute(name = "SANPHAMMOI")
 	public List<SanphamVaChitiet> getSanphammoi() {

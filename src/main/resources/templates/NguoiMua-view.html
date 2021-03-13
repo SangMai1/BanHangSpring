@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>DANH SACH NGUOI MUA HANG DA DANG KI</title>
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/css/StyleViewNguoiMua.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -64,16 +64,17 @@
 										data-toggle="modal" data-target="#myChitiet"
 										th:attrappend="data-target=${nguoimuahang.bill_id}"><i
 											class="fas fa-eye"></i></a> <input type="checkbox" id="allDelete"
-										name="lnm" th:value="${nguoimuahang.bill_id}" /> <!-- The Modal Chi tiet -->
-										<div class="modal" id="myChitiet"
+										name="lnm" th:value="${nguoimuahang.bill_id}" /> 
+										<!-- The Modal Chi tiet -->
+										<div class="modal fade" id="myChitiet"
 											th:attrappend="id=${nguoimuahang.bill_id}">
 											<div class="modal-dialog">
-												<div class="modal-content chitiet">
+												<div class="modal-content">
 
 													<!-- Modal Header -->
 													<div class="modal-header">
-														<h4>Chi tiết</h4>
 														<button type="button" class="close" data-dismiss="modal">&times;</button>
+														<h4>Chi tiết</h4>
 													</div>
 													<div id="chitiet-body">
 														<table class="table table-bordered">
@@ -156,7 +157,7 @@
 			</th:block>
 
 			<!-- The Modal Delete -->
-			<div class="modal" tabindex="-1" role="dialog" id="myDelete">
+			<div class="modal fade" tabindex="-1" role="dialog" id="myDelete">
 				<div class="modal-dialog">
 					<div class="modal-content">
 
