@@ -42,7 +42,7 @@ public class LoginController {
 		model.addAttribute("countSanPhamBanRa", this.billDetailService.countSanPhamBanRa());
 		model.addAttribute("countSoLuongDonHang", this.billDetailService.countSoLuongDonHang());
 		model.addAttribute("countTongDoanhThu", this.billDetailService.countTongDoanhThu());
-		return "/layout/main-layout";
+		return "layout/main-layout";
 	}
 
 	@GetMapping("/403")
